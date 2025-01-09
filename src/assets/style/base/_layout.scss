@@ -1,0 +1,79 @@
+@use './mixins' as *;
+
+.main-app {
+    @include grid(column);
+
+    grid-template-columns: max-content 1fr;
+
+    .side-bar {
+        @include grid(row);
+
+        grid-template-rows: repeat(7, max-content);
+
+        div {
+            @include grid(column, $align: center);
+
+            grid-template-columns: max-content 1fr;
+
+            align-self: start;
+        }
+
+        .profile-btn,
+        .more-btn {
+            align-self: end;
+        }
+    }
+
+    .main-container {
+
+        .post-container {
+            @include grid(row, $place: center);
+
+            .header {
+                @include grid(column, $align: center);
+
+                grid-template-columns: max-content 1fr max-content;
+
+                .user-image {
+                    @include grid(row, $place: center)
+                }
+                
+                .header-details-container {
+                    
+                    .header-details {
+                        @include grid(column, $align: center);
+
+                        grid-template-columns: repeat(5, max-content);
+
+                    }
+                }
+
+                .menu {
+                    justify-self: end;
+                }
+
+            }
+
+            .buttons {
+                @include grid(column);
+
+                grid-template-columns: repeat(3, max-content);
+
+                .save {
+                    justify-self: end;
+                }
+            }
+
+            .comment-container {
+                
+                @include grid(row);
+
+                .comment {
+                    @include grid(column);
+    
+                    grid-template-columns: repeat(2, max-content);
+                }
+            }
+        }
+    }
+}

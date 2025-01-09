@@ -1,0 +1,59 @@
+@use './variables' as *;
+
+@mixin aStyle {
+    margin: 0 0.5em;
+    padding: 0.25em 0.5em;
+
+    text-decoration: none;
+    color: hsl(0, 0%, 0%);
+    background-color: $button-color;
+
+    font-family: Roboto;
+    font-size: 1.1em;
+    font-weight: 500;
+
+    border: 1px solid hsl(0, 0%, 75%);
+    border-radius: 5px;
+
+    transition: background-color 150ms, border 150ms;
+
+    &:hover {
+        background-color: $button-color-hover;
+        border: 1px solid hsl(0, 0%, 50%);
+    }
+}
+
+@mixin grid($type: row, $justify: null, $align: null, $place: null) {
+    display: grid;
+    grid-auto-flow: $type;
+
+    @if $justify ==start {
+        justify-items: start;
+    } @else if $justify ==center {
+        justify-items: center;
+    } @else if $justify ==end {
+        justify-items: end;
+    }
+
+    @if $align ==start {
+        align-items: start;
+    } @else if $align ==center {
+        align-items: center;
+    } @else if $align ==end {
+        align-items: end;
+    }
+
+    @if $place ==start {
+        place-items: start;
+    } @else if $place ==center {
+        place-items: center;
+    } @else if $place ==end {
+        place-items: end;
+    }
+}
+
+@mixin for-narrow-layout {
+    @media (width < 800px) {
+      @content;
+    }
+  }
