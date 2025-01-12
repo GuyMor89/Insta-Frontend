@@ -37,9 +37,9 @@
                 .user-image {
                     @include grid(row, $place: center)
                 }
-                
+
                 .header-details-container {
-                    
+
                     .header-details {
                         @include grid(column, $align: center);
 
@@ -65,15 +65,90 @@
             }
 
             .comment-container {
-                
+
                 @include grid(row);
 
                 .comment {
                     @include grid(column);
-    
+
                     grid-template-columns: repeat(2, max-content);
                 }
             }
+        }
+    }
+
+}
+
+.modal {
+
+    .post-submit-container {
+        @include grid(row, $place: center);
+        // grid-template-rows: max-content max-content;
+
+        .header {
+            @include grid(column, $align: center);
+
+            grid-template-columns: max-content 1fr max-content;
+
+            .next {
+                justify-self: end;
+            }
+        }
+
+        .post-contents {
+
+            @include grid(column);
+
+            &:has(.post-details) {
+
+                grid-template-columns: 1.5fr 1fr;
+                // grid-template-rows: 400px;
+            }
+
+            .uploaded-image-container {
+
+                @include grid(row, $place: center);
+
+                // &.narrow {
+                //     justify-self: start;
+                // }
+            }
+
+            .post-details {
+                @include grid(row);
+
+                grid-template-rows: repeat(4, max-content);
+
+                .user-details {
+                    @include grid(column, $align: center);
+
+                    grid-template-columns: repeat(2, max-content);
+                    grid-template-rows: max-content;
+
+                    .user-image-container {
+                        @include grid(row)
+                    }
+                }
+
+                .post-location {
+                    @include grid(column);
+
+                    grid-template-columns: 1fr max-content;
+
+                    svg {
+                        justify-self: end;
+                    }
+                }
+            }
+        }
+
+        .drag-wrapper {
+            @include grid(row, $align: center);
+
+            .upload-container {
+                @include grid(row, $place: center);
+            }
+
         }
     }
 }

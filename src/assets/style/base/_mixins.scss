@@ -56,4 +56,10 @@
     @media (width < 800px) {
       @content;
     }
-  }
+}
+
+@mixin for-normal-layout {
+    @media (width > 800px) {
+      @content;
+    }
+}

@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './functions' as *;
 
 *,
 *::before,
@@ -14,7 +15,7 @@
 
 body {
     margin: 0;
-    font-family: Lato;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1,
@@ -35,6 +36,7 @@ a {
 
 .main-app {
     min-height: 100vh;
+    position: relative;
 }
 
 button {
@@ -42,16 +44,16 @@ button {
 
     background-color: $button-color;
     border: 1px solid hsl(0, 0%, 80%);
-    border-radius: 5px; 
+    border-radius: 5px;
 
-    font-family: Roboto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 500;
-    
+
     cursor: pointer;
 
     transition: 150ms background-color, 150ms border, box-shadow 250ms;
 
-    &:hover { 
+    &:hover {
         background-color: $button-color-hover;
         border: 1px solid hsl(0, 0%, 70%);
     }
@@ -62,7 +64,28 @@ button {
     }
 }
 
+button {
+    padding-block: rem(6px);
+    padding-block-end: rem(7px);
+    padding-inline: rem(16px);
+
+    font-size: rem(14px);
+
+    background-color: hsl(204, 100%, 48%);
+    color: white;
+    border: none;
+    border-radius: rem(8px);
+
+    &:hover {
+        background-color: rgb(24, 119, 242);
+    }
+
+    &:active {
+        background-color: rgba(0, 149, 246, 0.7);
+    }
+}
+
 img {
-    height: 100%;
-    object-fit: cover;
+    // height: 100%;
+    // object-fit: cover;
 }

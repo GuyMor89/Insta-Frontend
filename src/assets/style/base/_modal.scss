@@ -1,3 +1,5 @@
+@use './functions' as *;
+
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -8,37 +10,277 @@
     transition: background-color 0.6s;
 
     &.overlay-on {
-        background-color: rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 0.65);
         pointer-events: auto;
     }
 
     .modal-container {
         position: fixed;
 
-        height: 350px;
-        width: 350px;
+        width: 53.2vw;
 
-        top: 300px;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
 
         background-color: rgb(255, 255, 255);
-        border: 2px solid rgba(0, 0, 0, 0.211);
-        border-radius: 5px;
+        border-radius: 11px;
         box-shadow:
             1px 1px 5px 0px rgba(0, 0, 0, 0.1);
 
         z-index: 30;
 
+        transition: width 500ms, top 500ms;
+
+        &.wide {
+            // top: 45%;
+            width: 70vw;
+        }
+
         cursor: auto;
 
         .modal {
 
-            >div {
-                margin-block-end: 1em;
+            .post-submit-container {
 
-                font-size: 1.5em;
-                font-weight: 600;
+
+                .header {
+
+                    width: 100%;
+
+                    border-block-end: 0.5px solid hsl(0, 0%, 86%);
+
+                    svg {
+                        margin-inline-start: 1em;
+                        cursor: pointer;
+
+                        &:active {
+                            opacity: 0.5;
+                        }
+                    }
+
+                    span {
+                        margin-block: 0.65em;
+
+                        text-align: center;
+                        font-weight: 600;
+                    }
+
+                    .next {
+                        margin-inline-end: 1.1em;
+                        background-color: white;
+                        color: hsl(204, 100%, 48%);
+
+                        font-size: em(14px);
+                        font-weight: 600;
+
+                        cursor: pointer;
+
+                        &:hover {
+                            border: none;
+                            color: black;
+                        }
+
+                        &:active {
+                            box-shadow: none;
+                            opacity: 0.5;
+                        }
+                    }
+                }
+
+                .post-contents {
+                    width: 100%;
+
+                    height: 348px;
+
+                    &:has(.post-details) {
+                        max-height: 400px;
+
+                        .uploaded-image-container {
+                            border-bottom-right-radius: 0;
+                        }
+                    }
+
+                    // height: 350px;
+
+                    .uploaded-image-container {
+
+                        // margin: auto;
+                        background-color: hsl(0, 0%, 86%);
+                        border-bottom-left-radius: 11px;
+                        border-bottom-right-radius: 11px;
+
+                        min-height: 100%;
+                        max-height: 100%;
+                        // min-width: 100%;
+
+                        .uploaded-image {
+                            display: block;
+                            margin: auto;
+                            object-fit: cover;
+                            // min-width: 100%;
+                            max-width: 100%;
+                            min-height: clamp(50%, 10vw, 100%);
+                            // max-height: clamp(60%, 10vw, 100%);
+                            max-height: 100%;
+                            aspect-ratio: 1/1;
+                            border-bottom-right-radius: 11px;
+                            border-bottom-left-radius: 11px;
+                        }
+                    }
+
+                    .post-details {
+
+                        .user-details {
+                            padding: 1em;
+
+                            .user-image {
+                                margin-inline-end: 0.5em;
+                                width: 28px;
+                                height: 28px;
+                                border-radius: 999px;
+
+                                img {
+                                    width: 24.5px;
+                                    height: 24.5px;
+                                    border-radius: 999px;
+
+                                    border: 2.5px solid white;
+                                }
+                            }
+
+                            .user-name {
+
+                                font-size: em(14px);
+                                font-weight: 600;
+                            }
+                        }
+
+                        form {
+
+                            .body-input {
+
+                                width: 100%;
+
+                                position: relative;
+
+                                &.error-input {
+
+                                    textarea {
+                                        // border: 1px solid red;
+                                    }
+                                }
+
+                                &::after {
+                                    // content: attr(data-error);
+                                    position: absolute;
+
+                                    padding: 0.25em 0.5em;
+
+                                    top: -53%;
+                                    left: 10%;
+
+                                    color: white;
+                                    background-color: grey;
+                                    border-radius: 5px;
+                                    font-size: 12px;
+
+                                }
+
+                                textarea {
+                                    padding-inline: 1em;
+
+                                    height: 168px;
+                                    width: 100%;
+
+                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+                                    white-space: pre-wrap;
+                                    word-break: break-word;
+                                    outline: none;
+                                    border: none;
+                                    resize: none;
+                                }
+                            }
+
+                            .separator {
+                                margin-block-start: 1em;
+                                padding-block-start: 1em;
+
+                                border-block-start: 1px solid hsl(0, 0%, 86%);
+                            }
+
+                            .post-location {
+                                margin-inline: 1em;
+                                margin-block-end: 1em;
+
+                                .location-input {
+
+                                    input {
+                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+                                        outline: none;
+                                        border: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    .drag-wrapper {
+
+                        height: 100%;
+                        width: 100%;
+
+                        border-bottom-right-radius: 11px;
+                        border-bottom-left-radius: 11px;
+
+                        transition: background-color 200ms;
+
+                        &.drag {
+                            background-color: hsl(0, 0%, 94%);
+
+                            .upload-container {
+                                svg {
+                                    color: hsl(204, 100%, 48%);
+                                }
+                            }
+                        }
+
+                        .upload-container {
+
+                            margin-block-end: 0.25em;
+
+                            span {
+                                margin-block-start: 0.5em;
+                                margin-block-end: 1.1em;
+                                font-size: rem(20px);
+                            }
+
+                            button {
+                                padding-block: rem(6px);
+                                padding-block-end: rem(7px);
+                                padding-inline: rem(16px);
+
+                                font-size: rem(14px);
+
+                                background-color: hsl(204, 100%, 48%);
+                                color: white;
+                                border: none;
+                                border-radius: rem(8px);
+
+                                &:hover {
+                                    background-color: rgb(24, 119, 242);
+                                }
+
+                                &:active {
+                                    background-color: rgba(0, 149, 246, 0.7);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             >form {

@@ -1,18 +1,31 @@
-.side-bar {
+@use '../base/mixins' as *;
 
+.side-bar {
+    position: sticky;
+    height: 100vh;
+    top: 0;
+    border-inline-end: 1px solid hsl(0, 0%, 86%);
+    
+    @include for-narrow-layout {
+        padding-inline-end: 0.75em;
+    }
+    
     >div {
         padding: 0.74em;
         margin-block-end: 0.5em;
-        margin-inline-start: 0.75em;
+        margin-inline: 0.75em;
 
-        width: 220px;
+        width: 208px;
 
-        // border: 2px solid hsl(0, 0%, 50%);
         border-radius: 8px;
 
         transition: 200ms background-color;
 
         cursor: pointer;
+
+        @include for-narrow-layout {
+            width: inherit;
+        }
 
         &:hover {
             background-color: rgba(0, 0, 0, 0.043);
@@ -21,12 +34,12 @@
         &:active {
             background-color: rgba(0, 0, 0, 0.02);
 
-            span {
+            span,
+            svg {
                 color: rgba(0, 0, 0, 0.5);
             }
 
             svg {
-                color: rgba(0, 0, 0, 0.5);
                 scale: 0.9;
             }
 
@@ -43,12 +56,16 @@
 
         svg,
         img {
-            margin-inline-end: 0.4em;
+            // margin-inline-start: 0.4em;
             margin-inline-end: 1em;
             height: 24px;
             width: 24px;
 
             transition: scale 200ms;
+
+            @include for-narrow-layout {
+                margin-inline-end: 0;
+            }
         }
 
         img {
@@ -59,21 +76,56 @@
             }
         }
 
-        span.bold {
-            font-weight: 800;
-        }
+        span {
 
+            @include for-narrow-layout {
+                display: none;
+            }
+
+            .bold {
+                font-weight: 800;
+            }
+        }
     }
 
     .logo-btn {
-        margin-block: 0.25em;
-        margin-inline-start: 0em;
 
-        font-family: Grand Hotel;
-        font-size: 2em;
+        @include for-narrow-layout {
+            margin-block-start: 1.5em;
+            margin-block-end: 2.05em;
+        }
 
-        &:hover {
-            background-color: white;
+        @include for-normal-layout {
+            &:hover {
+                background-color: white;
+            }
+
+            &:active {
+                background-color: white;
+            }
+        }
+
+        .logo-image {
+            
+            @include for-normal-layout {
+                display: none;
+            }
+        }
+
+        .logo-name {
+            margin-block: 0.25em;
+            margin-inline-start: 0em;
+
+            font-family: Grand Hotel;
+            font-size: 2em;
+
+            &:hover {
+                background-color: white;
+            }
+
+            @include for-narrow-layout {
+                display: none;
+            }
         }
     }
 }
