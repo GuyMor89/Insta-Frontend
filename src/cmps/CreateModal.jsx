@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { postActions } from "../store/actions/post.actions.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
-import { SET_MODAL } from "../store/reducers/post.reducer.js"
+import { SET_CREATE_MODAL } from "../store/reducers/post.reducer.js"
 import { ImgUploader } from "./ImgUploader.jsx"
 
 import { Formik, Form, Field } from 'formik'
@@ -12,7 +12,7 @@ export function CreateModal() {
     const dispatch = useDispatch()
 
     const posts = useSelector(storeState => storeState.postModule.posts)
-    const modalOpen = useSelector(storeState => storeState.postModule.modal.open)
+    const modalOpen = useSelector(storeState => storeState.postModule.createModal.open)
     const [uploadedImage, setUploadedImage] = useState(null)
     const [currPage, setCurrPage] = useState(1)
 
@@ -20,7 +20,7 @@ export function CreateModal() {
 
     function closeModal(event) {
         event.stopPropagation()
-        if (event.currentTarget.className === 'modal-overlay overlay-on') dispatch({ type: SET_MODAL, modal: { open: false } })
+        if (event.currentTarget.className === 'create-modal-overlay overlay-on') dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
     }
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export function CreateModal() {
         try {
             postActions.savePost(post)
             showSuccessMsg('Post added')
-            dispatch({ type: SET_MODAL, modal: { open: false } })
+            dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
         } catch (err) {
             console.log('Error from onAddPost ->', err)
             showErrorMsg('Cannot add post')
@@ -95,7 +95,7 @@ export function CreateModal() {
     }
 
     return (
-        <div className={modalOpen ? 'modal-overlay overlay-on' : 'modal-overlay'} onClick={closeModal}>
+        <div className={modalOpen ? 'create-modal-overlay overlay-on' : 'create-modal-overlay'} onClick={closeModal}>
             {modalOpen && <div className={`modal-container ${currPage === 3 ? 'wide' : ''}`} onClick={closeModal} >
                 <div className='modal'>
                     <article className='post-submit-container'>
@@ -105,7 +105,7 @@ export function CreateModal() {
                                 <img src={uploadedImage} className="uploaded-image" />
                             </div>}
                             {currPage === 3 && <div className="post-details">
-                                <div className="user-details">
+                                <div className="header">
                                     <div className="user-image-container">
                                         <img className="user-image" src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
                                     </div>

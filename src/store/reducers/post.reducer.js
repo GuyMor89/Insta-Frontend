@@ -2,12 +2,14 @@ export const SET_POSTS = 'SET_POSTS'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_POST = 'ADD_POST'
 export const UPDATE_POST = 'UPDATE_POST'
-export const SET_MODAL = 'SET_MODAL'
 export const SET_IS_LOADING = 'IS_LOADING'
+export const SET_CREATE_MODAL = 'SET_CREATE_MODAL'
+export const SET_POST_MODAL = 'SET_POST_MODAL'
 
 const initialState = {
     posts: [],
-    modal: { open: false },
+    createModal: { open: false },
+    postModal: { open: false },
     // isLoading: false,
 }
 
@@ -32,10 +34,15 @@ export function postReducer(state = initialState, action) {
                 ...state,
                 posts: state.posts.map(post => post._id === action.post._id ? action.post : post)
             }
-        case SET_MODAL:
+        case SET_CREATE_MODAL:
             return {
                 ...state,
-                modal: { ...action.modal }
+                createModal: { ...action.createModal }
+            }
+        case SET_POST_MODAL:
+            return {
+                ...state,
+                postModal: { ...action.postModal }
             }
         case SET_IS_LOADING:
             return {

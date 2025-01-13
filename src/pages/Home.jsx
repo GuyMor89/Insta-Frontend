@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { postActions } from "../store/actions/post.actions.js"
+import { useNavigate } from "react-router-dom"
 
 export function Home() {
 
     const posts = useSelector(storeState => storeState.postModule.posts)
+    const navigate = useNavigate()
 
     useEffect(() => {
         postActions.loadPosts()
@@ -13,7 +15,7 @@ export function Home() {
     if (!posts) return <div>Loading..</div>
 
     return (
-        < article className="post-container" >
+        <article className="post-container" >
             {posts.map(post =>
                 <div className="post" key={post._id}>
                     <div className="header">
@@ -61,7 +63,7 @@ export function Home() {
                         <div className="expand-comment">
                             <span>...</span> more</div>
                     </div>
-                    <div className="open">
+                    <div className="open" onClick={() => navigate(`/p/${post._id}`)}>
                         {`View all ${post.comments.length} comments`}
                     </div>
                     <div className="add-comment">

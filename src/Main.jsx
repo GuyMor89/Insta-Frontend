@@ -8,6 +8,7 @@ import { store } from './store/store.js'
 import { Home } from './pages/Home.jsx'
 import { SideBar } from './cmps/SideBar.jsx'
 import { CreateModal } from './cmps/CreateModal.jsx'
+import { PostModal } from './cmps/PostModal.jsx'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
@@ -19,6 +20,8 @@ createRoot(document.getElementById('root')).render(
         <section className='main-container'>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path='/p/:id' element={<><Home /> <PostModal /></>} />
+            <Route path='/:username' element={<UserPage />} />
           </Routes>
         </section>
       </main>

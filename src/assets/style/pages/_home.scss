@@ -1,150 +1,164 @@
 @use '../base/functions' as *;
 
-.post-container {
-    margin-block-start: 1em;
+.main-container {
 
-    .post {
-        width: 470px;
 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        >.post-container {
+            margin-block-start: 1em;
+            
+            // position: fixed;
+            // overflow: hidden;
+            // width: 100%;
 
-        .header {
-            padding: 0.6em 0;
+        .post {
+            width: 470px;
 
-            >* {
-                margin-inline-end: 0.25em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            .header {
+                padding: 0.6em 0;
+
+                >* {
+                    margin-inline-end: 0.25em;
+                }
+
+                .user-image {
+                    margin-inline-end: 0.5em;
+                    width: 42px;
+                    height: 42px;
+                    border-radius: 999px;
+                    background: linear-gradient(230deg,
+                            hsl(326, 57%, 48%),
+                            hsl(291, 63%, 46%),
+                            hsl(340, 75%, 54%),
+                            hsl(340, 75%, 54%),
+                            hsl(20, 92%, 59%),
+                            hsl(20, 92%, 59%),
+                            hsl(39, 96%, 50%),
+                            hsl(39, 96%, 80%),
+                            hsl(39, 96%, 90%));
+
+                    img {
+                        width: 38.5px;
+                        height: 38.5px;
+                        border-radius: 999px;
+
+                        border: 2.5px solid white;
+                    }
+
+                }
+
+                .header-details-container {
+
+                    .header-details {
+
+                        * {
+                            margin-inline-end: 0.35em;
+                            font-size: em(14px);
+                        }
+
+                        span {
+                            color: grey;
+                        }
+
+                        .user-name {
+                            font-weight: 600;
+                        }
+
+                        .created-at {
+                            color: hsl(0, 0%, 50%)
+                        }
+
+                        .follow-btn {
+                            color: rgb(0, 149, 246);
+                            font-weight: 600;
+                        }
+
+                    }
+
+                    .location {
+                        font-size: em(12px);
+
+                    }
+
+                }
+
             }
 
-            .user-image {
-                margin-inline-end: 0.5em;
-                width: 42px;
-                height: 42px;
-                border-radius: 999px;
-                background: linear-gradient(230deg,
-                        hsl(326, 57%, 48%),
-                        hsl(291, 63%, 46%),
-                        hsl(340, 75%, 54%),
-                        hsl(340, 75%, 54%),
-                        hsl(20, 92%, 59%),
-                        hsl(20, 92%, 59%),
-                        hsl(39, 96%, 50%),
-                        hsl(39, 96%, 80%),
-                        hsl(39, 96%, 90%));
+            .main-image {
+                border-inline-end: 0.5px solid hsl(0, 0%, 30%);
+
+                border-radius: 4px;
 
                 img {
-                    width: 38.5px;
-                    height: 38.5px;
-                    border-radius: 999px;
+                    display: block;
 
-                    border: 2.5px solid white;
+                    width: 100%;
+
+                    border-radius: 4px;
                 }
-
             }
 
-            .header-details-container {
+            .buttons {
+                margin-block-start: 0.75em;
 
-                .header-details {
+                .comment,
+                .share {
+                    margin-inline-start: 1em;
+                }
+            }
 
-                    * {
-                        margin-inline-end: 0.35em;
-                        font-size: em(14px);
+            .likes {
+                margin-block: 0.5em;
+
+                font-weight: 600;
+                font-size: em(14px);
+            }
+
+            .comment-container {
+                margin-block: 0.6em;
+
+                font-size: em(14px);
+
+                .comment {
+
+                    .left-by {
+                        margin-inline-end: 0.4em;
+
+                        font-weight: 600;
                     }
+
+                }
+
+                .expand-comment {
+
+                    color: grey;
 
                     span {
-                        color: grey;
+                        color: black;
                     }
-
-                    .user-name {
-                        font-weight: 600;
-                    }
-
-                    .created-at {
-                        color: grey
-                    }
-
-                    .follow-btn {
-                        color: rgb(0, 149, 246);
-                        font-weight: 600;
-                    }
-
                 }
-
-                .location {
-                    font-size: em(12px);
-
-                }
-
             }
 
-        }
+            .open { 
+                margin-block-end: 0.3em;
 
-        .main-image {
-            border-inline-end: 0.5px solid hsl(0, 0%, 30%);
-        
-            border-radius: 4px;
-
-            img {
-                display: block;
-
-                width: 100%;
-                
-                border-radius: 4px;
-            }
-        }
-
-        .buttons {
-            margin-block-start: 0.75em;
-
-            .comment,
-            .share {
-                margin-inline-start: 1em;
-            }
-        }
-
-        .likes {
-            margin-block: 0.5em;
-
-            font-weight: 600;
-            font-size: em(14px);
-        }
-
-        .comment-container {
-            margin-block: 0.6em;
-
-            font-size: em(14px);
-
-            .comment {
-
-                .left-by {
-                    margin-inline-end: 0.4em;
-    
-                    font-weight: 600;
-                }
-                
-            }
-
-            .expand-comment {
-
+                font-size: em(14px);
                 color: grey;
 
-                span {
-                    color: black;
-                }
+                cursor: pointer;
             }
-        }
 
-        .open,
-        .add-comment {
-            margin-block-end: 0.3em;
+            .add-comment {
 
-            font-size: em(14px);
-            color: grey;
-        }
 
-        .separator {
-            margin-block-start: 1em;
-            margin-block-end: 0.5em;
-            border-block-end: 1px solid hsl(0, 0%, 86%);
+            }
+
+            .separator {
+                margin-block-start: 1em;
+                margin-block-end: 0.5em;
+                border-block-end: 1px solid hsl(0, 0%, 86%);
+            }
         }
     }
 }

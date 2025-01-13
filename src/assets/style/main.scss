@@ -10,12 +10,13 @@
 // Extras
 
 @use './base/loader';
-@use './base/modal';
 
 // CMPS
 
 @use './cmps/sidebar';
 @use './cmps/user-msg';
+@use './cmps/create-modal';
+@use './cmps/post-modal';
 
 // Pages
 

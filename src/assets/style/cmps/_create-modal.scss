@@ -1,6 +1,6 @@
-@use './functions' as *;
+@use '../base/functions' as *;
 
-.modal-overlay {
+.create-modal-overlay {
     position: fixed;
     inset: 0;
     cursor: pointer;
@@ -42,7 +42,6 @@
         .modal {
 
             .post-submit-container {
-
 
                 .header {
 
@@ -112,7 +111,8 @@
 
                         min-height: 100%;
                         max-height: 100%;
-                        // min-width: 100%;
+
+                        overflow: hidden;
 
                         .uploaded-image {
                             display: block;
@@ -124,14 +124,12 @@
                             // max-height: clamp(60%, 10vw, 100%);
                             max-height: 100%;
                             aspect-ratio: 1/1;
-                            border-bottom-right-radius: 11px;
-                            border-bottom-left-radius: 11px;
                         }
                     }
 
                     .post-details {
 
-                        .user-details {
+                        .header {
                             padding: 1em;
 
                             .user-image {

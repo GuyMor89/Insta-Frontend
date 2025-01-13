@@ -7,7 +7,7 @@
     border-inline-end: 1px solid hsl(0, 0%, 86%);
     
     @include for-narrow-layout {
-        padding-inline-end: 0.75em;
+        margin-inline-end: 0.75em;
     }
     
     >div {
