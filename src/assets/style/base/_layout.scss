@@ -30,7 +30,7 @@
             @include grid(row, $place: center);
 
             >.post {
-                >.header {
+                >.user-details {
                     @include grid(column, $align: center);
 
                     grid-template-columns: max-content 1fr max-content;
@@ -100,7 +100,7 @@
                     }
                 }
 
-                >.post-contents {
+                >.post-container {
 
                     @include grid(column);
 
@@ -110,7 +110,7 @@
                         // grid-template-rows: 400px;
                     }
 
-                    >.uploaded-image-container {
+                    >.post-image {
 
                         @include grid(row, $place: center);
 
@@ -130,28 +130,32 @@
                             grid-template-columns: repeat(2, max-content);
                             grid-template-rows: max-content;
 
-                            >.user-image-container {
-                                @include grid(row)
+                            >.user-image {
+                                @include grid(row, $place: center)
                             }
                         }
 
-                        >.post-location {
-                            @include grid(column);
+                        form {
 
-                            grid-template-columns: 1fr max-content;
+                            >.post-location {
+                                @include grid(column);
 
-                            >svg {
-                                justify-self: end;
+                                grid-template-columns: 1fr max-content;
+
+                                >svg {
+                                    justify-self: end;
+                                }
                             }
                         }
                     }
+
                     >.drag-wrapper {
                         @include grid(row, $align: center);
-    
+
                         >.upload-container {
                             @include grid(row, $place: center);
                         }
-    
+
                     }
                 }
 
@@ -184,30 +188,28 @@
 
                     >.user-details {
 
-                        >.header {
-                            align-self: start;
+                        align-self: start;
 
-                            @include grid(column, $align: center);
+                        @include grid(column, $align: center);
 
-                            grid-template-columns: max-content 1fr max-content;
+                        grid-template-columns: max-content 1fr max-content;
 
-                            >.user-image {
-                                @include grid(row, $place: center)
+                        >.user-image {
+                            @include grid(row, $place: center)
+                        }
+
+                        >.header-details-container {
+
+                            .header-details {
+                                @include grid(column, $align: center);
+
+                                grid-template-columns: repeat(3, max-content);
+
                             }
+                        }
 
-                            >.header-details-container {
-
-                                .header-details {
-                                    @include grid(column, $align: center);
-
-                                    grid-template-columns: repeat(3, max-content);
-
-                                }
-                            }
-
-                            >.menu {
-                                justify-self: end;
-                            }
+                        >.menu {
+                            justify-self: end;
                         }
                     }
 
@@ -215,55 +217,52 @@
 
                         >.post-caption-container {
 
-                            >.header {
-                                @include grid(column, $align: center);
+                            @include grid(column, $align: center);
 
-                                grid-template-columns: max-content 1fr;
+                            grid-template-columns: max-content 1fr;
 
-                                >.header-details-container {
+                            >.header-details-container {
 
-                                    .header-details {
-                                        @include grid(column, $align: center);
+                                .header-details {
+                                    @include grid(column, $align: center);
 
-                                        grid-template-columns: repeat(3, max-content);
-                                    }
+                                    grid-template-columns: repeat(3, max-content);
                                 }
+                            }
 
-                                >.user-image {
-                                    @include grid(row, $place: center);
-                                    align-self: start;
-                                }
+                            >.user-image {
+                                @include grid(row, $place: center);
+                                align-self: start;
+                            }
 
-                                >.menu {
-                                    align-self: start;
-                                }
+                            >.menu {
+                                align-self: start;
                             }
                         }
 
+
                         >.comment-container {
 
-                            >.header {
-                                @include grid(column, $align: center);
+                            @include grid(column, $align: center);
 
-                                grid-template-columns: max-content 1fr;
+                            grid-template-columns: max-content 1fr;
 
-                                >.header-details-container {
+                            >.header-details-container {
 
-                                    .user-image {
-                                        place-self: center;
-                                    }
+                                .user-image {
+                                    place-self: center;
+                                }
 
-                                    .header-details {
-                                        @include grid(column, $align: center);
+                                .header-details {
+                                    @include grid(column, $align: center);
 
-                                        grid-template-columns: repeat(3, max-content);
-                                    }
+                                    grid-template-columns: repeat(3, max-content);
+                                }
 
-                                    .header-contents {
-                                        @include grid(column);
+                                .header-contents {
+                                    @include grid(column);
 
-                                        grid-template-columns: max-content max-content
-                                    }
+                                    grid-template-columns: max-content max-content
                                 }
                             }
                         }
@@ -292,6 +291,127 @@
                 }
             }
 
+        }
+    }
+}
+
+.user-page-container {
+
+    @include grid(row, $place: center);
+
+    .user-page-header-container {
+
+        @include grid(column);
+
+        grid-template-columns: 1fr 2fr;
+
+        .user-image {
+            @include grid(row, $place: center)
+        }
+
+        .user-page-header {
+
+            justify-self: start;
+
+            @include grid(row);
+
+
+            .user-nav {
+
+                @include grid(column, $place: center);
+
+                grid-template-columns: repeat(3, max-content);
+            }
+
+            .user-data {
+
+                @include grid(column, $place: center);
+
+                >* {
+                    justify-self: start;
+                }
+
+            }
+
+        }
+    }
+
+    .user-content-container {
+
+        @include grid(row);
+
+        .user-content-header {
+
+            justify-self: center;
+
+            @include grid(column);
+            grid-template-columns: max-content max-content;
+
+            .user-posts-btn {
+                @include grid(column, $place: center)
+            }
+
+            .user-saved-btn {
+                @include grid(column, $place: center)
+            }
+
+        }
+
+        .user-posts-container {
+            @include grid(row);
+
+            grid-template-columns: repeat(3, 1fr);
+
+            .user-post {}
+        }
+    }
+}
+
+.user-modal {
+    @include grid(row);
+
+    grid-template-rows: repeat(3, max-content) 1fr;
+
+    >.user-details {
+        @include grid(column, $align: center);
+
+        grid-template-columns: max-content 1fr max-content;
+
+        >.user-image {
+            @include grid(row, $place: center)
+        }
+
+        >.header-details-container {
+
+            >.header-details {
+                @include grid(column, $align: center);
+            }
+        }
+    }
+
+    >.user-data {
+        @include grid(column);
+
+        >* {
+            @include grid(row, $place: center);
+        }
+    }
+
+    >.user-posts-container {
+        @include grid(row);
+
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.25em;
+    }
+
+    >button {
+        place-self: center;
+
+        @include grid(column, $place: center);
+        
+        .follow-btn {
+            @include grid(column, $place: center);
+            gap: 0.5em;
         }
     }
 }

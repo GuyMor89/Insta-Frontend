@@ -1,330 +1,202 @@
 @use '../base/functions' as *;
+@use '../base/mixins' as *;
 
-.create-modal-overlay {
-    position: fixed;
-    inset: 0;
-    cursor: pointer;
-    pointer-events: none;
-    z-index: 10;
 
-    transition: background-color 0.6s;
+@include modal($name: 'create-modal-overlay', $width: 53.2vw, $wide: true) {
 
-    &.overlay-on {
-        background-color: rgba(0, 0, 0, 0.65);
-        pointer-events: auto;
-    }
+    >.post-submit-container {
 
-    .modal-container {
-        position: fixed;
+        >.header {
 
-        width: 53.2vw;
+            width: 100%;
 
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+            border-block-end: 0.5px solid hsl(0, 0%, 86%);
 
-        background-color: rgb(255, 255, 255);
-        border-radius: 11px;
-        box-shadow:
-            1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+        svg {
+                margin-inline-start: 1em;
+                cursor: pointer;
 
-        z-index: 30;
+                &:active {
+                    opacity: 0.5;
+                }
+            }
 
-        transition: width 500ms, top 500ms;
+            span {
+                margin-block: 0.65em;
 
-        &.wide {
-            // top: 45%;
-            width: 70vw;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            .next {
+                margin-inline-end: 1.1em;
+                background-color: white;
+                color: hsl(204, 100%, 48%);
+
+                font-size: em(14px);
+                font-weight: 600;
+
+                cursor: pointer;
+
+                &:hover {
+                    border: none;
+                    color: black;
+                }
+
+                &:active {
+                    box-shadow: none;
+                    opacity: 0.5;
+                }
+            }
         }
 
-        cursor: auto;
+        >.post-container {
+            width: 100%;
 
-        .modal {
+            height: 434px;
 
-            .post-submit-container {
+            border-bottom-right-radius: 11px;
 
-                .header {
+            @include mainImage;
 
-                    width: 100%;
+            >.post-image {
+                border-top-left-radius: 11px;
+            }
 
-                    border-block-end: 0.5px solid hsl(0, 0%, 86%);
+            &:has(.post-details) {
+                max-height: 375px;
+            }
 
-                    svg {
-                        margin-inline-start: 1em;
-                        cursor: pointer;
+            >.post-details {
 
-                        &:active {
-                            opacity: 0.5;
+                >.user-details {
+                    padding: 0.75em;
+
+                        >.user-image {
+                            margin-inline-end: 0.5em;
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 999px;
+
+                            >img {
+                                width: 28.5px;
+                                height: 28.5px;
+                                border-radius: 999px;
+
+                                border: 2.5px solid white;
+                            }
                         }
-                    }
 
-                    span {
-                        margin-block: 0.65em;
-
-                        text-align: center;
-                        font-weight: 600;
-                    }
-
-                    .next {
-                        margin-inline-end: 1.1em;
-                        background-color: white;
-                        color: hsl(204, 100%, 48%);
+                    >.user-name {
 
                         font-size: em(14px);
                         font-weight: 600;
-
-                        cursor: pointer;
-
-                        &:hover {
-                            border: none;
-                            color: black;
-                        }
-
-                        &:active {
-                            box-shadow: none;
-                            opacity: 0.5;
-                        }
                     }
                 }
 
-                .post-contents {
-                    width: 100%;
+                >form {
 
-                    height: 348px;
+                    >.body-input {
 
-                    &:has(.post-details) {
-                        max-height: 400px;
-
-                        .uploaded-image-container {
-                            border-bottom-right-radius: 0;
-                        }
-                    }
-
-                    // height: 350px;
-
-                    .uploaded-image-container {
-
-                        // margin: auto;
-                        background-color: hsl(0, 0%, 86%);
-                        border-bottom-left-radius: 11px;
-                        border-bottom-right-radius: 11px;
-
-                        min-height: 100%;
-                        max-height: 100%;
-
-                        overflow: hidden;
-
-                        .uploaded-image {
-                            display: block;
-                            margin: auto;
-                            object-fit: cover;
-                            // min-width: 100%;
-                            max-width: 100%;
-                            min-height: clamp(50%, 10vw, 100%);
-                            // max-height: clamp(60%, 10vw, 100%);
-                            max-height: 100%;
-                            aspect-ratio: 1/1;
-                        }
-                    }
-
-                    .post-details {
-
-                        .header {
-                            padding: 1em;
-
-                            .user-image {
-                                margin-inline-end: 0.5em;
-                                width: 28px;
-                                height: 28px;
-                                border-radius: 999px;
-
-                                img {
-                                    width: 24.5px;
-                                    height: 24.5px;
-                                    border-radius: 999px;
-
-                                    border: 2.5px solid white;
-                                }
-                            }
-
-                            .user-name {
-
-                                font-size: em(14px);
-                                font-weight: 600;
-                            }
-                        }
-
-                        form {
-
-                            .body-input {
-
-                                width: 100%;
-
-                                position: relative;
-
-                                &.error-input {
-
-                                    textarea {
-                                        // border: 1px solid red;
-                                    }
-                                }
-
-                                &::after {
-                                    // content: attr(data-error);
-                                    position: absolute;
-
-                                    padding: 0.25em 0.5em;
-
-                                    top: -53%;
-                                    left: 10%;
-
-                                    color: white;
-                                    background-color: grey;
-                                    border-radius: 5px;
-                                    font-size: 12px;
-
-                                }
-
-                                textarea {
-                                    padding-inline: 1em;
-
-                                    height: 168px;
-                                    width: 100%;
-
-                                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-                                    white-space: pre-wrap;
-                                    word-break: break-word;
-                                    outline: none;
-                                    border: none;
-                                    resize: none;
-                                }
-                            }
-
-                            .separator {
-                                margin-block-start: 1em;
-                                padding-block-start: 1em;
-
-                                border-block-start: 1px solid hsl(0, 0%, 86%);
-                            }
-
-                            .post-location {
-                                margin-inline: 1em;
-                                margin-block-end: 1em;
-
-                                .location-input {
-
-                                    input {
-                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-                                        outline: none;
-                                        border: none;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-
-                    .drag-wrapper {
-
-                        height: 100%;
                         width: 100%;
 
-                        border-bottom-right-radius: 11px;
-                        border-bottom-left-radius: 11px;
+                        position: relative;
 
-                        transition: background-color 200ms;
+                        &.error-input {
 
-                        &.drag {
-                            background-color: hsl(0, 0%, 94%);
-
-                            .upload-container {
-                                svg {
-                                    color: hsl(204, 100%, 48%);
-                                }
+                            textarea {
+                                // border: 1px solid red;
                             }
                         }
 
-                        .upload-container {
+                        &::after {
+                            // content: attr(data-error);
+                            position: absolute;
 
-                            margin-block-end: 0.25em;
+                            padding: 0.25em 0.5em;
 
-                            span {
-                                margin-block-start: 0.5em;
-                                margin-block-end: 1.1em;
-                                font-size: rem(20px);
-                            }
+                            top: -53%;
+                            left: 10%;
 
-                            button {
-                                padding-block: rem(6px);
-                                padding-block-end: rem(7px);
-                                padding-inline: rem(16px);
+                            color: white;
+                            background-color: grey;
+                            border-radius: 5px;
+                            font-size: 12px;
 
-                                font-size: rem(14px);
+                        }
 
-                                background-color: hsl(204, 100%, 48%);
-                                color: white;
+                        >textarea {
+                            padding-inline: 1.25em;
+
+                            height: 168px;
+                            width: 100%;
+
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+                            white-space: pre-wrap;
+                            word-break: break-word;
+                            outline: none;
+                            border: none;
+                            resize: none;
+                        }
+                    }
+
+                    >.post-location {
+                        padding-inline: 1em;
+                        padding-block: 0.5em;
+
+                        border-block: 1px solid hsl(0, 0%, 86%);
+
+
+                        >.location-input {
+
+                            >input {
+                                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+                                outline: none;
                                 border: none;
-                                border-radius: rem(8px);
-
-                                &:hover {
-                                    background-color: rgb(24, 119, 242);
-                                }
-
-                                &:active {
-                                    background-color: rgba(0, 149, 246, 0.7);
-                                }
                             }
                         }
                     }
                 }
             }
 
-            >form {
 
-                >div {
-                    position: relative;
+            >.drag-wrapper {
 
-                    >input {
-                        margin-block-end: 1em;
+                height: 100%;
+                width: 100%;
 
-                        border-radius: 5px;
-                        border: 2px solid hsl(0, 0%, 75%);
-                        outline: none;
+                border-bottom-right-radius: 11px;
+                border-bottom-left-radius: 11px;
 
-                        font-size: 1.25em;
+                transition: background-color 200ms;
 
-                        height: 35px;
-                    }
+                &.drag {
+                    background-color: hsl(0, 0%, 94%);
 
-                    &.error-input {
-                        >input {
-                            border-color: red;
+                    .upload-container {
+                        svg {
+                            color: hsl(204, 100%, 48%);
                         }
                     }
+                }
 
-                    &::after {
-                        content: attr(data-error);
-                        color: red;
-                        font-size: 14px;
-                        position: absolute;
-                        top: -42%;
-                        left: 24%;
-                        margin-top: 4px;
+                >.upload-container {
+
+                    margin-block-end: 0.25em;
+
+                    >span {
+                        margin-block-start: 0.5em;
+                        margin-block-end: 1.1em;
+                        font-size: rem(20px);
+                    }
+
+                    >button {
+                       @include button($bgc: 'blue');
                     }
                 }
-
-                >button {
-                    margin-block-start: 1em;
-
-                    width: 75px;
-
-                    font-size: 1.25em;
-                }
-
             }
         }
-
     }
 }

@@ -90,7 +90,7 @@ export function CreateModal() {
         return Yup.object({
             postBody: Yup.string()
                 .required('Description is required')
-                .min(3, 'At least 3 characters')          
+                .min(3, 'At least 3 characters')
         })
     }
 
@@ -100,14 +100,14 @@ export function CreateModal() {
                 <div className='modal'>
                     <article className='post-submit-container'>
                         {handleHeader()}
-                        <div className="post-contents">
-                            {uploadedImage && <div className={`uploaded-image-container`} >
-                                <img src={uploadedImage} className="uploaded-image" />
+                        <div className="post-container">
+                            {uploadedImage && <div className='post-image' >
+                                <img src={uploadedImage} />
                             </div>}
                             {currPage === 3 && <div className="post-details">
-                                <div className="header">
-                                    <div className="user-image-container">
-                                        <img className="user-image" src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
+                                <div className="user-details">
+                                    <div className="user-image">
+                                        <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
                                     </div>
                                     <div className="user-name">{posts[0].by.fullname}</div>
                                 </div>
@@ -126,7 +126,6 @@ export function CreateModal() {
                                     {({ errors, touched }) => (
                                         <Form>
                                             {addFormikField(errors, touched, { fieldName: 'postBody', className: 'body-input', type: 'textarea', placeholder: 'Add description', focus: 'autoFocus' })}
-                                            <div className="separator" />
 
                                             <div className="post-location">
                                                 {addFormikField(errors, touched, { fieldName: 'postLocation', className: 'location-input', type: 'text', placeholder: "Add location", focus: 'none' })}

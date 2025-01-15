@@ -1,11 +1,13 @@
 import { postService } from "../../services/post.service.js"
-import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING } from "../reducers/post.reducer.js"
+import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING, SET_CREATE_MODAL, SET_POST_MODAL } from "../reducers/post.reducer.js"
 import { store } from "../store.js"
 
 export const postActions = {
     loadPosts,
     savePost,
     removePost,
+    openModal,
+    closeModal
 }
 
 async function loadPosts(filterBy) {
@@ -44,4 +46,16 @@ async function savePost(post, user) {
         console.log('Post action -> Cannot save Post', err)
         throw err
     }
+}
+
+
+
+async function openModal(type) {
+    if (type === 'post') store.dispatch({ type: SET_POST_MODAL, postModal: { open: true } })
+    if (type === 'create') store.dispatch({ type: SET_CREATE_MODAL, createModal: { open: true } })
+}
+
+async function closeModal(type) {
+    if (type === 'post') store.dispatch({ type: SET_POST_MODAL, postModal: { open: false } })
+    if (type === 'create') store.dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
 }

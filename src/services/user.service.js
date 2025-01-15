@@ -6,13 +6,13 @@ const BASE_URL = 'users/'
 export const userService = {
     getUsers,
     getById,
+    getByUsername,
     login,
     signup,
     logout,
     getLoggedinUser,
     remove,
     update,
-    getEmptyCredentials
 }
 
 function getUsers() {
@@ -20,7 +20,11 @@ function getUsers() {
 }
 
 function getById(userId) {
-    return httpService.get(BASE_URL + userId)
+    return httpService.get(BASE_URL + 'id/' + userId)
+}
+
+function getByUsername(username) {
+    return httpService.get(BASE_URL + 'username/' + username)
 }
 
 async function login({ username, password }) {
@@ -65,14 +69,6 @@ async function update(userToUpdate) {
         return user
     } catch (err) {
         console.log(err)
-    }
-}
-
-function getEmptyCredentials() {
-    return {
-        username: '',
-        password: '',
-        fullname: ''
     }
 }
 

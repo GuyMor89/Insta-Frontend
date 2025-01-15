@@ -3,26 +3,28 @@
 .main-container {
 
 
-        >.post-container {
-            margin-block-start: 1em;
-            
-            // position: fixed;
-            // overflow: hidden;
-            // width: 100%;
+    >.post-container {
+        margin-block-start: 1em;
 
-        .post {
+        // position: fixed;
+        // overflow: hidden;
+        // width: 100%;
+
+        >.post {
             width: 470px;
 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-            .header {
+            >.user-details {
                 padding: 0.6em 0;
 
                 >* {
                     margin-inline-end: 0.25em;
                 }
 
-                .user-image {
+                >.user-image {
+                    position: relative;
+
                     margin-inline-end: 0.5em;
                     width: 42px;
                     height: 42px;
@@ -38,7 +40,18 @@
                             hsl(39, 96%, 80%),
                             hsl(39, 96%, 90%));
 
-                    img {
+                    cursor: pointer;
+
+                    &:hover {
+
+                        .user-modal {
+                            opacity: 1;
+                            transition-delay: 0.25s;
+                            pointer-events: auto;
+                        }
+                    }
+
+                    >img {
                         width: 38.5px;
                         height: 38.5px;
                         border-radius: 999px;
@@ -48,35 +61,50 @@
 
                 }
 
-                .header-details-container {
+                >.header-details-container {
 
-                    .header-details {
+                    >.header-details {
 
-                        * {
+                        >* {
                             margin-inline-end: 0.35em;
-                            font-size: em(14px);
+                            font-size: rem(14px);
                         }
 
-                        span {
+                        >span {
                             color: grey;
                         }
 
-                        .user-name {
+                        >.user-name {
+                            position: relative;
                             font-weight: 600;
+
+                            cursor: pointer;
+
+                            &:hover {
+
+                                color: hsl(0, 0%, 50%);
+
+                                >.user-modal {
+                                    opacity: 1;
+                                    color: black;
+                                    transition-delay: 0.25s;
+                                    pointer-events: auto;
+                                }
+                            }
                         }
 
-                        .created-at {
+                        >.created-at {
                             color: hsl(0, 0%, 50%)
                         }
 
-                        .follow-btn {
+                        >.follow-btn {
                             color: rgb(0, 149, 246);
                             font-weight: 600;
                         }
 
                     }
 
-                    .location {
+                    >.location {
                         font-size: em(12px);
 
                     }
@@ -85,12 +113,12 @@
 
             }
 
-            .main-image {
+            >.main-image {
                 border-inline-end: 0.5px solid hsl(0, 0%, 30%);
 
                 border-radius: 4px;
 
-                img {
+                >img {
                     display: block;
 
                     width: 100%;
@@ -99,30 +127,30 @@
                 }
             }
 
-            .buttons {
+            >.buttons {
                 margin-block-start: 0.75em;
 
-                .comment,
-                .share {
+                >.comment,
+                >.share {
                     margin-inline-start: 1em;
                 }
             }
 
-            .likes {
+            >.likes {
                 margin-block: 0.5em;
 
                 font-weight: 600;
                 font-size: em(14px);
             }
 
-            .comment-container {
+            >.comment-container {
                 margin-block: 0.6em;
 
                 font-size: em(14px);
 
-                .comment {
+                >.comment {
 
-                    .left-by {
+                    >.left-by {
                         margin-inline-end: 0.4em;
 
                         font-weight: 600;
@@ -130,17 +158,17 @@
 
                 }
 
-                .expand-comment {
+                >.expand-comment {
 
                     color: grey;
 
-                    span {
+                    >span {
                         color: black;
                     }
                 }
             }
 
-            .open { 
+            >.open {
                 margin-block-end: 0.3em;
 
                 font-size: em(14px);
@@ -149,12 +177,9 @@
                 cursor: pointer;
             }
 
-            .add-comment {
+            >.add-comment {}
 
-
-            }
-
-            .separator {
+            >.separator {
                 margin-block-start: 1em;
                 margin-block-end: 0.5em;
                 border-block-end: 1px solid hsl(0, 0%, 86%);

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { postActions } from "../store/actions/post.actions.js"
 import { useNavigate } from "react-router-dom"
+import { UserModal } from "../cmps/UserModal.jsx"
 
 export function Home() {
 
@@ -18,13 +19,16 @@ export function Home() {
         <article className="post-container" >
             {posts.map(post =>
                 <div className="post" key={post._id}>
-                    <div className="header">
+                    <div className="user-details">
                         <div className="user-image">
+                            <UserModal />
                             <img src={post.by.imgUrl} />
                         </div>
                         <div className="header-details-container">
                             <div className="header-details">
-                                <div className="user-name">{post.by.fullname}</div>
+                                <div className="user-name">{post.by.username}
+                                    <UserModal />
+                                </div>
                                 <span>•</span>
                                 <div className="created-at">1d</div>
                                 <span>•</span>

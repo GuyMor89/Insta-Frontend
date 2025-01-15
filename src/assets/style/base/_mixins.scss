@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './functions' as *;
 
 @mixin aStyle {
     margin: 0 0.5em;
@@ -23,43 +24,228 @@
     }
 }
 
+@mixin button ($bgc: 'grey') {
+    padding-block: rem(6px);
+    padding-block-end: rem(7px);
+    padding-inline: rem(16px);
+
+    font-size: rem(14px);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+
+    background-color: hsl(204, 100%, 48%);
+    color: white;
+
+    border: none;
+    border-radius: rem(8px);
+
+    cursor: pointer;
+
+    transition: 150ms background-color, 150ms border, box-shadow 250ms;
+
+    &:hover {
+        @if $bgc =='grey' {
+            background-color: rgb(219, 219, 219);
+        }
+
+        @else if $bgc =='blue' {
+            background-color: hsl(214, 89%, 52%);
+        }
+    }
+
+    &:active {
+        opacity: 0.5;
+        // background-color: rgba(0, 149, 246, 0.7);
+        box-shadow: 0px 0px 5px 1px hsl(0, 0%, 100%);
+    }
+}
+
 @mixin grid($type: row, $justify: null, $align: null, $place: null) {
     display: grid;
     grid-auto-flow: $type;
 
     @if $justify ==start {
         justify-items: start;
-    } @else if $justify ==center {
+    }
+
+    @else if $justify ==center {
         justify-items: center;
-    } @else if $justify ==end {
+    }
+
+    @else if $justify ==end {
         justify-items: end;
     }
 
     @if $align ==start {
         align-items: start;
-    } @else if $align ==center {
+    }
+
+    @else if $align ==center {
         align-items: center;
-    } @else if $align ==end {
+    }
+
+    @else if $align ==end {
         align-items: end;
     }
 
     @if $place ==start {
         place-items: start;
-    } @else if $place ==center {
+    }
+
+    @else if $place ==center {
         place-items: center;
-    } @else if $place ==end {
+    }
+
+    @else if $place ==end {
         place-items: end;
     }
 }
 
 @mixin for-narrow-layout {
     @media (width < 800px) {
-      @content;
+        @content;
     }
 }
 
 @mixin for-normal-layout {
     @media (width > 800px) {
-      @content;
+        @content;
+    }
+}
+
+@mixin mainImage {
+
+    >.post-image {
+
+        background-color: hsl(0, 0%, 86%);
+        border-bottom-left-radius: 11px;
+
+        min-height: 100%;
+        max-height: 100%;
+
+        overflow: hidden;
+
+        >img {
+            display: block;
+            margin: auto;
+            object-fit: cover;
+            // min-width: 100%;
+            max-width: 100%;
+            // max-width: clamp(60%, 10vw, 100%);
+            min-height: clamp(50%, 10vw, 100%);
+            max-height: 100%;
+            aspect-ratio: 1/1;
+        }
+    }
+}
+
+@mixin userHeader {
+    padding-block: 0.6em;
+    padding-inline: 0.6em;
+
+    border-block-end: 1px solid hsl(0, 0%, 92%);
+
+    >* {
+        margin-inline-end: 0.25em;
+    }
+
+    >.user-image {
+        margin-inline-end: 0.75em;
+
+        width: 36px;
+        height: 36px;
+
+        border-radius: 999px;
+        background: linear-gradient(230deg,
+                hsl(326, 57%, 48%),
+                hsl(291, 63%, 46%),
+                hsl(340, 75%, 54%),
+                hsl(340, 75%, 54%),
+                hsl(20, 92%, 59%),
+                hsl(20, 92%, 59%),
+                hsl(39, 96%, 50%),
+                hsl(39, 96%, 80%),
+                hsl(39, 96%, 90%));
+
+        >img {
+            width: 32.5px;
+            height: 32.5px;
+
+            border-radius: 999px;
+            border: 2.5px solid white;
+        }
+    }
+
+    >.header-details-container {
+        >.header-details {
+            * {
+                margin-inline-end: 0.35em;
+                font-size: em(14px);
+            }
+
+            .user-name {
+                font-weight: 600;
+
+                cursor: pointer;
+
+                &:hover {
+                    color: hsl(0, 0%, 50%);
+                }
+            }
+        }
+
+        .location {
+            font-size: em(12px);
+        }
+
+    }
+}
+
+@mixin modal($name: 'modal-overlay', $width: null, $wide: false) {
+
+    .#{$name} {
+        position: fixed;
+        inset: 0;
+        cursor: pointer;
+        pointer-events: none;
+        z-index: 10;
+
+        transition: background-color 0.3s;
+
+        &.overlay-on {
+            background-color: rgba(0, 0, 0, 0.65);
+            pointer-events: auto;
+        }
+
+        >.modal-container {
+            position: fixed;
+
+            width: $width;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            background-color: rgb(255, 255, 255);
+            border-radius: 11px;
+            box-shadow:
+                1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+
+            z-index: 30;
+
+            transition: width 500ms, top 500ms;
+
+            @if $wide {
+                &.wide {
+                    width: 70vw;
+                }
+            }
+
+            cursor: auto;
+
+            >.modal {
+                @content
+            }
+        }
     }
 }

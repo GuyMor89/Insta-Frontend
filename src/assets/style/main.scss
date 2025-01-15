@@ -17,7 +17,9 @@
 @use './cmps/user-msg';
 @use './cmps/create-modal';
 @use './cmps/post-modal';
+@use './cmps/user-modal';
 
 // Pages
 
-@use './pages/home'
+@use './pages/home';
+@use './pages/user-page';
