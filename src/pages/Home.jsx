@@ -7,13 +7,15 @@ import { UserModal } from "../cmps/UserModal.jsx"
 export function Home() {
 
     const posts = useSelector(storeState => storeState.postModule.posts)
+    const [comment, setComment] = useState(null)
+
     const navigate = useNavigate()
 
     useEffect(() => {
         postActions.loadPosts()
     }, [])
 
-    if (!posts) return <div>Loading..</div>
+    if (!posts) return <div></div>
 
     return (
         <article className="post-container" >
@@ -61,7 +63,7 @@ export function Home() {
                     </div>
                     <div className="comment-container">
                         <div className="comment">
-                            <div className="left-by">{post.comments[0].by.fullname}</div>
+                            <div className="left-by">{post.comments[0].by.username}</div>
                             <div className="text">{post.comments[0].text}</div>
                         </div>
                         <div className="expand-comment">
@@ -70,8 +72,9 @@ export function Home() {
                     <div className="open" onClick={() => navigate(`/p/${post._id}`)}>
                         {`View all ${post.comments.length} comments`}
                     </div>
-                    <div className="add-comment">
-                        Add a comment...
+                    <div className="add-comment-container">
+                        <input type="text" onChange={(e) => setComment(e.target.value)} placeholder="Add a comment.." />
+                        <button className={comment?.length > 0 && 'full'}>Post</button>
                     </div>
                     <div className='separator'></div>
                 </div>

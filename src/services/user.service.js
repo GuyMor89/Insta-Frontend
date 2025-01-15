@@ -73,7 +73,7 @@ async function update(userToUpdate) {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, username: user.username, fullname: user.fullname, isAdmin: user.isAdmin, imgURL: user.imgURL }
+    const userToSave = { _id: user._id, username: user.username, fullname: user.fullname, imgURL: user.imgURL }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
     return userToSave
 }

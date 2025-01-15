@@ -53,14 +53,14 @@
         >.post-container {
             width: 100%;
 
-            height: 434px;
+            height: 414px;
 
             border-bottom-right-radius: 11px;
 
             @include mainImage;
 
             >.post-image {
-                border-top-left-radius: 11px;
+                // border-top-left-radius: 11px;
             }
 
             &:has(.post-details) {

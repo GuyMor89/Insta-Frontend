@@ -1,0 +1,101 @@
+@use '../base/functions' as *;
+@use '../base/mixins' as *;
+
+.login-signup-overlay {
+    position: absolute;
+    
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    
+    z-index: 100;
+
+    .login-signup-container {
+        
+        .login-signup-contents {
+            
+            border: 1px solid hsl(0, 0%, 86%);
+            
+            width: 350px;
+            
+            .logo-name {
+                padding: 0.7em;
+                
+                font-family: Grand Hotel;
+                font-size: 3em;
+            }
+            
+            .login-container {
+                padding-block-end: 1.5em;
+                width: 100%;
+                
+                form {
+                    >div {
+                        width: 260px;
+                        padding-block-end: 0.35em;
+                        
+                        input {
+                            padding-inline-start: 0.5em;
+                            height: 35px;
+                            width: 100%;
+                            
+                            border: 1px solid hsl(0, 0%, 86%);
+                            border-radius: 3px;
+                            
+                            background-color: hsl(0, 0%, 98%);
+                            outline: none;
+                            
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            font-size: em(12px);
+                            
+                        }
+                    }
+                    button {
+                        margin-block-start: 0.6em;
+                        @include button;
+                        
+                        width: 260px;
+                    }
+                }
+            }
+            
+        }
+        .login-or-signup-chooser-container {
+            margin-block-start: 0.6em;
+
+            height: 60px;
+            border: 1px solid hsl(0, 0%, 86%);
+            
+            >.login-or-signup-chooser {
+
+                >button {
+                    margin-inline-start: 0.5em;
+                    
+                    @include button;
+                    
+                    padding: 0;
+                    background-color: white;
+                    color: hsl(204, 100%, 48%);
+
+                    font-size: em(14px);
+                    font-weight: 600;
+
+                    cursor: pointer;
+
+                    transition: opacity 100ms;
+
+                    &:hover {
+                        background-color: transparent;
+                        border: none;
+                    }
+
+                    &:active {
+                        box-shadow: none;
+
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+}

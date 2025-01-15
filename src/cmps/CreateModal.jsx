@@ -4,6 +4,7 @@ import { postActions } from "../store/actions/post.actions.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 import { SET_CREATE_MODAL } from "../store/reducers/post.reducer.js"
 import { ImgUploader } from "./ImgUploader.jsx"
+import { addFormikField } from '../cmps/Formik.jsx';
 
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
@@ -40,26 +41,6 @@ export function CreateModal() {
             console.log('Error from onAddPost ->', err)
             showErrorMsg('Cannot add post')
         }
-    }
-
-    function addFormikField(errors, touched, options) {
-        const { fieldName, className, type, placeholder, focus } = options
-
-        return (
-            <div
-                className={`${className} ${(errors[fieldName] && touched[fieldName]) ? 'error-input' : ''}`}
-                data-error={(errors[fieldName] && touched[fieldName]) ? errors[fieldName] : ''}
-            >
-                <Field
-                    as={type === 'textarea' && type}
-                    type={type}
-                    name={fieldName}
-                    placeholder={placeholder}
-                    required
-                    autoFocus={focus === 'autoFocus'}
-                />
-            </div>
-        )
     }
 
     function handleHeader() {

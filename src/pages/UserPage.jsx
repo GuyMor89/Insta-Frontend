@@ -21,7 +21,7 @@ export function UserPage() {
         const user = await userService.getByUsername(params.username)
         setCurrUser(user)
     }
-    if (!currUser) return <div>Loading..</div>
+    if (!currUser) return <div></div>
     console.log(currUser.imgUrls)
 
     return (

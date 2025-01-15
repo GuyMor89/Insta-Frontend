@@ -173,7 +173,7 @@
             >.post-container {
                 @include grid(column);
 
-                grid-template-columns: 1fr minmax(250px, 300px);
+                grid-template-columns: 1fr clamp(300px, 50%, 330px);
 
 
                 >.post-image {
@@ -412,6 +412,29 @@
         .follow-btn {
             @include grid(column, $place: center);
             gap: 0.5em;
+        }
+    }
+}
+
+
+.login-signup-overlay {
+    @include grid(row, $place: center);
+
+    >.login-signup-container {
+
+        >.login-signup-contents {
+            @include grid(row, $justify: center);
+            
+            .login-container {
+                
+                form {
+                    @include grid(row, $place: center);
+                }
+            }
+        }
+
+        >.login-or-signup-chooser-container {
+            @include grid(row, $place: center);
         }
     }
 }

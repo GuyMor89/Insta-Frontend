@@ -10,13 +10,15 @@ import { SideBar } from './cmps/SideBar.jsx'
 import { CreateModal } from './cmps/CreateModal.jsx'
 import { PostModal } from './cmps/PostModal.jsx'
 import { UserPage } from './pages/UserPage.jsx'
+import { LoginSignup } from './pages/LoginSignup.jsx'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <Router>
       {/* <UserMsg /> */}
-      <CreateModal />
       <main className='main-app'>
+        <LoginSignup />
+        <CreateModal />
         <SideBar />
         <section className='main-container'>
           <Routes>
