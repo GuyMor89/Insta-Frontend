@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SET_CREATE_MODAL, SET_POST_MODAL } from '../store/reducers/post.reducer';
 import { useNavigate, useParams } from 'react-router-dom';
+import { postActions } from '../store/actions/post.actions';
 
 export function SideBar() {
 
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
     const [page, setPage] = useState('home')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const params = useParams()
 
     return (
         <article className="side-bar">
@@ -44,11 +45,11 @@ export function SideBar() {
                 }
                 <span className={page === 'messages' && 'bold'}>Messages</span>
             </div>
-            <div className="create-btn" onClick={() => { setPage('create'), dispatch({ type: SET_CREATE_MODAL, createModal: { open: true } }) }}>
+            <div className="create-btn" onClick={() => { setPage('create'), postActions.openModal('create') }}>
                 <svg fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>New post</title><path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line></svg>
                 <span className={page === 'create' && 'bold'}>Create</span>
             </div>
-            <div className="profile-btn" onClick={() => { setPage('profile'); navigate('/guymor89') }}>
+            <div className="profile-btn" onClick={() => { setPage('profile'); navigate(`/${loggedInUser.username}`) }}>
                 <img className={page === 'profile' && 'bold'} src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1736381008/profile_pirpak.jpg'></img>
                 <span className={page === 'profile' && 'bold'}>Profile</span>
             </div>

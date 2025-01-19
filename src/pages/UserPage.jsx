@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { postActions } from "../store/actions/post.actions"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { userActions } from "../store/actions/user.actions"
 import { userService } from "../services/user.service"
 
 
 export function UserPage() {
 
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
     const [currUser, setCurrUser] = useState(null)
 
+    const location = useLocation()
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (!loggedInUser) userActions.loadLoggedInUser()
         getUser()
     }, [params.username])
-    
+
     async function getUser() {
         const user = await userService.getByUsername(params.username)
         setCurrUser(user)
     }
-    if (!currUser) return <div></div>
-    console.log(currUser.imgUrls)
+
+    function handleButtons() {
+        const myPage = params.username === loggedInUser.username
+        // const alreadyFollowing = 
+        if (!myPage) return (<><div className="follow-btn">Follow</div><button className="message-btn">Message</button></>)
+    }
+
+    if (!currUser) return
 
     return (
         <article className="user-page-container">
@@ -33,8 +42,7 @@ export function UserPage() {
                 <div className="user-page-header">
                     <div className="user-nav">
                         <div className="user-name">{currUser.username}</div>
-                        <button className="follow-btn">Follow</button>
-                        <button className="message-btn">Message</button>
+                        {handleButtons()}
                     </div>
                     <div className="user-data">
                         <div className="user-posts">
@@ -77,11 +85,18 @@ export function UserPage() {
                     </div>
                 </div>
                 <div className="user-posts-container">
-                    {currUser.imgUrls.map(image =>
-                        <div className="user-post" onClick={() => navigate(`/p/${image._id}`)}>
-                            <img src={image.url} />
-                        </div>
-                    )}
+                    {currUser.imgUrls.length > 0
+                        ? currUser.imgUrls.map(image =>
+                            <div className="user-post" onClick={() => navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } })}>
+                                <img src={image.url} />
+                            </div>
+                        )
+                        : <div className="no-posts">
+                            <svg fill="currentColor" height="62" role="img" viewBox="0 0 96 96" width="62"><circle cx="48" cy="48" fill="none" r="47" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></circle><ellipse cx="48.002" cy="49.524" fill="none" rx="10.444" ry="10.476" stroke="currentColor" stroke-linejoin="round" stroke-width="2.095"></ellipse><path d="M63.994 69A8.02 8.02 0 0 0 72 60.968V39.456a8.023 8.023 0 0 0-8.01-8.035h-1.749a4.953 4.953 0 0 1-4.591-3.242C56.61 25.696 54.859 25 52.469 25h-8.983c-2.39 0-4.141.695-5.181 3.178a4.954 4.954 0 0 1-4.592 3.242H32.01a8.024 8.024 0 0 0-8.012 8.035v21.512A8.02 8.02 0 0 0 32.007 69Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
+                            <div className="no-posts-title">Share Photos</div>
+                            <div className="no-posts-body">When you share photos, they will appear on your profile.</div>
+                            <button className="share-post-link" onClick={() => postActions.openModal('create')}>Share your first photo</button>
+                        </div>}
                 </div>
             </div>
         </article>

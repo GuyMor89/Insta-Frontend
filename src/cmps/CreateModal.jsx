@@ -13,6 +13,7 @@ export function CreateModal() {
     const dispatch = useDispatch()
 
     const posts = useSelector(storeState => storeState.postModule.posts)
+    const user = useSelector(storeState => storeState.userModule.loggedInUser)
     const modalOpen = useSelector(storeState => storeState.postModule.createModal.open)
     const [uploadedImage, setUploadedImage] = useState(null)
     const [currPage, setCurrPage] = useState(1)
@@ -20,28 +21,22 @@ export function CreateModal() {
     let formikRef = null
 
     function closeModal(event) {
-        event.stopPropagation()
-        if (event.currentTarget.className === 'create-modal-overlay overlay-on') dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
+        if (event.currentTarget.className === 'create-modal-overlay overlay-on') {
+            if (uploadedImage) postActions.openModal('dialogue')
+            else postActions.closeModal('create')
+        }
     }
 
     useEffect(() => {
         if (uploadedImage) setCurrPage(2)
     }, [uploadedImage])
 
-    function onAddPost(postData) {
-        const post = {
-            name: postData.postName,
+    useEffect(() => {
+        if(!modalOpen) {
+            setUploadedImage(null)
+            setCurrPage(1)
         }
-
-        try {
-            postActions.savePost(post)
-            showSuccessMsg('Post added')
-            dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
-        } catch (err) {
-            console.log('Error from onAddPost ->', err)
-            showErrorMsg('Cannot add post')
-        }
-    }
+    }, [modalOpen])
 
     function handleHeader() {
         if (currPage === 1) return (
@@ -62,7 +57,7 @@ export function CreateModal() {
             <div className="header">
                 <svg className="back" onClick={() => setCurrPage(2)} fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Back</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
                 <span>Create new post</span>
-                <div className="next" onClick={() => formikRef && formikRef.submitForm()}>Share</div>
+                <div className="next" onClick={() => { formikRef && formikRef.submitForm(); postActions.closeModal('create') }}>Share</div>
             </div>
         )
     }
@@ -77,7 +72,7 @@ export function CreateModal() {
 
     return (
         <div className={modalOpen ? 'create-modal-overlay overlay-on' : 'create-modal-overlay'} onClick={closeModal}>
-            {modalOpen && <div className={`modal-container ${currPage === 3 ? 'wide' : ''}`} onClick={closeModal} >
+            {modalOpen && <div className={`modal-container ${currPage === 3 ? 'wide' : ''}`} onClick={(e) => e.stopPropagation()} >
                 <div className='modal'>
                     <article className='post-submit-container'>
                         {handleHeader()}
@@ -90,7 +85,7 @@ export function CreateModal() {
                                     <div className="user-image">
                                         <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
                                     </div>
-                                    <div className="user-name">{posts[0].by.fullname}</div>
+                                    <div className="user-name">{user.username}</div>
                                 </div>
 
                                 <Formik
@@ -98,9 +93,10 @@ export function CreateModal() {
                                         postBody: '',
                                         postLocation: ''
                                     }}
-                                    validationSchema={validationSchema}
+                                    // validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         console.log(values)
+                                        postActions.savePost({ caption: values.postBody, loc: values.postLocation, imgUrl: uploadedImage })
                                     }}
                                     innerRef={(instance) => (formikRef = instance)}
                                 >

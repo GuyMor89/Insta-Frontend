@@ -1,33 +1,34 @@
-import { createRoot } from 'react-dom/client'
-import './assets/style/main.scss'
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'
 
-import { Provider } from 'react-redux'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-
-import { store } from './store/store.js'
 import { Home } from './pages/Home.jsx'
 import { SideBar } from './cmps/SideBar.jsx'
 import { CreateModal } from './cmps/CreateModal.jsx'
 import { PostModal } from './cmps/PostModal.jsx'
 import { UserPage } from './pages/UserPage.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
+import { DialogueModal } from './cmps/DialogueModal.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <Router>
-      {/* <UserMsg /> */}
-      <main className='main-app'>
-        <LoginSignup />
-        <CreateModal />
-        <SideBar />
-        <section className='main-container'>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path='/p/:id' element={<><Home /> <PostModal /></>} />
-            <Route path='/:username' element={<><UserPage /> <PostModal /></>} />
-          </Routes>
-        </section>
-      </main>
-    </Router>
-  </Provider>
-)
+export function Main() {
+
+    const location = useLocation()
+
+    const previousLocation = location.state?.previousLocation
+
+    return (
+        <main className='main-app'>
+            <LoginSignup />
+            <DialogueModal />
+            <CreateModal />
+            <SideBar />
+            <section className='main-container'>
+                <Routes location={previousLocation || location}>
+                    <Route path="/" element={<Home />} />
+                    <Route path='/:username' element={<UserPage />} />
+                </Routes>
+                <Routes>
+                    <Route path='/p/:id' element={<PostModal />} />
+                </Routes>
+            </section>
+        </main>
+    )
+}

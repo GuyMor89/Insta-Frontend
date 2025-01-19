@@ -10,7 +10,7 @@
         @include mainImage;
 
         >.post-image {
-            border-top-left-radius: 11px;
+            border-top-left-radius: 6px;
         }
 
         >.post-details {
@@ -44,6 +44,12 @@
 
                 >.header-details-container {
 
+                    >.header-details {
+
+                        .user-name {
+                            line-height: 16px;
+                        }
+                    }
                     >.caption {
                         white-space: pre-line;
                         font-size: em(14px);
@@ -58,29 +64,47 @@
                     border: none;
 
                     >.user-image {
-                        // margin-inline-start: 0.25em;
-                        margin-inline-end: 0.5em;
+                        position: relative;
                         background: white;
+
+                        @include userModalHover;
+
+                        >.user-modal {
+                            z-index: 10000;
+                        }
+
+                        >img {
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
 
                     >.header-details-container {
-
-                        >.header-contents {
-                            padding-block-start: 0.5em;
+                        padding-block-start: 0.25em;
+                        >.comment-content {
 
                             >.created-at {
+                                padding-block-start: 0.5em;
                                 font-size: em(12px);
-                                color: hsl(0, 0%, 50%);
-                            }
-
-                            >.likes {
-                                margin-inline-start: 1em;
-
-                                font-size: em(12px);
-                                font-weight: 500;
-                                color: hsl(0, 0%, 50%);
+                                color: grey
                             }
                         }
+                    }
+                }
+
+                >.no-comments {
+
+                    height: 100%;
+
+                    >.title {
+                        padding-block-end: 0.25em;
+
+                        font-size: em(24px);
+                        font-weight: 700;
+                    }
+
+                    >.body {
+                        font-size: em(14px);
                     }
                 }
             }
@@ -90,8 +114,18 @@
 
                 border-block-start: 1px solid hsl(0, 0%, 86%);
 
-                .comment,
-                .share {
+                >* {
+                    cursor: pointer;
+
+                    transition: opacity 100ms;
+                    
+                    &:hover {
+                        opacity: 0.5;
+                    }
+                }
+
+                >.comment,
+                >.share {
                     margin-inline-start: 1em;
                 }
             }
@@ -101,6 +135,19 @@
 
                 font-weight: 600;
                 font-size: em(14px);
+            }
+            
+            >.no-likes {
+                padding-inline-start: em(14px);
+                font-size: em(14px);
+
+                >span {
+                    font-weight: 500;
+                    &:hover {
+                        opacity: 0.5;
+                        cursor: pointer;
+                    }
+                }
             }
 
             >.created-at {
@@ -129,37 +176,11 @@
                 }
 
                 >button {
-                    @include button;
-                    background-color: white;
-                    color: hsl(204, 100%, 48%);
-
-                    font-size: em(14px);
-                    font-weight: 600;
+                    @include borderlessButton;
 
                     opacity: 0.5;
-
-                    cursor: pointer;
-
-                    transition: opacity 100ms;
-
-                    &.full {
-                        opacity: 1;
-                    }
-
-                    &:hover {
-                        background-color: transparent;
-                        border: none;
-                        color: black;
-                    }
-
-                    &:active {
-                        box-shadow: none;
-                        opacity: 0.5;
-                    }
                 }
             }
-
         }
     }
-
 }

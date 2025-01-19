@@ -55,12 +55,12 @@
 
             height: 414px;
 
-            border-bottom-right-radius: 11px;
+            border-bottom-right-radius: 6px;
 
             @include mainImage;
 
             >.post-image {
-                // border-top-left-radius: 11px;
+                // border-top-left-radius: 6px;
             }
 
             &:has(.post-details) {
@@ -167,8 +167,8 @@
                 height: 100%;
                 width: 100%;
 
-                border-bottom-right-radius: 11px;
-                border-bottom-left-radius: 11px;
+                border-bottom-right-radius: 6px;
+                border-bottom-left-radius: 6px;
 
                 transition: background-color 200ms;
 

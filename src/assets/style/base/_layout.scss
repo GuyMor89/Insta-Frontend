@@ -5,22 +5,49 @@
 
     grid-template-columns: max-content 1fr;
 
+    @include for-mobile-layout {
+        grid-auto-flow: row;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr max-content
+    }
+
     >.side-bar {
         @include grid(row);
 
         grid-template-rows: repeat(7, max-content);
 
-        div {
+        @include for-mobile-layout {
+            grid-row: 2/3;
+            grid-template-rows: max-content;
+            grid-template-columns: repeat(6, 1fr);
+
+            justify-items: center;
+        }
+
+        >div {
             @include grid(column, $align: center);
 
             grid-template-columns: max-content 1fr;
-
+            
             align-self: start;
         }
 
         .profile-btn,
         .more-btn {
             align-self: end;
+        }
+
+        .profile-btn {
+            @include for-mobile-layout{
+                align-self: start;
+            }
+        }
+
+        .more-btn {
+            @include for-mobile-layout {
+                display: none;
+            }
         }
     }
 
@@ -103,6 +130,10 @@
                 >.post-container {
 
                     @include grid(column);
+
+                    &:has(.loader) {
+                        @include grid(column, $place: center);
+                    }
 
                     &:has(.post-details) {
 
@@ -197,20 +228,6 @@
                         >.user-image {
                             @include grid(row, $place: center)
                         }
-
-                        >.header-details-container {
-
-                            .header-details {
-                                @include grid(column, $align: center);
-
-                                grid-template-columns: repeat(3, max-content);
-
-                            }
-                        }
-
-                        >.menu {
-                            justify-self: end;
-                        }
                     }
 
                     >.post-body {
@@ -266,6 +283,18 @@
                                 }
                             }
                         }
+
+                        >.no-comments {
+                            @include grid(row, $place: center);
+                        
+                            >.title {
+                                align-self: end;
+                            }
+
+                            >.body {
+                                align-self:start;
+                            }
+                        }
                     }
 
                     >.buttons {
@@ -303,7 +332,7 @@
 
         @include grid(column);
 
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: max-content max-content;
 
         .user-image {
             @include grid(row, $place: center)
@@ -357,12 +386,20 @@
 
         }
 
-        .user-posts-container {
+        >.user-posts-container {
             @include grid(row);
-
+    
             grid-template-columns: repeat(3, 1fr);
-
-            .user-post {}
+            gap: 0.25em;
+    
+            &:has(.no-posts) {
+    
+                grid-template-columns: 1fr;
+            }
+    
+            >.no-posts {
+                @include grid(row, $place: center)
+            }
         }
     }
 }
@@ -402,6 +439,15 @@
 
         grid-template-columns: repeat(3, 1fr);
         gap: 0.25em;
+
+        &:has(.no-posts) {
+
+            grid-template-columns: 1fr;
+        }
+
+        >.no-posts {
+            @include grid(row, $place: center)
+        }
     }
 
     >button {
@@ -416,6 +462,20 @@
     }
 }
 
+.dialogue-modal-overlay {
+
+    .modal-container {
+
+        .modal {
+            @include grid(row, $place: center);
+        
+            .dialogue-container {
+                @include grid(row, $place: center);
+            }
+        }
+    }
+
+}
 
 .login-signup-overlay {
     @include grid(row, $place: center);

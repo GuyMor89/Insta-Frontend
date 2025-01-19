@@ -1,17 +1,34 @@
 @use '../base/mixins' as *;
+@use '../base/functions' as *;
 
 .side-bar {
     position: sticky;
+
     height: 100vh;
     top: 0;
+
     border-inline-end: 1px solid hsl(0, 0%, 86%);
-    
-    @include for-narrow-layout {
-        // padding-inline-end: 0.75em;
+
+    @include for-mobile-layout {
+        z-index: 100;
+        border: none;
+        border-block-start: 1px solid hsl(0, 0%, 86%);
     }
-    
+
+    @include for-mobile-layout {
+        position: fixed;
+
+        bottom: 0;
+        top: auto;
+
+        height: inherit;
+        width: 100%;
+
+        background-color: white;
+    }
+
     >div {
-        padding: 0.74em;
+        padding: em(12px);
         margin-block-end: 0.25em;
         margin-inline: 0.75em;
 
@@ -19,12 +36,16 @@
 
         border-radius: 8px;
 
-        transition: 200ms background-color;
+        transition: background-color 200ms;
 
         cursor: pointer;
 
         @include for-narrow-layout {
-            width: inherit;
+            width: max-content;
+        }
+        
+        @include for-mobile-layout {
+            margin: 0;
         }
 
         &:hover {
@@ -61,7 +82,7 @@
             height: 24px;
             width: 24px;
 
-            transition: scale 200ms;
+            transition: scale 200ms, background-color 500ms, border 500ms;
 
             @include for-narrow-layout {
                 margin-inline-end: 0;
@@ -90,9 +111,14 @@
 
     .logo-btn {
 
+        
         @include for-narrow-layout {
             margin-block-start: 1.4em;
             margin-block-end: 2.05em;
+        }
+        
+        @include for-mobile-layout {
+            display: none !important;
         }
 
         @include for-normal-layout {
@@ -106,7 +132,7 @@
         }
 
         .logo-image {
-            
+
             @include for-normal-layout {
                 display: none;
             }
@@ -126,6 +152,15 @@
             @include for-narrow-layout {
                 display: none;
             }
+        }
+    }
+
+    .profile-btn {
+        padding: em(10px);
+
+        img {
+            width: 28px;
+            height: 28px;
         }
     }
 }

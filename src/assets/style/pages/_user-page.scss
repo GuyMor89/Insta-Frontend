@@ -14,6 +14,8 @@
             margin-inline-end: 2em;
             margin-block-end: 1em;
 
+            width: 180px;
+
             img {
                 border-radius: 999px;
 
@@ -97,6 +99,7 @@
     }
 
     .user-content-container {
+        width: 100%;
 
         border-block-start: 1px solid hsl(0, 0%, 86%);
 
@@ -130,13 +133,40 @@
 
         .user-posts-container {
             padding-inline-start: 0.25em;
-            padding-inline-end: 0.75em;
+            // padding-inline-end: 0.75em;
+
+            width: 100%;
 
             .user-post {
                 cursor: pointer;
                 img {
                     padding-inline-end: 0.25em;
                     width: 100%;
+                    aspect-ratio: 1/1;
+                    object-fit: cover;
+                }
+            }
+
+            >.no-posts {
+                margin: em(60px);
+                margin-inline: em(40px);    
+                
+                >.no-posts-title {
+                    margin-block: 0.5em;
+
+                    font-size: em(30px);
+                    font-weight: 800;
+                }
+    
+                >.no-posts-body {
+                    margin-block-end: 1.1em;
+
+                    text-align: center;
+                    font-size: em(14px);
+                }
+
+                >button {
+                    @include borderlessButton;
                 }
             }
         }

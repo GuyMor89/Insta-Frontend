@@ -30,8 +30,8 @@ function getByUsername(username) {
 async function login({ username, password }) {
     try {
         const user = await httpService.post('auth/login', { username, password })
-        _setLoggedinUser(user)
-        return user
+        const savedUser = _setLoggedinUser(user)
+        return savedUser
     } catch (err) {
         console.log(err)
     }
@@ -63,7 +63,7 @@ function remove(userId) {
 
 async function update(userToUpdate) {
     try {
-        const user = await httpService.put('users/' + userToUpdate._id, userToUpdate)
+        const user = await httpService.put('users/', userToUpdate)
         const loggedInUser = getLoggedinUser()
         if (user._id === loggedInUser._id) _setLoggedinUser(user)
         return user
@@ -73,7 +73,7 @@ async function update(userToUpdate) {
 }
 
 function _setLoggedinUser(user) {
-    const userToSave = { _id: user._id, username: user.username, fullname: user.fullname, imgURL: user.imgURL }
+    const userToSave = { _id: user._id, username: user.username, fullname: user.fullname, imgUrl: user.imgUrl }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
     return userToSave
 }

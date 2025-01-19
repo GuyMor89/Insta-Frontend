@@ -23,7 +23,7 @@ function remove(postID) {
 
 function save(post) {
     if (post._id) {
-        return httpService.put(BASE_URL + post._id, post)
+        return httpService.put(BASE_URL, post)
     } else {
         return httpService.post(BASE_URL, post)
     }

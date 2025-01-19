@@ -1,21 +1,36 @@
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { userService } from "../services/user.service"
+import { useNavigate } from "react-router-dom"
 
 
-export function UserModal() {
+export function UserModal({ postBy, isLast }) {
 
-    const posts = useSelector(storeState => storeState.postModule.posts)
+    const [currUser, setCurrUser] = useState(null)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        getUser()
+    }, [])
+
+    async function getUser() {
+        const user = await userService.getByUsername(postBy.username)
+        setCurrUser(user)
+    }
+
+    if (!currUser) return
 
     return (
-        <div className="user-modal">
+        <div className={`user-modal ${isLast && 'last'}`} onClick={(e) => { e.stopPropagation() }}>
             <div className="user-details">
-                <div className="user-image">
+                <div className="user-image" onClick={() => navigate(`/${currUser.username}`)}>
                     <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
                 </div>
                 <div className="header-details-container">
                     <div className="header-details">
-                        <div className="user-name">Mr. Test</div>
+                        <div className="user-name" onClick={() => navigate(`/${currUser.username}`)}>{currUser.username}</div>
                     </div>
-                    <div className="full-name">Senior Test</div>
+                    <div className="full-name">{currUser.fullname}</div>
                 </div>
             </div>
             <div className="user-data">
@@ -33,11 +48,17 @@ export function UserModal() {
                 </div>
             </div>
             <div className="user-posts-container">
-                {posts.map(post =>
-                    <div className="user-post">
-                        <img src={post.imgUrl} />
-                    </div>
-                )}
+                {currUser.imgUrls.length > 0
+                    ? currUser.imgUrls.map(image =>
+                        <div className="user-post" onClick={() => navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } })}>
+                            <img src={image.url} />
+                        </div>
+                    )
+                    : <div className="no-posts">
+                        <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1737130872/0qSQcHrCNzw_huro0j.png"></img>
+                        <div className="no-posts-title">No posts yet</div>
+                        <div className="no-posts-body">When {currUser.username} shares photos and reels, you'll see them here.</div>
+                    </div>}
             </div>
             <button>
                 <div className="follow-btn">

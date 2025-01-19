@@ -5,12 +5,14 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const SET_IS_LOADING = 'IS_LOADING'
 export const SET_CREATE_MODAL = 'SET_CREATE_MODAL'
 export const SET_POST_MODAL = 'SET_POST_MODAL'
+export const SET_DIALOGUE_MODAL = 'SET_DIALOGUE_MODAL'
 
 const initialState = {
     posts: [],
     createModal: { open: false },
     postModal: { open: false },
-    // isLoading: false,
+    dialogueModal: { open: false },
+    isLoading: false
 }
 
 export function postReducer(state = initialState, action) {
@@ -43,6 +45,11 @@ export function postReducer(state = initialState, action) {
             return {
                 ...state,
                 postModal: { ...action.postModal }
+            }
+        case SET_DIALOGUE_MODAL:
+            return {
+                ...state,
+                dialogueModal: { ...action.dialogueModal }
             }
         case SET_IS_LOADING:
             return {

@@ -5,16 +5,27 @@ import { addFormikField } from '../cmps/Formik.jsx';
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { userService } from '../services/user.service.js';
 
 export function LoginSignup() {
 
     const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
+    const [currState, setCurrState] = useState('login')
 
     useEffect(() => {
         if (!loggedInUser) userActions.loadLoggedInUser()
     }, [])
+
+    function handleAuth(values) {
+        if (currState === 'login') userActions.loginUser(values)
+        if (currState === 'signup') userActions.signupUser(values)
+    }
+
+    function handleChooserBtn() {
+        if (currState === 'login') return <button onClick={() => setCurrState('signup')}>Sign up</button>
+        if (currState === 'signup') return <button onClick={() => setCurrState('login')}>Log in</button>
+    }
 
     if (loggedInUser) return
 
@@ -23,25 +34,25 @@ export function LoginSignup() {
             <article className="login-signup-overlay">
                 <div className='login-signup-container'>
                     <div className='login-signup-contents'>
-
                         <span className='logo-name'>Instagram</span>
-
                         <div className='login-container'>
                             <Formik
                                 initialValues={{
                                     username: '',
-                                    password: ''
+                                    password: '',
+                                    ...(currState === 'signup' && { fullname: '' })
                                 }}
                                 // validationSchema={validationSchema}
                                 onSubmit={(values) => {
-                                    userActions.loginUser(values)
+                                    handleAuth(values)
                                 }}
                             >
                                 {({ errors, touched }) => (
                                     <Form>
                                         {addFormikField(errors, touched, { fieldName: 'username', className: 'username-input', type: 'text', placeholder: 'Username', focus: 'autoFocus' })}
-                                        {addFormikField(errors, touched, { fieldName: 'password', className: 'password-input', type: 'text', placeholder: 'Password' })}
-                                        <button>Log in</button>
+                                        {currState === 'signup' && addFormikField(errors, touched, { fieldName: 'fullname', className: 'fullname-input', type: 'text', placeholder: 'Full name' })}
+                                        {addFormikField(errors, touched, { fieldName: 'password', className: 'password-input', type: 'password', placeholder: 'Password' })}
+                                        <button>{currState === 'login' ? 'Log in' : 'Sign up'}</button>
                                     </Form>
                                 )}
                             </Formik>
@@ -50,8 +61,8 @@ export function LoginSignup() {
                     </div>
                     <div className='login-or-signup-chooser-container'>
                         <div className='login-or-signup-chooser'>
-                            Don't have an account?
-                            <button>Sign up</button>
+                            {currState === 'login' ? 'Don\'t have an account?': 'Already have an account?'}
+                            {handleChooserBtn()}
                         </div>
                     </div>
                 </div>
