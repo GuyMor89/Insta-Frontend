@@ -7,6 +7,8 @@ import { PostModal } from './cmps/PostModal.jsx'
 import { UserPage } from './pages/UserPage.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
 import { DialogueModal } from './cmps/DialogueModal.jsx'
+import { UserModal } from './cmps/UserModal.jsx'
+import { HoverTracker } from './cmps/HoverTracker.jsx'
 
 export function Main() {
 
@@ -19,6 +21,9 @@ export function Main() {
             <LoginSignup />
             <DialogueModal />
             <CreateModal />
+            <HoverTracker>
+                <UserModal />
+            </HoverTracker>
             <SideBar />
             <section className='main-container'>
                 <Routes location={previousLocation || location}>

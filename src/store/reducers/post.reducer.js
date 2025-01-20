@@ -3,12 +3,16 @@ export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_POST = 'ADD_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const SET_IS_LOADING = 'IS_LOADING'
+export const SET_USER_MODAL_DATA = 'SET_USER_MODAL_DATA'
+export const SET_HOVERING_OVER_MODAL = 'SET_HOVERING_OVER_MODAL'
 export const SET_CREATE_MODAL = 'SET_CREATE_MODAL'
 export const SET_POST_MODAL = 'SET_POST_MODAL'
 export const SET_DIALOGUE_MODAL = 'SET_DIALOGUE_MODAL'
 
 const initialState = {
     posts: [],
+    userModalData: {},
+    hoveringOverModal: false,
     createModal: { open: false },
     postModal: { open: false },
     dialogueModal: { open: false },
@@ -35,6 +39,16 @@ export function postReducer(state = initialState, action) {
             return {
                 ...state,
                 posts: state.posts.map(post => post._id === action.post._id ? action.post : post)
+            }
+        case SET_USER_MODAL_DATA:
+            return {
+                ...state,
+                userModalData: { ...action.userModalData }
+            }
+        case SET_HOVERING_OVER_MODAL:
+            return {
+                ...state,
+                hoveringOverModal: action.hoveringOverModal 
             }
         case SET_CREATE_MODAL:
             return {

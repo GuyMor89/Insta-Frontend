@@ -93,7 +93,6 @@ export function PostModal() {
                                             <div className="comment-container">
                                                 <div className="user-image">
                                                     <img src={comment.by.imgUrl} />
-                                                    <UserModal postBy={currPost.by} />
                                                 </div>
                                                 <div className="header-details-container">
                                                     <div className="header-details">

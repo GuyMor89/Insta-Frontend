@@ -30,8 +30,8 @@ export function Home() {
 
     return (
         <article className="post-container" >
-            {posts.map((post, idx) =>
-                <Post post={post} fullLoggedInUser={fullLoggedInUser} isLast={idx === posts.length - 1} />
+            {posts.map(post =>
+                <Post post={post} fullLoggedInUser={fullLoggedInUser} />
             )}
         </article >
     )

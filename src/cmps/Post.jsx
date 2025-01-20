@@ -7,6 +7,7 @@ import { userActions } from "../store/actions/user.actions.js"
 import { userService } from "../services/user.service.js"
 import { utilService } from "../services/util.service.js"
 import { interactionService } from "../services/interactions.service.js"
+import { HoverTracker } from "./HoverTracker.jsx"
 
 export function Post({ post, fullLoggedInUser, isLast }) {
 
@@ -54,15 +55,16 @@ export function Post({ post, fullLoggedInUser, isLast }) {
     return (
         <div className="post" key={post._id}>
             <div className="user-details">
-                <div className="user-image" onClick={() => navigate(`/${post.by.username}`)}>
-                    <UserModal postBy={post.by} />
-                    <img src={post.by.imgUrl} />
-                </div>
+                <HoverTracker username={post.by.username}>
+                    <div className="user-image" onClick={() => navigate(`/${post.by.username}`)}>
+                        <img src={post.by.imgUrl} />
+                    </div>
+                </HoverTracker>
                 <div className="header-details-container">
                     <div className="header-details">
-                        <div className="user-name" onClick={() => navigate(`/${post.by.username}`)}>{post.by.username}
-                            <UserModal postBy={post.by} />
-                        </div>
+                        <HoverTracker username={post.by.username}>
+                            <div className="user-name" onClick={() => navigate(`/${post.by.username}`)}>{post.by.username}</div>
+                        </HoverTracker>
                         <span>•</span>
                         <div className="created-at">
                             {utilService.formatDate(post.createdAt).relativeTime}
@@ -93,28 +95,28 @@ export function Post({ post, fullLoggedInUser, isLast }) {
                     <svg height="24" role="img" viewBox="0 0 24 24" width="24"><title>Save</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg>
                 </div>
             </div>
+
             {postHasLikes &&
                 <div className="likes">
                     <span>{post.likedBy.length} likes</span>
-                </div>
-            }
+                </div>}
 
             <div className="caption-overlay">
                 <div className="caption-container">
                     {postHasCaption && <div className="caption">
                         <div className="username" onClick={() => navigate(`/${post.by.username}`)}>
                             {post.by.username}
-                            {isLast ? <UserModal postBy={post.by} isLast={isLast} /> : <UserModal postBy={post.by} />}
                         </div>
                         {handleCaption()}
                     </div>}
                 </div>
             </div>
+
             {postHasComments &&
                 <div className="open" onClick={() => navigate(`/p/${post._id}`, { state: { previousLocation: location.pathname } })}>
                     {`View all ${post.comments.length} comments`}
-                </div>
-            }
+                </div>}
+
             <div className="add-comment-container">
                 <input type="text" ref={commentInput} onChange={(e) => setComment(e.target.value)} placeholder="Add a comment.." />
                 <button className={comment?.length > 0 && 'full'} onClick={() => interactionService.addCommentToPost(post, fullLoggedInUser, comment, commentInput, setComment)}>Post</button>

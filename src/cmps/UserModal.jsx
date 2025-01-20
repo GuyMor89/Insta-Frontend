@@ -1,34 +1,56 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { userService } from "../services/user.service"
 import { useNavigate } from "react-router-dom"
+import { SET_HOVERING_OVER_MODAL, SET_USER_MODAL_DATA } from "../store/reducers/post.reducer"
 
 
-export function UserModal({ postBy, isLast }) {
+export function UserModal() {
 
+    const hoveringOverModal = useSelector(storeState => storeState.postModule.hoveringOverModal)
+    const userModalData = useSelector(storeState => storeState.postModule.userModalData)
+    const modalOpen = useSelector(storeState => storeState.postModule.userModalData.open)
+    const currentCoords = useSelector(storeState => storeState.postModule.userModalData.coords)
+    const username = useSelector(storeState => storeState.postModule.userModalData.username)
     const [currUser, setCurrUser] = useState(null)
     const navigate = useNavigate()
 
     useEffect(() => {
-        getUser()
-    }, [])
+        if (currUser?.username !== username) getUser()
+    }, [username])
 
     async function getUser() {
-        const user = await userService.getByUsername(postBy.username)
+        const user = await userService.getByUsername(username)
         setCurrUser(user)
     }
+
+    const [isHovering, setIsHovering] = useState(false)
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+    const dispatch = useDispatch()
+
+    const handleMouseEnter = () => setIsHovering(true)
+    const handleMouseLeave = () => setIsHovering(false)
+
+    useEffect(() => {
+        if (hoveringOverModal === isHovering) return
+        dispatch({ type: SET_HOVERING_OVER_MODAL, hoveringOverModal: isHovering ? true : false })
+
+        if (!isHovering) dispatch({ type: SET_USER_MODAL_DATA, userModalData: { ...userModalData, open: false, coords: { x: -500, y: 0 } } })
+
+    }, [isHovering])
 
     if (!currUser) return
 
     return (
-        <div className={`user-modal ${isLast && 'last'}`} onClick={(e) => { e.stopPropagation() }}>
+        <div className='user-modal' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ left: currentCoords?.x, top: currentCoords?.y, opacity: modalOpen ? 1 : 0 }} onClick={(e) => { e.stopPropagation() }}>
             <div className="user-details">
-                <div className="user-image" onClick={() => navigate(`/${currUser.username}`)}>
+                <div className="user-image" onClick={() => { navigate(`/${currUser.username}`); setIsHovering(false) }}>
                     <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
                 </div>
                 <div className="header-details-container">
                     <div className="header-details">
-                        <div className="user-name" onClick={() => navigate(`/${currUser.username}`)}>{currUser.username}</div>
+                        <div className="user-name" onClick={() => { navigate(`/${currUser.username}`); setIsHovering(false) }}>{currUser.username}</div>
                     </div>
                     <div className="full-name">{currUser.fullname}</div>
                 </div>
@@ -50,7 +72,7 @@ export function UserModal({ postBy, isLast }) {
             <div className="user-posts-container">
                 {currUser.imgUrls.length > 0
                     ? currUser.imgUrls.map(image =>
-                        <div className="user-post" onClick={() => navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } })}>
+                        <div className="user-post" onClick={() => { navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } }); setIsHovering(false) }}>
                             <img src={image.url} />
                         </div>
                     )
