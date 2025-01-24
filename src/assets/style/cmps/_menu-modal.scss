@@ -1,0 +1,40 @@
+@use '../base/functions' as *;
+@use '../base/mixins' as *;
+
+
+@include modal($name: 'menu-modal-overlay', $width: 414px, $zIndex: 100) {
+
+    .affirmative,
+    .negative {
+        width: 100%;
+        height: 48px;
+
+        font-size: em(14px);
+        border: none;
+
+        background-color: white;
+        border-block-start: 1px solid hsl(0, 0%, 86%);
+
+        cursor: pointer;
+
+        transition: background-color 150ms;
+
+        &:active {
+            background-color: hsl(0, 0%, 86%);
+        }
+    }
+
+    .affirmative {
+        color: hsl(355, 82%, 61%);
+        font-weight: 700;
+        
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+    }
+
+    .negative {
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+}

@@ -13,6 +13,7 @@ export const userService = {
     getLoggedinUser,
     remove,
     update,
+    updateUsers
 }
 
 function getUsers() {
@@ -67,6 +68,15 @@ async function update(userToUpdate) {
         const loggedInUser = getLoggedinUser()
         if (user._id === loggedInUser._id) _setLoggedinUser(user)
         return user
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function updateUsers(type, userToFollowID) {
+    try {
+        const users = await httpService.put(BASE_URL + userToFollowID, {type})
+        return users
     } catch (err) {
         console.log(err)
     }

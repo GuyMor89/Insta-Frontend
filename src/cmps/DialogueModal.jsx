@@ -4,11 +4,15 @@ import { postActions } from "../store/actions/post.actions";
 
 export function DialogueModal() {
 
+    const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const modalOpen = useSelector(storeState => storeState.postModule.dialogueModal.open)
 
     function closeModal(event) {
         if (event.currentTarget.className === 'dialogue-modal-overlay overlay-on') postActions.closeModal('dialogue')
     }
+
+    // const myPost = post.by._id === fullLoggedInUser._id
+    // const alreadyFollowingUser = fullLoggedInUser.following.some(_id => _id === post.by._id)
 
     return (
         // <RemoveScroll>

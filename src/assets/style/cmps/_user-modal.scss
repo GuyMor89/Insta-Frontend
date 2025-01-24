@@ -10,6 +10,7 @@
     height: 320px;
 
     opacity: 0;
+    visibility: hidden;
     z-index: 100;
 
     // pointer-events: none;
@@ -21,7 +22,7 @@
 
     box-shadow: 0px 0px 23px hsl(0, 0%, 0%, 0.2);
 
-    transition: opacity 500ms ease;
+    transition: opacity 500ms ease, visibility 500ms;
 
     >.user-details {
         padding-block-start: 1.1em;
@@ -38,16 +39,16 @@
             width: 60px;
             height: 60px;
             border-radius: 999px;
-            background: linear-gradient(230deg,
-                    hsl(326, 57%, 48%),
-                    hsl(291, 63%, 46%),
-                    hsl(340, 75%, 54%),
-                    hsl(340, 75%, 54%),
-                    hsl(20, 92%, 59%),
-                    hsl(20, 92%, 59%),
-                    hsl(39, 96%, 50%),
-                    hsl(39, 96%, 80%),
-                    hsl(39, 96%, 90%));
+            // background: linear-gradient(230deg,
+            //         hsl(326, 57%, 48%),
+            //         hsl(291, 63%, 46%),
+            //         hsl(340, 75%, 54%),
+            //         hsl(340, 75%, 54%),
+            //         hsl(20, 92%, 59%),
+            //         hsl(20, 92%, 59%),
+            //         hsl(39, 96%, 50%),
+            //         hsl(39, 96%, 80%),
+            //         hsl(39, 96%, 90%));
 
             cursor: pointer;
 
@@ -116,6 +117,7 @@
 
             >img {
                 width: 100%;
+                object-fit: cover;
                 aspect-ratio: 1/1;
             }
         }
@@ -145,5 +147,12 @@
         width: 95%;
 
         @include button($bgc: 'blue');
+
+        &.grey {
+            @include button($bgc: 'grey');
+
+            background-color: hsl(0, 0%, 92%);
+            color: black
+        }
     }
 }

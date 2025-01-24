@@ -6,11 +6,11 @@ export const postService = {
     query,
     getById,
     save,
-    remove,
+    remove
 }
 
-function query(filterBy) {
-    return httpService.get(BASE_URL, filterBy)
+function query(postLimit) {
+    return httpService.get(BASE_URL, postLimit)
 }
 
 function getById(postID) {

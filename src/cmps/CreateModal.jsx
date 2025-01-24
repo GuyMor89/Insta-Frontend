@@ -10,14 +10,12 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 
 export function CreateModal() {
-    const dispatch = useDispatch()
-
-    const posts = useSelector(storeState => storeState.postModule.posts)
-    const user = useSelector(storeState => storeState.userModule.loggedInUser)
+    const user = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const modalOpen = useSelector(storeState => storeState.postModule.createModal.open)
     const [uploadedImage, setUploadedImage] = useState(null)
     const [currPage, setCurrPage] = useState(1)
-
+    
+    const dispatch = useDispatch()
     let formikRef = null
 
     function closeModal(event) {
@@ -32,7 +30,7 @@ export function CreateModal() {
     }, [uploadedImage])
 
     useEffect(() => {
-        if(!modalOpen) {
+        if (!modalOpen) {
             setUploadedImage(null)
             setCurrPage(1)
         }
@@ -83,7 +81,7 @@ export function CreateModal() {
                             {currPage === 3 && <div className="post-details">
                                 <div className="user-details">
                                     <div className="user-image">
-                                        <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1736627051/44884218_345707102882519_2446069589734326272_n_lutjai.jpg" />
+                                        <img src={user.imgUrl} />
                                     </div>
                                     <div className="user-name">{user.username}</div>
                                 </div>

@@ -103,8 +103,8 @@
                 display: none;
             }
 
-            .bold {
-                font-weight: 800;
+            &.bold {
+                font-weight: 700;
             }
         }
     }
@@ -121,7 +121,7 @@
             display: none !important;
         }
 
-        @include for-normal-layout {
+        @include for-wide-layout {
             &:hover {
                 background-color: white;
             }
@@ -133,8 +133,14 @@
 
         .logo-image {
 
+            @include for-wide-layout {
+                display: none;
+            }
             @include for-normal-layout {
                 display: none;
+            }
+            @include for-narrow-layout {
+                display: block;
             }
         }
 

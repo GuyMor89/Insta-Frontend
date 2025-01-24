@@ -1,0 +1,60 @@
+@use '../base/functions' as *;
+@use '../base/mixins' as *;
+
+.user-bar-container {
+    padding-inline-start: em(64px);
+    padding-inline-end: em(32px);
+    padding-block-start: em(24px);
+
+    @include for-narrow-layout {
+        display: none
+    }
+
+    >.loggedInUser-details,
+    >.suggestedUser-details {
+        @include userHeader;
+
+        & {
+            padding-inline: em(14px);
+            border: none;
+
+            width: 287px;
+        }
+
+        >.user-image {
+            width: 48px;
+            height: 48px;
+
+            >img {
+                width: 44.5px;
+                height: 44.5px;
+            }
+        }
+
+        >.menu,
+        >.follow-btn {
+            color: rgb(0, 149, 246);
+            font-weight: 600;
+            font-size: em(14px);
+
+            cursor: pointer;
+        }
+    }
+
+    >.suggested {
+        padding-inline-start: em(18px);
+
+        color: hsl(0, 0%, 45%);
+        font-size: em(14px);
+        font-weight: 600;
+    }
+
+    >.loggedInUser-details {
+        padding-block-end: em(20px);
+    }
+
+    .suggestedUser-details {
+        padding-block-end: 0;
+    }
+
+}

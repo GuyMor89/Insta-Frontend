@@ -2,7 +2,7 @@
 @use '../base/mixins' as *;
 
 
-@include modal($name: 'create-modal-overlay', $width: 53.2vw, $wide: true) {
+@include modal($name: 'create-modal-overlay', $width: 414px, $wide: true) {
 
     >.post-submit-container {
 
@@ -61,6 +61,7 @@
 
             >.post-image {
                 // border-top-left-radius: 6px;
+                background-color: black;
             }
 
             &:has(.post-details) {

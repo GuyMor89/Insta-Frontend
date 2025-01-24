@@ -29,7 +29,7 @@
             @include grid(column, $align: center);
 
             grid-template-columns: max-content 1fr;
-            
+
             align-self: start;
         }
 
@@ -39,7 +39,7 @@
         }
 
         .profile-btn {
-            @include for-mobile-layout{
+            @include for-mobile-layout {
                 align-self: start;
             }
         }
@@ -53,8 +53,59 @@
 
     >.main-container {
 
+        &:has(.user-page-container) {
+            @include grid(row, $justify: center);
+
+            grid-template-rows: max-content;
+        }
+
+        &:has(div:has(.user-bar-container)) {
+            @include grid(column);
+
+            >.post-container {
+                justify-self: end;
+            }
+        }
+
+        @include for-narrow-layout {
+            >.post-container {
+                justify-self: center !important;
+
+            }
+        }
+
+        >.user-bar-container {
+            justify-self: start;
+
+            >.loggedInUser-details,
+            >.suggestedUser-details {
+
+                @include grid(column, $align: center);
+
+                grid-template-columns: max-content 1fr max-content;
+
+                >.user-image {
+                    @include grid(row, $place: center)
+                }
+
+                >.header-details-container {
+
+                    >.header-details {
+                        @include grid(column, $align: center);
+
+                        grid-template-columns: repeat(5, max-content);
+
+                    }
+                }
+
+                >.menu {
+                    justify-self: end;
+                }
+            }
+        }
+
         >.post-container {
-            @include grid(row, $place: center);
+            @include grid(row, $justify: center);
 
             >.post {
                 >.user-details {
@@ -63,7 +114,7 @@
                     grid-template-columns: max-content 1fr max-content;
 
                     >.user-image {
-                        @include grid(row, $place: center)
+                        @include grid(row, $place: center);
                     }
 
                     >.header-details-container {
@@ -264,11 +315,12 @@
 
                             grid-template-columns: max-content 1fr;
 
-                            >.header-details-container {
+                            .user-image {
+                                @include grid(column, $align: center);
+                                place-self: center;
+                            }
 
-                                .user-image {
-                                    place-self: center;
-                                }
+                            >.header-details-container {
 
                                 .header-details {
                                     @include grid(column, $align: center);
@@ -286,13 +338,13 @@
 
                         >.no-comments {
                             @include grid(row, $place: center);
-                        
+
                             >.title {
                                 align-self: end;
                             }
 
                             >.body {
-                                align-self:start;
+                                align-self: start;
                             }
                         }
                     }
@@ -388,15 +440,15 @@
 
         >.user-posts-container {
             @include grid(row);
-    
+
             grid-template-columns: repeat(3, 1fr);
             gap: 0.25em;
-    
+
             &:has(.no-posts) {
-    
+
                 grid-template-columns: 1fr;
             }
-    
+
             >.no-posts {
                 @include grid(row, $place: center)
             }
@@ -454,7 +506,7 @@
         place-self: center;
 
         @include grid(column, $place: center);
-        
+
         .follow-btn {
             @include grid(column, $place: center);
             gap: 0.5em;
@@ -468,8 +520,23 @@
 
         .modal {
             @include grid(row, $place: center);
-        
+
             .dialogue-container {
+                @include grid(row, $place: center);
+            }
+        }
+    }
+
+}
+
+.menu-modal-overlay {
+
+    .modal-container {
+
+        .modal {
+            @include grid(row, $place: center);
+
+            .menu-container {
                 @include grid(row, $place: center);
             }
         }
@@ -484,9 +551,9 @@
 
         >.login-signup-contents {
             @include grid(row, $justify: center);
-            
+
             .login-container {
-                
+
                 form {
                     @include grid(row, $place: center);
                 }

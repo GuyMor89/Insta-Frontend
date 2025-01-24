@@ -7,7 +7,9 @@ export const interactionService = {
     unlikePost,
     followUser,
     unfollowUser,
-    addCommentToPost
+    addCommentToPost,
+    savePost,
+    unSavePost
 }
 
 // Post
@@ -31,10 +33,29 @@ function addCommentToPost(post, fullLoggedInUser, comment, commentInput, setComm
 
 // User
 
-function followUser(postOwnerID, fullLoggedInUser) {
-    userActions.updateUser({ ...fullLoggedInUser, following: [...fullLoggedInUser.following, postOwnerID] })
+function followUser(userToFollowID) {
+    console.log('following')
+    const type = 'follow'
+    userActions.updateUsers(type, userToFollowID)
 }
 
-function unfollowUser(postOwnerID, fullLoggedInUser) {
-    userActions.updateUser({ ...fullLoggedInUser, following: fullLoggedInUser.following.filter(_id => _id !== postOwnerID) })
+function unfollowUser(userToFollowID,) {
+    console.log('unfollowing')
+    const type = 'unfollow'
+    userActions.updateUsers(type, userToFollowID)
 }
+
+function savePost(post, fullLoggedInUser) {
+    console.log('saving')
+    const userAlreadySavedPost = fullLoggedInUser.savedPostIDs.some(_id => _id === post._id)
+    if (userAlreadySavedPost) return
+    userActions.updateUser({ ...fullLoggedInUser, savedPostIDs: [...fullLoggedInUser.savedPostIDs, post._id] })
+}
+
+function unSavePost(post, fullLoggedInUser) {
+    console.log('unsaving')
+    const userHasNotSavedPost = fullLoggedInUser.savedPostIDs.find(_id => _id === post._id)
+    if (!userHasNotSavedPost) return
+    userActions.updateUser({ ...fullLoggedInUser, savedPostIDs: fullLoggedInUser.savedPostIDs.filter(_id => _id !== post._id ) })
+}
+

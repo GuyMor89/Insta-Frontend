@@ -45,7 +45,7 @@
 
     &:hover {
         @if $bgc =='grey' {
-            background-color: rgb(219, 219, 219);
+            background-color: hsl(0, 0%, 80%);
         }
 
         @else if $bgc =='blue' {
@@ -142,13 +142,19 @@
 }
 
 @mixin for-narrow-layout {
-    @media (width < 900px) {
+    @media (width < 1160px) {
         @content;
     }
 }
 
 @mixin for-normal-layout {
-    @media (width > 900px) {
+    @media (width < 1263px) {
+        @content;
+    }
+}
+
+@mixin for-wide-layout {
+    @media (width > 1263px) {
         @content;
     }
 }
@@ -179,7 +185,7 @@
     }
 }
 
-@mixin userHeader {
+@mixin userHeader($lineHeight: null) {
     padding-block: 0.6em;
     padding-inline: 0.6em;
 
@@ -192,24 +198,26 @@
     >.user-image {
         margin-inline-end: 0.75em;
 
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
 
         border-radius: 999px;
-        background: linear-gradient(230deg,
-                hsl(326, 57%, 48%),
-                hsl(291, 63%, 46%),
-                hsl(340, 75%, 54%),
-                hsl(340, 75%, 54%),
-                hsl(20, 92%, 59%),
-                hsl(20, 92%, 59%),
-                hsl(39, 96%, 50%),
-                hsl(39, 96%, 80%),
-                hsl(39, 96%, 90%));
+        // background: linear-gradient(230deg,
+        //         hsl(326, 57%, 48%),
+        //         hsl(291, 63%, 46%),
+        //         hsl(340, 75%, 54%),
+        //         hsl(340, 75%, 54%),
+        //         hsl(20, 92%, 59%),
+        //         hsl(20, 92%, 59%),
+        //         hsl(39, 96%, 50%),
+        //         hsl(39, 96%, 80%),
+        //         hsl(39, 96%, 90%));
+
+        cursor: pointer;
 
         >img {
-            width: 32.5px;
-            height: 32.5px;
+            width: 36px;
+            height: 36px;
 
             border-radius: 999px;
             border: 2.5px solid white;
@@ -224,8 +232,11 @@
             }
 
             .user-name {
+                display: inline;
+
                 font-weight: 600;
 
+                line-height: $lineHeight;
                 cursor: pointer;
 
                 &:hover {
@@ -235,20 +246,10 @@
         }
 
         .location {
+            padding-block-end: 0.25em;
             font-size: em(12px);
         }
 
-    }
-}
-
-@mixin userModalHover {
-    &:hover {
-
-        .user-modal {
-            opacity: 1;
-            transition-delay: 0.25s;
-            pointer-events: auto;
-        }
     }
 }
 
@@ -292,6 +293,19 @@
 
             cursor: auto;
 
+            >.close-btn {
+                position: absolute;
+
+                padding: em(8px);
+                
+                top: 10px;
+                right: 10px;
+
+                color: white;
+
+                cursor: pointer;
+            }
+
             >.modal {
                 @content
             }
@@ -299,13 +313,35 @@
     }
 }
 
-@keyframes slideUp {
-    from {
-        scale: (1.1);
-        opacity: 0;
+
+@mixin slideUpAnimation {
+    @keyframes slideUp {
+        from {
+            scale: (1.1);
+            opacity: 0;
+        }
+        to {
+            scale: (1);
+            opacity: 1;
+        }
     }
-    to {
-        scale: (1);
-        opacity: 1;
+}
+
+@include slideUpAnimation();
+
+@mixin growAnimation {
+    @keyframes grow {
+        0% {
+            scale: (1);
+            opacity: 0;
+        }
+        50% {
+            scale: (1.2);
+            opacity: 0.5;
+        }
+        100% {
+            scale: (1);
+            opacity: 1;
+        }
     }
-  }
+}

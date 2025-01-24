@@ -1,6 +1,8 @@
 import React, { useState, Children, cloneElement, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_USER_MODAL_DATA } from '../store/reducers/post.reducer.js'
+import { useEffectSkipFirst } from '../hooks/useEffectSkipFirst.jsx'
+import { useParams } from 'react-router-dom'
 
 export function HoverTracker({ children, username }) {
 
@@ -20,22 +22,50 @@ export function HoverTracker({ children, username }) {
         setMousePos({ x: e.clientX, y: e.clientY })
     }
 
-    useEffect(() => {
-        if (!myElementRef.current) return
+    useEffectSkipFirst(() => {
+        // If we need to open it...
+        if (isHovering) {
+            // 1) Calculate new coords if you are *just* opening now
+            if (!userModalData.open) {
+                if (!myElementRef.current) return
+                const rect = myElementRef.current.getBoundingClientRect();
+                const x = rect.x + window.scrollX + rect.width / 2
+                const y = rect.y + window.scrollY + rect.height / 2
 
-        const rect = myElementRef.current.getBoundingClientRect()
-
-        const x = rect.x + window.scrollX + rect.width / 2
-        const y = rect.y + window.scrollY + rect.height / 2
-
-        if (currentCoords?.y !== y) {
-            dispatch({ type: SET_USER_MODAL_DATA, userModalData: { open: isHovering ? true : false, username, coords: { x, y } } })
+                // 2) Dispatch open with new coords
+                dispatch({
+                    type: SET_USER_MODAL_DATA,
+                    userModalData: {
+                        ...userModalData,
+                        open: true,
+                        username,
+                        coords: { x, y },
+                    },
+                })
+            } else {
+                // If it's already open, we might NOT need to recalc coords,
+                // or you might recalc if the child has changed position.
+                dispatch({
+                    type: SET_USER_MODAL_DATA,
+                    userModalData: {
+                        ...userModalData,
+                        open: true,
+                    },
+                });
+            }
+        } else {
+            // Hover ended over both child and modal -> close
+            if (userModalData.open) {
+                dispatch({
+                    type: SET_USER_MODAL_DATA,
+                    userModalData: {
+                        ...userModalData,
+                        open: false,
+                    },
+                })
+            }
         }
-    }, [mousePos, isHovering])
-    
-    useEffect(() => {
-        dispatch({ type: SET_USER_MODAL_DATA, userModalData: { ...userModalData, open: (isHovering || hoveringOverModal) ? true : false}})
-    }, [isHovering, hoveringOverModal])
+    }, [isHovering])
 
     const singleChild = Children.only(children)
 

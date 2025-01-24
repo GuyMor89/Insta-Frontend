@@ -5,29 +5,37 @@ import { addFormikField } from '../cmps/Formik.jsx';
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { userService } from '../services/user.service.js';
+import { useEffect, useRef, useState } from 'react';
+
 
 export function LoginSignup() {
 
-    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
+    const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const [currState, setCurrState] = useState('login')
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
+    const [checkUser, setCheckUser] = useState(false)
 
     useEffect(() => {
-        if (!loggedInUser) userActions.loadLoggedInUser()
-    }, [])
+        if (fullLoggedInUser) return setIsLoggedIn(true)
+        const fetchLoggedInUser = async () => {
+            const userIsLoggedIn = await userActions.loadLoggedInUser()
+            setIsLoggedIn(!!userIsLoggedIn)
+        }
+        fetchLoggedInUser()
+    }, [checkUser, fullLoggedInUser])
 
-    function handleAuth(values) {
-        if (currState === 'login') userActions.loginUser(values)
-        if (currState === 'signup') userActions.signupUser(values)
+    if (isLoggedIn) return
+
+    async function handleAuth(values) {
+        if (currState === 'login') await userActions.loginUser(values)
+        if (currState === 'signup') await userActions.signupUser(values)
+        setCheckUser(!checkUser)
     }
 
     function handleChooserBtn() {
         if (currState === 'login') return <button onClick={() => setCurrState('signup')}>Sign up</button>
         if (currState === 'signup') return <button onClick={() => setCurrState('login')}>Log in</button>
     }
-
-    if (loggedInUser) return
 
     return (
         <RemoveScroll>
@@ -61,7 +69,7 @@ export function LoginSignup() {
                     </div>
                     <div className='login-or-signup-chooser-container'>
                         <div className='login-or-signup-chooser'>
-                            {currState === 'login' ? 'Don\'t have an account?': 'Already have an account?'}
+                            {currState === 'login' ? 'Don\'t have an account?' : 'Already have an account?'}
                             {handleChooserBtn()}
                         </div>
                     </div>

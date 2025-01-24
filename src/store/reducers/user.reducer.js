@@ -1,20 +1,20 @@
-export const SET_LOGGEDIN_USER = 'SET_LOGGEDIN_USER'
+export const SET_FULL_LOGGEDIN_USER = 'SET_FULL_LOGGEDIN_USER'
 export const SET_USERS = 'SET_USERS'
 export const REMOVE_USER = 'REMOVE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 
 const initialState = {
     users: [],
-    loggedInUser: null
+    fullLoggedInUser: null
 }
 
 export function userReducer(state = initialState, action) {
     switch (action.type) {
 
-        case SET_LOGGEDIN_USER:
+        case SET_FULL_LOGGEDIN_USER:
             return {
                 ...state,
-                loggedInUser: action.user
+                fullLoggedInUser: action.fullLoggedInUser
             }
         case SET_USERS:
             return {
@@ -22,10 +22,10 @@ export function userReducer(state = initialState, action) {
                 users: action.users
             }
         case UPDATE_USER:
-            console.log(action.user)
             return {
                 ...state,
-                users: state.users.map(user => user._id === action.user._id ? action.user : user)
+                users: state.users.map(user => user._id === action.user._id ? action.user : user),
+                fullLoggedInUser: (action.user._id === state.fullLoggedInUser._id) ? action.user : state.fullLoggedInUser
             }
         case REMOVE_USER:
             return {
