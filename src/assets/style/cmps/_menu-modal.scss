@@ -4,7 +4,7 @@
 
 @include modal($name: 'menu-modal-overlay', $width: 414px, $zIndex: 100) {
 
-    .affirmative,
+    .follow-btn,
     .negative {
         width: 100%;
         height: 48px;
@@ -24,7 +24,7 @@
         }
     }
 
-    .affirmative {
+    .follow-btn {
         color: hsl(355, 82%, 61%);
         font-weight: 700;
         

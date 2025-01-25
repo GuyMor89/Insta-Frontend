@@ -11,7 +11,7 @@ import * as Yup from 'yup'
 
 export function CreateModal() {
     const user = useSelector(storeState => storeState.userModule.fullLoggedInUser)
-    const modalOpen = useSelector(storeState => storeState.postModule.createModal.open)
+    const modalOpen = useSelector(storeState => storeState.postModule.modals.createModal.open)
     const [uploadedImage, setUploadedImage] = useState(null)
     const [currPage, setCurrPage] = useState(1)
     

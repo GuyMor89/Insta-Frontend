@@ -12,7 +12,6 @@ import { HoverTracker } from "./HoverTracker.jsx"
 export function Post({ post, isLast }) {
 
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
-    // const [userLikesPost, setUserLikesPost] = useState(post.likedBy.some(_id => _id === fullLoggedInUser._id) || null)
     const [comment, setComment] = useState(null)
     const [captionState, setCaptionState] = useState('short')
     const commentInput = useRef(null)
@@ -23,10 +22,6 @@ export function Post({ post, isLast }) {
     function handleFollowBtn() {
         if (!myPost && !alreadyFollowingUser) return (<> <span>•</span> <div className="follow-btn" onClick={() => interactionService.followUser(post.by._id)}>Follow</div> </>)
         if (!myPost && alreadyFollowingUser) return (<> <span>•</span> <div className="follow-btn" onClick={() => interactionService.unfollowUser(post.by._id)}>Unfollow</div> </>)
-    }
-
-    function handleSaveBtn() {
-
     }
 
     function handleCaption() {
@@ -82,7 +77,7 @@ export function Post({ post, isLast }) {
                     </div>
                     <div className="location">{post.loc}</div>
                 </div>
-                <svg onClick={() => postActions.openModal('menu')} className="menu" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                <svg onClick={() => postActions.openModal('menu', post)} className="menu" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
             </div>
             <div className="main-image">
                 <img src={post.imgUrl} />

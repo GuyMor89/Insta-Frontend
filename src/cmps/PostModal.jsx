@@ -16,7 +16,7 @@ import { HoverTracker } from "./HoverTracker.jsx";
 
 export function PostModal() {
 
-    const modalOpen = useSelector(storeState => storeState.postModule.postModal.open)
+    const modalOpen = useSelector(storeState => storeState.postModule.modals.postModal.open)
     const prevLoc = useSelector(storeState => storeState.postModule.prevLoc)
 
     const params = useParams()
@@ -24,10 +24,10 @@ export function PostModal() {
     const post = useSelector(storeState => storeState.postModule.posts.find(post => post._id === params.id))
     const [comment, setComment] = useState(null)
     const commentInput = useRef(null)
-    
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+
     useEffect(() => {
         postActions.openModal('post')
         if (!post || post.length === 0) postActions.loadPosts()
@@ -50,7 +50,7 @@ export function PostModal() {
     return (
         <RemoveScroll>
             <div className='post-modal-overlay overlay-on' onClick={closeModal}>
-                {modalOpen && <div className='modal-container' onClick={(e) => e.stopPropagation()} >
+                <div className='modal-container' onClick={(e) => e.stopPropagation()} >
                     <div className="close-btn" onClick={() => closeModal()}><svg fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg></div>
                     <div className='modal'>
                         <div className="post-container">
@@ -167,7 +167,7 @@ export function PostModal() {
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div>
             </div>
         </RemoveScroll>
     )

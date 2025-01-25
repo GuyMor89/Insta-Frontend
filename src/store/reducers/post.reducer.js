@@ -5,6 +5,7 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const SET_IS_LOADING = 'IS_LOADING'
 export const SET_PREV_LOC = 'SET_PREV_LOC'
 export const SET_USER_MODAL_DATA = 'SET_USER_MODAL_DATA'
+export const SET_MODAL_STATE = 'SET_MODAL_STATE'
 export const SET_CREATE_MODAL = 'SET_CREATE_MODAL'
 export const SET_POST_MODAL = 'SET_POST_MODAL'
 export const SET_DIALOGUE_MODAL = 'SET_DIALOGUE_MODAL'
@@ -15,10 +16,13 @@ const initialState = {
     userModalData: {},
     isLoading: false,
     prevLoc: '',
-    createModal: { open: false },
-    postModal: { open: false },
-    dialogueModal: { open: false },
-    menuModal: { open: false },
+    modals: {
+        createModal: { open: false },
+        postModal: { open: false },
+        dialogueModal: { open: false },
+        menuModal: { open: false },
+    }
+
 }
 
 export function postReducer(state = initialState, action) {
@@ -48,7 +52,6 @@ export function postReducer(state = initialState, action) {
                 isLoading: action.isLoading
             }
         case SET_PREV_LOC:
-            console.log(action)
             return {
                 ...state,
                 prevLoc: action.prevLoc
@@ -58,27 +61,14 @@ export function postReducer(state = initialState, action) {
                 ...state,
                 userModalData: { ...action.userModalData }
             }
-        case SET_CREATE_MODAL:
+        case SET_MODAL_STATE:
+            const modalName = Object.keys(action).find(key => key !== 'type')
             return {
                 ...state,
-                createModal: { ...action.createModal }
+                modals: {
+                    ...state.modals, [modalName]: { ...state.modals[modalName], ...action[modalName] }
+                }
             }
-        case SET_POST_MODAL:
-            return {
-                ...state,
-                postModal: { ...action.postModal }
-            }
-        case SET_DIALOGUE_MODAL:
-            return {
-                ...state,
-                dialogueModal: { ...action.dialogueModal }
-            }
-        case SET_MENU_MODAL:
-            return {
-                ...state,
-                menuModal: { ...action.menuModal }
-            }
-
         default:
             return state
     }

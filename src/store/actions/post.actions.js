@@ -1,5 +1,5 @@
 import { postService } from "../../services/post.service.js"
-import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING, SET_CREATE_MODAL, SET_POST_MODAL, SET_DIALOGUE_MODAL, SET_MENU_MODAL} from "../reducers/post.reducer.js"
+import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING, SET_MODAL_STATE} from "../reducers/post.reducer.js"
 import { store } from "../store.js"
 
 export const postActions = {
@@ -52,16 +52,17 @@ async function savePost(post) {
     }
 }
 
-async function openModal(type) {
-    if (type === 'post') store.dispatch({ type: SET_POST_MODAL, postModal: { open: true } })
-    if (type === 'create') store.dispatch({ type: SET_CREATE_MODAL, createModal: { open: true } })
-    if (type === 'dialogue') store.dispatch({ type: SET_DIALOGUE_MODAL, dialogueModal: { open: true } })
-    if (type === 'menu') store.dispatch({ type: SET_MENU_MODAL, menuModal: { open: true } })
+async function openModal(type, data) {
+    console.log(type)
+    if (type === 'post') store.dispatch({ type: SET_MODAL_STATE, postModal: { open: true } })
+    if (type === 'create') store.dispatch({ type: SET_MODAL_STATE, createModal: { open: true } })
+    if (type === 'dialogue') store.dispatch({ type: SET_MODAL_STATE, dialogueModal: { open: true } })
+    if (type === 'menu') store.dispatch({ type: SET_MODAL_STATE, menuModal: { open: true, data} })
 }
 
 async function closeModal(type) {
-    if (type === 'post') store.dispatch({ type: SET_POST_MODAL, postModal: { open: false } })
-    if (type === 'create') store.dispatch({ type: SET_CREATE_MODAL, createModal: { open: false } })
-    if (type === 'dialogue') store.dispatch({ type: SET_DIALOGUE_MODAL, dialogueModal: { open: false } })
-    if (type === 'menu') store.dispatch({ type: SET_MENU_MODAL, menuModal: { open: false } })
+    if (type === 'post') store.dispatch({ type: SET_MODAL_STATE, postModal: { open: false } })
+    if (type === 'create') store.dispatch({ type: SET_MODAL_STATE, createModal: { open: false } })
+    if (type === 'dialogue') store.dispatch({ type: SET_MODAL_STATE, dialogueModal: { open: false } })
+    if (type === 'menu') store.dispatch({ type: SET_MODAL_STATE, menuModal: { open: false, data: null } })
 }

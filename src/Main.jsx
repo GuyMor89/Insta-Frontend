@@ -9,7 +9,7 @@ import { LoginSignup } from './pages/LoginSignup.jsx'
 import { DialogueModal } from './cmps/DialogueModal.jsx'
 import { UserModal } from './cmps/UserModal.jsx'
 import { HoverTracker } from './cmps/HoverTracker.jsx'
-import { MenuModal } from './cmps/MenuModal.jsx'
+import { GlobalModal } from './cmps/GlobalModal.jsx'
 import { UserBar } from './cmps/UserBar.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -36,12 +36,10 @@ export function Main() {
         saveRootLocation()
     }, [location])
 
-    console.log(prevLoc)
     return (
         <main className='main-app'>
             <LoginSignup />
-            <DialogueModal />
-            <MenuModal />
+            <GlobalModal />
             <CreateModal />
             <UserModal />
             <SideBar />
