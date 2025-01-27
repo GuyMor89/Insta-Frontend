@@ -21,9 +21,13 @@
 @use './cmps/dialogue-modal';
 @use './cmps/menu-modal';
 @use './cmps/user-bar';
+@use './cmps/search';
+@use './cmps/user-menu';
+@use './cmps/switch-user-modal';
 
 // Pages
 
 @use './pages/home';
 @use './pages/user-page';
 @use './pages/login-signup';
+@use './pages/explore';

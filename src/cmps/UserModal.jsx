@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { userService } from "../services/user.service"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { SET_USER_MODAL_DATA } from "../store/reducers/post.reducer"
-import { interactionService } from "../services/interactions.service"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
+import { SET_USER_MODAL_DATA } from "../store/reducers/post.reducer.js"
+import { interactionService } from "../services/interactions.service.js"
+import { hookService } from '../services/hook.service.js'
+import { userService } from "../services/user.service.js"
 
 export function UserModal() {
 
@@ -14,12 +14,11 @@ export function UserModal() {
     const userModalData = useSelector(storeState => storeState.postModule.userModalData)
     const currentCoords = useSelector(storeState => storeState.postModule.userModalData.coords)
     const username = useSelector(storeState => storeState.postModule.userModalData.username)
+    
     const [isHovering, setIsHovering] = useState(false)
     const [currUser, setCurrUser] = useState(null)
     
-    const navigate = useNavigate()
-    const location = useLocation()
-    const dispatch = useDispatch()
+    const { location, dispatch, navigate } = hookService()
     
     const handleMouseEnter = () => setIsHovering(true)
     const handleMouseLeave = () => setIsHovering(false)

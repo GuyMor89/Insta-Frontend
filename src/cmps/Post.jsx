@@ -1,23 +1,22 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
+
+import { HoverTracker } from "./HoverTracker.jsx"
+
 import { postActions } from "../store/actions/post.actions.js"
-import { useLocation, useNavigate } from "react-router-dom"
-import { UserModal } from "../cmps/UserModal.jsx"
-import { userActions } from "../store/actions/user.actions.js"
-import { userService } from "../services/user.service.js"
 import { utilService } from "../services/util.service.js"
 import { interactionService } from "../services/interactions.service.js"
-import { HoverTracker } from "./HoverTracker.jsx"
+import { hookService } from "../services/hook.service.js"
 
 export function Post({ post, isLast }) {
 
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
-    const [comment, setComment] = useState(null)
     const [captionState, setCaptionState] = useState('short')
+
+    const [comment, setComment] = useState(null)
     const commentInput = useRef(null)
 
-    const location = useLocation()
-    const navigate = useNavigate()
+    const { location, navigate } = hookService()
 
     function handleFollowBtn() {
         if (!myPost && !alreadyFollowingUser) return (<> <span>•</span> <div className="follow-btn" onClick={() => interactionService.followUser(post.by._id)}>Follow</div> </>)
@@ -27,22 +26,20 @@ export function Post({ post, isLast }) {
     function handleCaption() {
         const captionIsLong = post.caption.length > 125
         const splicedCaption = post.caption.slice(0, 125)
+        const captionIsSpliced = captionState === 'short'
+        const captionIsFull = captionState === 'full'
 
-        if (captionIsLong && captionIsSpliced) {
+        if (!captionIsLong || captionIsFull) return <div className="text">{post.caption}</div>
+        else if (captionIsSpliced) {
             return (<><div className="text">{splicedCaption}</div>
                 <div className="expand-caption" onClick={() => setCaptionState('full')}>
                     <span>...</span> more
                 </div></>)
         }
-        else if (captionIsSpliced) {
-            return (<><div className="text">{splicedCaption}</div>
-                <div className="expand-caption" onClick={() => setCaptionState('full')}></div></>)
-        }
-        else if (captionIsFull) return <div className="text">{post.caption}</div>
     }
 
-    if (!fullLoggedInUser) return 
-    
+    if (!fullLoggedInUser) return
+
     const myPost = post.by._id === fullLoggedInUser._id
     const alreadyFollowingUser = fullLoggedInUser.following.some(_id => _id === post.by._id)
 
@@ -51,9 +48,6 @@ export function Post({ post, isLast }) {
     const userSavedPost = fullLoggedInUser.savedPostIDs.some(_id => _id === post._id)
 
     const postHasCaption = post.caption
-    const captionIsSpliced = captionState === 'short'
-    const captionIsFull = captionState === 'full'
-
     const postHasComments = post.comments.length > 0
 
     return (
@@ -77,7 +71,7 @@ export function Post({ post, isLast }) {
                     </div>
                     <div className="location">{post.loc}</div>
                 </div>
-                <svg onClick={() => postActions.openModal('menu', post)} className="menu" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                <svg onClick={() => postActions.openModal('menu', post.by._id)} className="menu" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
             </div>
             <div className="main-image">
                 <img src={post.imgUrl} />

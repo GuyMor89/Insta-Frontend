@@ -1,44 +1,42 @@
 import { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
-import { SET_POST_MODAL } from "../store/reducers/post.reducer.js"
-import { RemoveScroll } from 'react-remove-scroll';
-import { useNavigate } from "react-router-dom";
-import { postActions } from "../store/actions/post.actions.js"
-import { utilService } from '../services/util.service.js'
+import { useSelector } from "react-redux"
 
-import { Formik, Form, Field } from 'formik'
-import * as Yup from 'yup'
-import { postService } from "../services/post.service.js";
-import { UserModal } from "./UserModal.jsx";
-import { interactionService } from "../services/interactions.service.js";
+import { RemoveScroll } from 'react-remove-scroll';
 import { HoverTracker } from "./HoverTracker.jsx";
 
+import { postActions } from "../store/actions/post.actions.js"
+import { utilService } from '../services/util.service.js'
+import { interactionService } from "../services/interactions.service.js";
+import { hookService } from "../services/hook.service.js";
+import { postService } from "../services/post.service.js";
+
 export function PostModal() {
-
-    const modalOpen = useSelector(storeState => storeState.postModule.modals.postModal.open)
-    const prevLoc = useSelector(storeState => storeState.postModule.prevLoc)
-
-    const params = useParams()
+    
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
-    const post = useSelector(storeState => storeState.postModule.posts.find(post => post._id === params.id))
+    const prevLoc = useSelector(storeState => storeState.postModule.prevLoc)
+    const [post, setPost] = useState(null)
+
     const [comment, setComment] = useState(null)
     const commentInput = useRef(null)
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const { navigate, params } = hookService()
 
     useEffect(() => {
+        getPost()
         postActions.openModal('post')
-        if (!post || post.length === 0) postActions.loadPosts()
     }, [params.id])
+
+    async function getPost() {
+        const post = await postService.getById(params.id)
+        setPost(post)
+    }
 
     function closeModal() {
         postActions.closeModal('post')
         navigate(prevLoc)
     }
 
-    if (params.id && !post || fullLoggedInUser === null) return
+    if (!post || fullLoggedInUser === null) return
 
     const userLikesPost = post.likedBy.some(_id => _id === fullLoggedInUser._id)
     const userSavedPost = fullLoggedInUser.savedPostIDs.some(_id => _id === post._id)
@@ -49,7 +47,7 @@ export function PostModal() {
 
     return (
         <RemoveScroll>
-            <div className='post-modal-overlay overlay-on' onClick={closeModal}>
+            <div className='post-modal-overlay' onClick={closeModal}>
                 <div className='modal-container' onClick={(e) => e.stopPropagation()} >
                     <div className="close-btn" onClick={() => closeModal()}><svg fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg></div>
                     <div className='modal'>

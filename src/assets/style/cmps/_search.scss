@@ -1,0 +1,168 @@
+@use '../base/mixins' as *;
+@use '../base/functions' as *;
+
+.search-overlay {
+    position: sticky;
+
+    top: 0;
+    height: 0px;
+    width: 0px;
+
+    z-index: 10;
+
+
+    .search-container {
+        position: absolute;
+
+        top: 0px;
+        left: 0;
+
+        // opacity: 0;
+        // visibility: hidden;
+        height: 100vh;
+        width: 397px;
+
+        transform: translateX(-100%);
+
+        background-color: white;
+        border-inline-end: 1px solid hsl(0, 0%, 86%);
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
+
+
+        transition: transform 300ms ease-in-out, opacity 300ms ease-in-out, visibility 0s 300ms;
+        /* Delay visibility */
+
+        &.open {
+            transform: translateX(0);
+
+            // opacity: 1;
+            // visibility: visible;
+            box-shadow: rgba(0, 0, 0, 0.15) 4px 0px 24px 0px;
+
+            transition: transform 300ms ease-in-out, opacity 300ms ease-in-out, visibility 0s;
+            /* Sync visibility with the slide */
+        }
+
+        >.title {
+            padding-inline-start: rem(24px);
+            padding-inline-end: rem(14px);
+            padding-block-start: rem(22.5px);
+            padding-block-end: rem(39px);
+
+            font-size: rem(24px);
+            font-weight: 600;
+        }
+
+        >.search-bar {
+            margin-inline: rem(16px);
+            padding-inline: rem(16px);
+
+            width: calc(100% - 32px);
+            height: 40px;
+
+            background-color: hsl(0, 0%, 94%);
+            border-radius: 8px;
+
+            >.search-svg {
+                margin-inline-end: rem(10px);
+                opacity: 0.4;
+            }
+
+            >input {
+                padding-block-end: 3px;
+                border: none;
+                outline: none;
+
+                height: 100%;
+
+                background-color: hsl(0, 0%, 94%);
+
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: rem(16px);
+                font-weight: 300;
+
+            }
+
+            >img {
+                width: 15px;
+                height: 15px;
+
+                cursor: pointer;
+            }
+
+            >.loader-svg {
+                width: 75%;
+                height: 75%;
+
+                animation: spin 2s linear infinite;
+                transform-origin: center
+            }
+        }
+
+        >.results {
+            margin-block-start: rem(24px);
+            padding-block-start: rem(21px);
+
+            border-block-start: 1px solid hsl(0, 0%, 86%);
+
+            >.found-user-details {
+                @include userHeader($hoverClr: black);
+
+                & {
+                    padding-inline: em(14px);
+                    border: none;
+
+                    width: 100%;
+
+                    cursor: pointer;
+
+                    transition: background-color 200ms;
+                }
+
+                &:hover {
+                    background-color: hsl(0, 0%, 94%);
+                }
+
+                >.user-image {
+                    width: 52px;
+                    height: 52px;
+
+                    >img {
+                        width: 48.5px;
+                        height: 48.5px;
+                    }
+                }
+
+                >.menu,
+                >.follow-btn {
+                    color: rgb(0, 149, 246);
+                    font-weight: 600;
+                    font-size: em(14px);
+
+                    cursor: pointer;
+                }
+
+                .fullname {
+                    padding-block-end: 0.1em;
+                    font-size: em(14px);
+                    font-weight: 400;
+                    color: hsl(0, 0%, 45%);
+                }
+            }
+
+            >.no-users-found {
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

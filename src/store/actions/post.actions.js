@@ -1,5 +1,5 @@
 import { postService } from "../../services/post.service.js"
-import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING, SET_MODAL_STATE} from "../reducers/post.reducer.js"
+import { SET_POSTS, UPDATE_POST, ADD_POST, REMOVE_POST, SET_IS_LOADING, SET_MODAL_STATE } from "../reducers/post.reducer.js"
 import { store } from "../store.js"
 
 export const postActions = {
@@ -57,12 +57,14 @@ async function openModal(type, data) {
     if (type === 'post') store.dispatch({ type: SET_MODAL_STATE, postModal: { open: true } })
     if (type === 'create') store.dispatch({ type: SET_MODAL_STATE, createModal: { open: true } })
     if (type === 'dialogue') store.dispatch({ type: SET_MODAL_STATE, dialogueModal: { open: true } })
-    if (type === 'menu') store.dispatch({ type: SET_MODAL_STATE, menuModal: { open: true, data} })
+    if (type === 'switch') store.dispatch({ type: SET_MODAL_STATE, switchUserModal: { open: true } })
+    if (type === 'menu') store.dispatch({ type: SET_MODAL_STATE, menuModal: { open: true, data } })
 }
 
 async function closeModal(type) {
     if (type === 'post') store.dispatch({ type: SET_MODAL_STATE, postModal: { open: false } })
     if (type === 'create') store.dispatch({ type: SET_MODAL_STATE, createModal: { open: false } })
     if (type === 'dialogue') store.dispatch({ type: SET_MODAL_STATE, dialogueModal: { open: false } })
+    if (type === 'switch') store.dispatch({ type: SET_MODAL_STATE, switchUserModal: { open: false } })
     if (type === 'menu') store.dispatch({ type: SET_MODAL_STATE, menuModal: { open: false, data: null } })
 }

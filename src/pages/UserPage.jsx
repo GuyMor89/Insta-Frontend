@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { postActions } from "../store/actions/post.actions"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { userActions } from "../store/actions/user.actions"
-import { userService } from "../services/user.service"
-import { interactionService } from "../services/interactions.service"
+import { useSelector } from "react-redux"
+
+import { postActions } from "../store/actions/post.actions.js"
+import { userActions } from "../store/actions/user.actions.js"
+import { userService } from "../services/user.service.js"
+import { interactionService } from "../services/interactions.service.js"
 import { uploadService } from "../services/upload.service"
-import { hookService } from "../hooks/hook.service.js"
+import { hookService } from "../services/hook.service.js"
 
 export function UserPage() {
 
@@ -19,7 +19,7 @@ export function UserPage() {
     const [currUser, setCurrUser] = useState(null)
     const [currPage, setCurrPage] = useState('posts')
 
-    const { location, dispatch, params, navigate } = hookService()
+    const { location, params, navigate } = hookService()
 
     const imageInput = useRef(null)
 
@@ -36,18 +36,17 @@ export function UserPage() {
     function handleButtons() {
         if (myUserPage) return (<div className="follow-btn grey">Edit profile</div>)
         if (!myUserPage && !alreadyFollowingUser) return (<><div className="follow-btn" onClick={() => interactionService.followUser(currUser._id)}>Follow</div><button className="message-btn">Message</button></>)
-        if (!myUserPage && alreadyFollowingUser) return (<><div className="follow-btn" onClick={() => interactionService.unfollowUser(currUser._id)}>Unfollow</div><button className="message-btn">Message</button></>)
+        if (!myUserPage && alreadyFollowingUser) return (<><div className="follow-btn grey" onClick={() => postActions.openModal('menu', currUser._id)}>Following <span><svg class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12" style={{ transform: 'rotate(180deg)' }}><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg></span></div><button className="message-btn">Message</button></>)
     }
 
     async function uploadImg(ev) {
-
         ev.preventDefault()
         setIsUploading(true)
 
         const { secure_url } = await uploadService.uploadImg(ev)
         setUploadedImage(secure_url)
         ev.target.value = ''
-        const userWithImage = userActions.updateUser({ ...fullLoggedInUser, imgUrl: secure_url })
+        userActions.updateUser({ ...fullLoggedInUser, imgUrl: secure_url })
 
         setIsUploading(false)
     }

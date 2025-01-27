@@ -7,6 +7,9 @@
     height: 100vh;
     top: 0;
 
+    z-index: 20;
+
+    background-color: white;
     border-inline-end: 1px solid hsl(0, 0%, 86%);
 
     @include for-mobile-layout {
@@ -29,7 +32,7 @@
 
     >div {
         padding: em(12px);
-        margin-block-end: 0.25em;
+        margin-block-end: 0.45em;
         margin-inline: 0.75em;
 
         width: 208px;
@@ -113,7 +116,7 @@
 
         
         @include for-narrow-layout {
-            margin-block-start: 1.4em;
+            margin-block-start: 1.5em;
             margin-block-end: 2.05em;
         }
         
@@ -161,7 +164,7 @@
         }
     }
 
-    .profile-btn {
+    >.profile-btn {
         padding: em(10px);
 
         img {
@@ -169,4 +172,9 @@
             height: 28px;
         }
     }
+
+    >.more-btn {
+        margin-block-end: 29px;
+    }
+
 }

@@ -2,9 +2,11 @@
 @use '../base/mixins' as *;
 
 
-@include modal($name: 'create-modal-overlay', $width: 414px, $wide: true) {
+@include modal($name: 'create-modal-overlay', $width: 65vw, $wide: true) {
 
     >.post-submit-container {
+
+        height: 80vh;
 
         >.header {
 
@@ -53,7 +55,7 @@
         >.post-container {
             width: 100%;
 
-            height: 414px;
+            height: 76.5vh;
 
             border-bottom-right-radius: 6px;
 
@@ -65,7 +67,7 @@
             }
 
             &:has(.post-details) {
-                max-height: 375px;
+                // max-height: 375px;
             }
 
             >.post-details {
@@ -165,16 +167,20 @@
 
             >.drag-wrapper {
 
-                height: 100%;
+                height: 74.5vh;
                 width: 100%;
 
                 border-bottom-right-radius: 6px;
                 border-bottom-left-radius: 6px;
 
+                overflow: hidden;
+
                 transition: background-color 200ms;
 
                 &.drag {
                     background-color: hsl(0, 0%, 94%);
+
+                    // height: 100%;
 
                     .upload-container {
                         svg {

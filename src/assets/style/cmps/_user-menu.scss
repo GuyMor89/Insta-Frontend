@@ -1,0 +1,40 @@
+@use '../base/functions' as *;
+
+.user-menu-overlay {
+    position: sticky;
+
+    top: 0;
+    height: 0px;
+    width: 0px;
+    
+    z-index: 20;
+    
+    .user-menu-container {
+        position: absolute;
+
+        padding: rem(8px);
+
+        bottom: -95vh;
+        left: -10px;
+
+        border-radius: 10px;
+        background-color: white;
+
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px 0px;
+
+        >.logout {
+            padding: rem(16px);
+
+            border-radius: 10px;
+            font-size: rem(14px);
+
+            transition: background-color 200ms;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: hsl(0, 0%, 94%);
+            }
+        }
+    }
+}

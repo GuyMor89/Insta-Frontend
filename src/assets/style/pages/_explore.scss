@@ -1,0 +1,24 @@
+@use '../base/mixins' as *;
+@use '../base/functions' as *;
+
+
+.explore-container {
+    padding-inline-start: rem(20px);
+    padding-inline-end: rem(16px);
+    padding-block-start: rem(50px);
+
+    position: relative;
+
+    >.post {
+        cursor: pointer;
+
+        max-width: 317px;
+
+        >img {
+            padding-inline-end: 0.25em;
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+    }
+}

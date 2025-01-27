@@ -20,7 +20,7 @@ async function loadLoggedInUser() {
 
         const fullLoggedInUser = await userService.getById(loggedInUser._id)
         if (fullLoggedInUser) store.dispatch({ type: SET_FULL_LOGGEDIN_USER, fullLoggedInUser })
-            // console.log(fullLoggedInUser)
+
         return fullLoggedInUser
     } catch (err) {
         console.error('Failed to load logged-in user:', err)

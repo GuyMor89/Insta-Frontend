@@ -10,8 +10,8 @@
         display: none
     }
 
-    >.loggedInUser-details,
-    >.suggestedUser-details {
+    >.loggedIn-user-details,
+    >.suggested-user-details {
         @include userHeader;
 
         & {
@@ -38,6 +38,18 @@
             font-size: em(14px);
 
             cursor: pointer;
+
+            &:hover {
+                color: hsl(214, 45%, 34%)
+            }
+
+            &:active {
+                opacity: 0.7;
+            }
+
+            &.following {
+                color: black;   
+            }
         }
     }
 
@@ -49,11 +61,11 @@
         font-weight: 600;
     }
 
-    >.loggedInUser-details {
+    >.loggedIn-user-details {
         padding-block-end: em(20px);
     }
 
-    .suggestedUser-details {
+    .suggested-user-details {
         padding-block-end: 0;
     }
 

@@ -9,8 +9,8 @@ export const postService = {
     remove
 }
 
-function query(postLimit) {
-    return httpService.get(BASE_URL, postLimit)
+function query(limit) {
+    return httpService.get(BASE_URL, { limit: limit })
 }
 
 function getById(postID) {

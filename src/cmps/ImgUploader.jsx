@@ -1,36 +1,26 @@
 import { useState, useRef } from 'react'
 import { uploadService } from '../services/upload.service.js'
-import { SET_IS_LOADING } from '../store/reducers/post.reducer.js'
-import { useDispatch, useSelector } from 'react-redux'
 
 export function ImgUploader({ uploadedImage, setUploadedImage }) {
 
-    const isLoading = useSelector(storeState => storeState.postModule.isLoading)
     const [isUploading, setIsUploading] = useState(false)
+
     const [isDragging, setIsDragging] = useState(false)
-
-    const dispatch = useDispatch()
-
     const imageInput = useRef()
 
     async function uploadImg(ev) {
-
-        dispatch({ type: SET_IS_LOADING, isLoading: true })
-
-        ev.preventDefault()
         setIsUploading(true)
+        ev.preventDefault()
 
         const { secure_url } = await uploadService.uploadImg(ev)
         setUploadedImage(secure_url)
         ev.target.value = ''
-
         
         setIsDragging(false)
-        setIsUploading(false)
 
         setTimeout(() => {
-            dispatch({ type: SET_IS_LOADING, isLoading: false })
-        }, 0);
+            setIsUploading(false)
+        }, 0)
     }
 
     const handleDragOver = (e) => {
@@ -44,10 +34,11 @@ export function ImgUploader({ uploadedImage, setUploadedImage }) {
 
     return (
         <>
-            {isLoading ? <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
+            {isUploading
+                ? <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
                 : !uploadedImage && (
                     <div
-                        className={`drag-wrapper ${(isDragging && !isUploading) ? 'drag' : ''}`}
+                        className={`drag-wrapper ${isDragging ? 'drag' : ''}`}
                         onDrop={uploadImg}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}

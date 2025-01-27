@@ -16,8 +16,8 @@ export const userService = {
     updateUsers
 }
 
-function getUsers() {
-    return httpService.get('users')
+function getUsers(text) {
+    return httpService.get('users', {text: text})
 }
 
 function getById(userId) {

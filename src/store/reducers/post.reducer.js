@@ -21,6 +21,7 @@ const initialState = {
         postModal: { open: false },
         dialogueModal: { open: false },
         menuModal: { open: false },
+        switchUserModal: { open: false }
     }
 
 }

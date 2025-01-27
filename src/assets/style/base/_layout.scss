@@ -3,13 +3,17 @@
 .main-app {
     @include grid(column);
 
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: max-content min-content 1fr;
+    
+    &:has(.user-menu-overlay) {
+        grid-template-columns: max-content min-content min-content 1fr;
+    }
 
     @include for-mobile-layout {
         grid-auto-flow: row;
 
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr max-content
+        grid-template-rows: max-content max-content
     }
 
     >.side-bar {
@@ -49,6 +53,55 @@
                 display: none;
             }
         }
+
+    }
+
+    >.search-overlay {
+
+        >.search-container {
+
+            >.search-bar {
+                @include grid(column, $align: center);
+
+                grid-template-columns: max-content 1fr max-content;
+
+                &:not(:has(.search-svg)) {
+                    grid-template-columns: 1fr max-content;
+                }
+
+                >img,
+                >svg {
+                    justify-self: end;
+                }
+            }
+
+            >.results {
+
+                >.found-user-details {
+
+                    @include grid(column, $align: center);
+
+                    grid-template-columns: max-content 1fr max-content;
+
+                    >.user-image {
+                        @include grid(row, $place: center)
+                    }
+
+                    >.header-details-container {
+
+                        >.header-details {
+                            @include grid(column, $align: center);
+
+                            grid-template-columns: repeat(5, max-content);
+                        }
+                    }
+                }
+
+                >.no-users-found {
+                    @include grid(row, $justify: center)
+                }
+            }
+        }
     }
 
     >.main-container {
@@ -59,7 +112,11 @@
             grid-template-rows: max-content;
         }
 
-        &:has(div:has(.user-bar-container)) {
+        &:has(.explore-container) {
+            @include grid(row, $justify: center)
+        }
+
+        &:has(.user-bar-container) {
             @include grid(column);
 
             >.post-container {
@@ -77,8 +134,8 @@
         >.user-bar-container {
             justify-self: start;
 
-            >.loggedInUser-details,
-            >.suggestedUser-details {
+            >.loggedIn-user-details,
+            >.suggested-user-details {
 
                 @include grid(column, $align: center);
 
@@ -166,7 +223,7 @@
 
             >.post-submit-container {
                 @include grid(row, $place: center);
-                // grid-template-rows: max-content max-content;
+                grid-template-rows: max-content max-content;
 
                 >.header {
                     @include grid(column, $align: center);
@@ -376,15 +433,21 @@
     }
 }
 
+.explore-container {
+    @include grid(row, $justify: center);
+
+    grid-template-columns: repeat(3, 1fr)
+}
+
 .user-page-container {
 
     @include grid(row, $place: center);
 
     .user-page-header-container {
 
-        @include grid(column);
+        @include grid(column, $justify: center);
 
-        grid-template-columns: max-content max-content;
+        grid-template-columns: minmax(180px, 280px) max-content;
 
         .user-image {
             @include grid(row, $place: center)
@@ -531,13 +594,36 @@
 
 .menu-modal-overlay {
 
-    .modal-container {
+    >.modal-container {
 
-        .modal {
+        >.modal {
             @include grid(row, $place: center);
 
-            .menu-container {
+            >.menu-container {
                 @include grid(row, $place: center);
+            }
+        }
+    }
+
+}
+
+.switch-modal-overlay {
+
+    >.modal-container {
+
+        >.modal {
+            @include grid(row, $place: center);
+
+            >.switch-user-container {
+                @include grid(column, $place: center);
+
+                >div {
+                    justify-self: end;
+                }
+
+                >button {
+                    justify-self: start;
+                }
             }
         }
     }

@@ -9,14 +9,16 @@
 
     .user-page-header-container {
 
-        // width: 100%;
+        width: 100%;
 
         .user-image {
 
             margin-inline-end: 2em;
+            margin-block-start: 1em;
             margin-block-end: 1em;
 
-            width: 180px;
+            // min-width: 180px;
+            // max-width: 280px;
 
             img {
                 border-radius: 999px;
@@ -60,8 +62,6 @@
             }
 
             .user-data {
-
-                margin-block-start: 1em;
 
                 width: 400px;
                 height: 25px;
