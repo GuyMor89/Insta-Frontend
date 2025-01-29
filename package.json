@@ -21,6 +21,7 @@
     "redux": "^5.0.1",
     "sass-embedded": "^1.83.1",
     "scss": "^0.2.4",
+    "socket.io-client": "^4.8.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {

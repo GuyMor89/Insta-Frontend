@@ -1,180 +1,185 @@
 @use '../base/mixins' as *;
 @use '../base/functions' as *;
 
-.side-bar {
-    position: sticky;
+.main-app {
 
-    height: 100vh;
-    top: 0;
+    >.side-bar {
+        position: sticky;
 
-    z-index: 20;
+        height: 100vh;
+        top: 0;
 
-    background-color: white;
-    border-inline-end: 1px solid hsl(0, 0%, 86%);
-
-    @include for-mobile-layout {
-        z-index: 100;
-        border: none;
-        border-block-start: 1px solid hsl(0, 0%, 86%);
-    }
-
-    @include for-mobile-layout {
-        position: fixed;
-
-        bottom: 0;
-        top: auto;
-
-        height: inherit;
-        width: 100%;
+        z-index: 20;
 
         background-color: white;
-    }
+        border-inline-end: 1px solid hsl(0, 0%, 86%);
 
-    >div {
-        padding: em(12px);
-        margin-block-end: 0.45em;
-        margin-inline: 0.75em;
-
-        width: 208px;
-
-        border-radius: 8px;
-
-        transition: background-color 200ms;
-
-        cursor: pointer;
-
-        @include for-narrow-layout {
-            width: max-content;
-        }
-        
         @include for-mobile-layout {
-            margin: 0;
+            z-index: 100;
+            border: none;
+            border-block-start: 1px solid hsl(0, 0%, 86%);
         }
 
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.043);
+        @include for-mobile-layout {
+            position: fixed;
+
+            bottom: 0;
+            top: auto;
+
+            height: inherit;
+            width: 100%;
+
+            background-color: white;
         }
 
-        &:active {
-            background-color: rgba(0, 0, 0, 0.02);
+        >div {
+            padding: em(12px);
+            margin-block-end: 0.45em;
+            margin-inline: 0.75em;
 
-            span,
-            svg {
-                color: rgba(0, 0, 0, 0.5);
+            width: 208px;
+
+            border-radius: 8px;
+
+            transition: background-color 200ms;
+
+            cursor: pointer;
+
+            @include for-narrow-layout {
+                width: max-content;
             }
 
-            svg {
-                scale: 0.9;
+            @include for-mobile-layout {
+                margin: 0;
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.043);
+            }
+
+            &:active {
+                background-color: rgba(0, 0, 0, 0.02);
+
+                span,
+                svg {
+                    color: rgba(0, 0, 0, 0.5);
+                }
+
+                svg {
+                    scale: 0.9;
+                }
+
+                img {
+                    border: 2px solid hsl(0, 0%, 50%);
+                    scale: 0.9;
+
+                    &.bold {
+                        scale: 0.9;
+                        border: 2px solid hsl(0, 0%, 50%);
+                    }
+                }
+            }
+
+            svg,
+            img {
+                // margin-inline-start: 0.4em;
+                margin-inline-end: 1em;
+                height: 24px;
+                width: 24px;
+
+                transition: scale 200ms, background-color 500ms, border 500ms;
+
+                @include for-narrow-layout {
+                    margin-inline-end: 0;
+                }
             }
 
             img {
-                border: 2px solid hsl(0, 0%, 50%);
-                scale: 0.9;
+                border-radius: 999px;
 
                 &.bold {
-                    scale: 0.9;
-                    border: 2px solid hsl(0, 0%, 50%);
+                    border: 2px solid black;
+                }
+            }
+
+            span {
+
+                @include for-narrow-layout {
+                    display: none;
+                }
+
+                &.bold {
+                    font-weight: 700;
                 }
             }
         }
 
-        svg,
-        img {
-            // margin-inline-start: 0.4em;
-            margin-inline-end: 1em;
-            height: 24px;
-            width: 24px;
+        .logo-btn {
 
-            transition: scale 200ms, background-color 500ms, border 500ms;
 
             @include for-narrow-layout {
-                margin-inline-end: 0;
-            }
-        }
-
-        img {
-            border-radius: 999px;
-
-            &.bold {
-                border: 2px solid black;
-            }
-        }
-
-        span {
-
-            @include for-narrow-layout {
-                display: none;
+                margin-block-start: 1.5em;
+                margin-block-end: 2.05em;
             }
 
-            &.bold {
-                font-weight: 700;
+            @include for-mobile-layout {
+                display: none !important;
             }
-        }
-    }
-
-    .logo-btn {
-
-        
-        @include for-narrow-layout {
-            margin-block-start: 1.5em;
-            margin-block-end: 2.05em;
-        }
-        
-        @include for-mobile-layout {
-            display: none !important;
-        }
-
-        @include for-wide-layout {
-            &:hover {
-                background-color: white;
-            }
-
-            &:active {
-                background-color: white;
-            }
-        }
-
-        .logo-image {
 
             @include for-wide-layout {
-                display: none;
+                &:hover {
+                    background-color: white;
+                }
+
+                &:active {
+                    background-color: white;
+                }
             }
-            @include for-normal-layout {
-                display: none;
+
+            .logo-image {
+
+                @include for-wide-layout {
+                    display: none;
+                }
+
+                @include for-normal-layout {
+                    display: none;
+                }
+
+                @include for-narrow-layout {
+                    display: block;
+                }
             }
-            @include for-narrow-layout {
-                display: block;
+
+            .logo-name {
+                margin-block: 0.25em;
+                margin-inline-start: 0em;
+
+                font-family: Grand Hotel;
+                font-size: 2em;
+
+                &:hover {
+                    background-color: white;
+                }
+
+                @include for-narrow-layout {
+                    display: none;
+                }
             }
         }
 
-        .logo-name {
-            margin-block: 0.25em;
-            margin-inline-start: 0em;
+        >.profile-btn {
+            padding: em(10px);
 
-            font-family: Grand Hotel;
-            font-size: 2em;
-
-            &:hover {
-                background-color: white;
-            }
-
-            @include for-narrow-layout {
-                display: none;
+            img {
+                width: 28px;
+                height: 28px;
             }
         }
-    }
 
-    >.profile-btn {
-        padding: em(10px);
-
-        img {
-            width: 28px;
-            height: 28px;
+        >.more-btn {
+            margin-block-end: 29px;
         }
-    }
 
-    >.more-btn {
-        margin-block-end: 29px;
     }
-
 }

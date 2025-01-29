@@ -67,8 +67,8 @@ export function GlobalModal() {
         }))
 
         async function switchUser() {
-            // await userActions.logoutUser()
-            await userActions.loginUser({username: chosenUser, password: 'vageta44'})
+            await userActions.loginUser({ username: chosenUser, password: 'vageta44' })
+
         }
 
         return (
@@ -79,7 +79,7 @@ export function GlobalModal() {
                         onChange={(option) => setChosenUser(option.value)}
                         placeholder="Choose a user"
                     />
-                    <button onClick={() => switchUser()}>Log in</button>
+                    <button onClick={() => { switchUser(); postActions.closeModal('switch') }}>Log in</button>
                 </div>
             </Modal>
         )

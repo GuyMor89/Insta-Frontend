@@ -17,7 +17,7 @@ export const userService = {
 }
 
 function getUsers(text) {
-    return httpService.get('users', {text: text})
+    return httpService.get('users', { text })
 }
 
 function getById(userId) {
@@ -75,7 +75,7 @@ async function update(userToUpdate) {
 
 async function updateUsers(type, userToFollowID) {
     try {
-        const users = await httpService.put(BASE_URL + userToFollowID, {type})
+        const users = await httpService.put(BASE_URL + userToFollowID, { type })
         return users
     } catch (err) {
         console.log(err)

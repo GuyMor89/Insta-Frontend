@@ -4,7 +4,7 @@
     @include grid(column);
 
     grid-template-columns: max-content min-content 1fr;
-    
+
     &:has(.user-menu-overlay) {
         grid-template-columns: max-content min-content min-content 1fr;
     }
@@ -437,6 +437,121 @@
     @include grid(row, $justify: center);
 
     grid-template-columns: repeat(3, 1fr)
+}
+
+.messenger-container {
+    @include grid(column);
+
+    grid-template-columns: max-content 1fr;
+
+    >.side-bar {
+        @include grid(row);
+
+        grid-template-rows: repeat(3, max-content) 1fr;
+
+        >.side-bar-header {
+            @include grid(column);
+
+            >svg {
+                justify-self: end;
+            }
+        }
+
+        >.messages-list {
+            @include grid(row);
+
+            grid-auto-rows: max-content;
+
+            &:has(.no-messages-found) {
+                @include grid(row, $place: center)
+            }
+
+            .user-details {
+                @include grid(column, $align: center);
+
+                grid-template-columns: max-content 1fr max-content;
+
+                >.user-image {
+                    @include grid(row, $place: center)
+                }
+            }
+        }
+    }
+
+    >.chosen-message-container {
+        @include grid(row);
+
+        grid-template-rows: max-content 1fr max-content;
+        
+        >.container-header {
+
+            >.header-details-container {
+                
+                @include grid(column, $place: center);
+                grid-template-columns: repeat(3, max-content);
+                
+                >.user-image {
+                    @include grid(row, $place: center)
+                }
+            }
+        }
+
+        >.message-header {
+
+            >.header-details-container {
+                
+                @include grid(row, $place: center);
+                
+                >.user-image {
+                    @include grid(row, $place: center)
+                }
+
+                >.header-details {
+                    @include grid(row, $place: center)
+                }
+            }
+
+        }
+
+        >.message-content-container {
+            @include grid(row, $align: end);
+
+            >.message-container {
+                @include grid(row);  
+    
+                grid-auto-rows: max-content;
+                
+                >.message {
+                    @include grid(row, $justify: center, $align: end);  
+                    
+                    align-self: end;
+                    
+                    >.text{
+                        justify-self: end;
+                    }
+                }
+            }
+        }
+
+        >.send-message-container {
+            >.message-bar {
+                @include grid(column);
+
+                grid-template-columns: 1fr max-content
+            }
+        }
+
+        &:has(.start-new-message) {
+            @include grid(row, $place: center);
+
+            grid-template-rows: 1fr;
+            
+            >.start-new-message {
+                @include grid(row, $place: center)
+            }
+        }
+
+    }
 }
 
 .user-page-container {

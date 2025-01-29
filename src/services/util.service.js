@@ -33,7 +33,7 @@ function debounce(func, wait) {
 }
 
 function formatDate(ms) {
-    const date = new Date(ms)
+    const date = new Date(Number(ms))
 
     // Format the date and time
     const dateOptions = {

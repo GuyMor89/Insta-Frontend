@@ -13,6 +13,7 @@ import { UserModal } from './cmps/UserModal.jsx'
 import { GlobalModal } from './cmps/GlobalModal.jsx'
 import { UserBar } from './cmps/UserBar.jsx'
 import { Explore } from './pages/Explore.jsx'
+import { Messenger } from './pages/Messenger.jsx'
 
 import { SET_PREV_LOC } from './store/reducers/post.reducer.js'
 
@@ -47,8 +48,10 @@ export function Main() {
             <section className='main-container'>
                 <Routes location={prevLoc || '/'}>
                     <Route path="/" element={<><Home /><UserBar /></>} />
-                    <Route path='/:username' element={<UserPage />} />
                     <Route path='/explore' element={<Explore />} />
+                    <Route path='/:username' element={<UserPage />} />
+                    <Route path='/direct/inbox' element={<Messenger />} />
+                    <Route path='/direct/t/:id' element={<Messenger />} />
                 </Routes>
                 <Routes>
                     <Route path='/p/:id' element={<PostModal />} />

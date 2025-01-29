@@ -14,7 +14,7 @@
 
             border-block-end: 0.5px solid hsl(0, 0%, 86%);
 
-        svg {
+            >svg {
                 margin-inline-start: 1em;
                 cursor: pointer;
 
@@ -23,14 +23,14 @@
                 }
             }
 
-            span {
+            >span {
                 margin-block: 0.65em;
 
                 text-align: center;
                 font-weight: 600;
             }
 
-            .next {
+            >.next {
                 margin-inline-end: 1.1em;
                 background-color: white;
                 color: hsl(204, 100%, 48%);
@@ -75,20 +75,20 @@
                 >.user-details {
                     padding: 0.75em;
 
-                        >.user-image {
-                            margin-inline-end: 0.5em;
-                            width: 32px;
-                            height: 32px;
+                    >.user-image {
+                        margin-inline-end: 0.5em;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 999px;
+
+                        >img {
+                            width: 28.5px;
+                            height: 28.5px;
                             border-radius: 999px;
 
-                            >img {
-                                width: 28.5px;
-                                height: 28.5px;
-                                border-radius: 999px;
-
-                                border: 2.5px solid white;
-                            }
+                            border: 2.5px solid white;
                         }
+                    }
 
                     >.user-name {
 
@@ -200,7 +200,7 @@
                     }
 
                     >button {
-                       @include button($bgc: 'blue');
+                        @include button($bgc: 'blue');
                     }
                 }
             }

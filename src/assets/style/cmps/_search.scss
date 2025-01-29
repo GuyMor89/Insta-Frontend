@@ -107,7 +107,7 @@
             border-block-start: 1px solid hsl(0, 0%, 86%);
 
             >.found-user-details {
-                @include userHeader($hoverClr: black);
+                @include userHeader($imgSize: 52px, $hoverClr: black);
 
                 & {
                     padding-inline: em(14px);
@@ -122,16 +122,6 @@
 
                 &:hover {
                     background-color: hsl(0, 0%, 94%);
-                }
-
-                >.user-image {
-                    width: 52px;
-                    height: 52px;
-
-                    >img {
-                        width: 48.5px;
-                        height: 48.5px;
-                    }
                 }
 
                 >.menu,

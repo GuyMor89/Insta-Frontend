@@ -5,7 +5,9 @@
 @include modal($name: 'post-modal-overlay', $width: 85vw) {
 
     >.post-container {
-        height: 77.5vh;
+        width: 100%;
+
+        height: 70.8vh;
 
         @include mainImage;
 

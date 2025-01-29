@@ -185,7 +185,7 @@
     }
 }
 
-@mixin userHeader($lineHeight: null, $hoverClr: hsl(0, 0%, 50%)) {
+@mixin userHeader($lineHeight: null, $imgSize: 40px, $hoverClr: hsl(0, 0%, 50%)) {
     padding-block: 0.6em;
     padding-inline: 0.6em;
 
@@ -198,8 +198,8 @@
     >.user-image {
         margin-inline-end: 0.75em;
 
-        width: 40px;
-        height: 40px;
+        width: $imgSize;
+        height: $imgSize;
 
         border-radius: 999px;
         // background: linear-gradient(230deg,
@@ -216,8 +216,8 @@
         cursor: pointer;
 
         >img {
-            width: 36px;
-            height: 36px;
+            width: $imgSize - 4px;
+            height: $imgSize - 4px;
 
             border-radius: 999px;
             border: 2.5px solid white;
@@ -231,7 +231,7 @@
                 font-size: em(14px);
             }
 
-            .user-name {
+            >.user-name {
                 display: inline;
 
                 font-weight: 600;
@@ -245,7 +245,7 @@
             }
         }
 
-        .location {
+        >.location {
             padding-block-end: 0.25em;
             font-size: em(12px);
         }

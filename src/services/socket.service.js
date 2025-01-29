@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { userService } from './user/index.js'
+import { userService } from './user.service.js'
 
 export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
@@ -43,7 +43,6 @@ function createSocketService() {
             socket.emit(eventName, data)
         },
         login() {
-            console.log('hi')
             const user = userService.getLoggedinUser()
             if (user) socket.emit(SOCKET_EMIT_LOGIN, user._id)
         },
