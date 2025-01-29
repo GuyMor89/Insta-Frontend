@@ -22,6 +22,10 @@
 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+            @include for-mobile-layout {
+                width: 430px;
+            }
+            
             @include for-narrow-mobile-layout {
                 >* {
                     padding-inline: 0.75em;

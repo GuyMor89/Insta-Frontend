@@ -19,9 +19,12 @@ export function Messenger() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!messages) getMessages()
+        getMessages()
+    }, [params.id])
+
+    useEffect(() => {
         setChosenMessage(messages?.find(message => message._id === params.id) || null)
-    }, [params.id, messages])
+    }, [messages])
 
     async function getMessages() {
         const messages = await messageService.query()
@@ -67,7 +70,7 @@ export function Messenger() {
         <article className="messenger-container">
             <div className="side-bar">
                 <div className="side-bar-header">
-                    <div className="user-name">{fullLoggedInUser.username} <svg aria-label="Down chevron icon" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12"><title>Down chevron icon</title><path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path></svg></div>
+                    <div className="user-name">{fullLoggedInUser.username} <svg aria-label="Down chevron icon" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12"><title>Down chevron icon</title><path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path></svg></div>
                     <svg className="new-message-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>New message</title><path d="M12.202 3.203H5.25a3 3 0 0 0-3 3V18.75a3 3 0 0 0 3 3h12.547a3 3 0 0 0 3-3v-6.952" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M10.002 17.226H6.774v-3.228L18.607 2.165a1.417 1.417 0 0 1 2.004 0l1.224 1.225a1.417 1.417 0 0 1 0 2.004Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.848" x2="20.076" y1="3.924" y2="7.153"></line></svg>
                 </div>
                 <div className="user-image">
@@ -77,7 +80,7 @@ export function Messenger() {
                 <div className="messages-list">
 
                     {messages.map(message =>
-                        <div className={`user-details`} onClick={() => { navigate(chosenMessage ? '/direct/inbox' : `/direct/t/${message._id}`) }}>
+                        <div className={`user-details ${chosenMessage?._id === message._id ? 'chosen' : ''}`} onClick={() => { navigate(chosenMessage?._id === message._id ? '/direct/inbox' : `/direct/t/${message._id}`) }} key={message._id}>
                             <div className="user-image">
                                 <img src={message.user.imgUrl} />
                             </div>

@@ -26,14 +26,17 @@ function debounce(func, wait) {
 
     return function executedFunction(...args) {
         clearTimeout(timeout)
-        timeout = setTimeout(()=>{
+        timeout = setTimeout(() => {
             func(...args)
         }, wait)
     }
 }
 
 function formatDate(ms) {
-    const date = new Date(Number(ms))
+    const timeValue = typeof ms === "string"
+        ? (isNaN(ms) ? Date.parse(ms) : Number(ms))
+        : ms
+    const date = new Date(timeValue)
 
     // Format the date and time
     const dateOptions = {
@@ -81,8 +84,8 @@ function formatDate(ms) {
     const days = Math.floor(hours / 24)
     const months = Math.floor(days / 30)
 
-    const timeStampYear = new Intl.DateTimeFormat('en-US', {year: 'numeric'}).format(date)
-    const currentYear = new Intl.DateTimeFormat('en-US', {year: 'numeric'}).format(new Date())
+    const timeStampYear = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(date)
+    const currentYear = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(new Date())
 
     let relativeTime
     if (days > 7 && timeStampYear !== currentYear) {

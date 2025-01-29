@@ -9,7 +9,7 @@ import { postActions } from "../store/actions/post.actions.js"
 
 export function CreateModal() {
 
-    const user = useSelector(storeState => storeState.userModule.fullLoggedInUser)
+    const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const modalOpen = useSelector(storeState => storeState.postModule.modals.createModal.open)
 
     const [uploadedImage, setUploadedImage] = useState(null)
@@ -75,9 +75,9 @@ export function CreateModal() {
                                 && <div className="post-details">
                                     <div className="user-details">
                                         <div className="user-image">
-                                            <img src={user.imgUrl} />
+                                            <img src={fullLoggedInUser.imgUrl} />
                                         </div>
-                                        <div className="user-name">{user.username}</div>
+                                        <div className="user-name">{fullLoggedInUser.username}</div>
                                     </div>
 
                                     <Formik

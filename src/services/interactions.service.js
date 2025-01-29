@@ -23,7 +23,7 @@ function unlikePost(post, fullLoggedInUser) {
 }
 
 function addCommentToPost(post, fullLoggedInUser, comment, commentInput, setComment) {
-    const commentToAdd = { _id: utilService.makeId(), createdAt: new Date(), by: { _id: fullLoggedInUser._id, imgUrl: fullLoggedInUser.imgUrl, username: fullLoggedInUser.username }, text: comment }
+    const commentToAdd = { _id: utilService.makeId(), createdAt: new Date.now(), by: { _id: fullLoggedInUser._id, imgUrl: fullLoggedInUser.imgUrl, username: fullLoggedInUser.username }, text: comment }
 
     postActions.savePost({ ...post, comments: [...post.comments, commentToAdd] })
 
