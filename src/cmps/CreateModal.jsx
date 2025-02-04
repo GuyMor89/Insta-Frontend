@@ -6,6 +6,10 @@ import { ImgUploader } from "./ImgUploader.jsx"
 import { addFormikField } from '../cmps/Formik.jsx';
 
 import { postActions } from "../store/actions/post.actions.js"
+import { utilService } from "../services/util.service.js"
+import Cropper from "react-easy-crop";
+import { uploadService } from "../services/upload.service.js";
+import { hookService } from "../services/hook.service.js";
 
 export function CreateModal() {
 
@@ -13,9 +17,38 @@ export function CreateModal() {
     const modalOpen = useSelector(storeState => storeState.postModule.modals.createModal.open)
 
     const [uploadedImage, setUploadedImage] = useState(null)
+    const [croppedImage, setCroppedImage] = useState(null)
     const [currPage, setCurrPage] = useState(1)
 
+    const [crop, setCrop] = useState({ x: 0, y: 0 })
+    const [zoom, setZoom] = useState(1)
+    const [croppedPixels, setCroppedPixels] = useState(null)
+    const [isUploading, setIsUploading] = useState(false)
+
+    const { navigate } = hookService()
     let formikRef = null
+
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        // console.log(croppedArea, croppedAreaPixels)
+        setCroppedPixels(croppedAreaPixels)
+    }
+
+    const handleSave = async () => {
+        setIsUploading(true)
+
+        const croppedBlob = await utilService.getCroppedImg(uploadedImage, croppedPixels)
+        const croppedFile = new File([croppedBlob], "cropped-image.jpg", { type: "image/jpeg" })
+
+        setTimeout(() => {
+            setIsUploading(false)
+        }, 1000)
+
+        const { secure_url } = await uploadService.uploadImg({ target: { files: [croppedFile] }, type: "change" })
+
+        setCroppedImage(secure_url)
+
+        setCurrPage(3)
+    }
 
     function closeModal() {
         if (uploadedImage) postActions.openModal('dialogue')
@@ -29,6 +62,7 @@ export function CreateModal() {
     useEffect(() => {
         if (!modalOpen) {
             setUploadedImage(null)
+            setCroppedImage(null)
             setCurrPage(1)
         }
     }, [modalOpen])
@@ -43,14 +77,14 @@ export function CreateModal() {
         )
         if (currPage === 2) return (
             <div className="header">
-                <svg className="back" onClick={() => { setUploadedImage(null); setCurrPage(1) }} fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Back</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                <svg className="back" onClick={() => { setUploadedImage(null); setCroppedImage(null); setCurrPage(1) }} fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Back</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
                 <span>Crop</span>
-                <div className="next" onClick={() => setCurrPage(3)}>Next</div>
+                <div className="next" onClick={() => handleSave()}>Next</div>
             </div>
         )
         if (currPage === 3) return (
             <div className="header">
-                <svg className="back" onClick={() => setCurrPage(2)} fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Back</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                <svg className="back" onClick={() => { setCroppedImage(null); setCurrPage(2) }} fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Back</title><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="2.909" x2="22.001" y1="12.004" y2="12.004"></line><polyline fill="none" points="9.276 4.726 2.001 12.004 9.276 19.274" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
                 <span>Create new post</span>
                 <div className="next" onClick={() => { formikRef && formikRef.submitForm(); postActions.closeModal('create') }}>Share</div>
             </div>
@@ -58,6 +92,12 @@ export function CreateModal() {
     }
 
     if (!modalOpen) return
+
+    function handleMainImages() {
+        if (croppedImage) return <img src={croppedImage} />
+        else if (isUploading) return <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
+        return <Cropper image={uploadedImage} crop={crop} zoom={zoom} aspect={1 / 1} onCropChange={setCrop} onCropComplete={onCropComplete} onZoomChange={setZoom} />
+    }
 
     return (
         <div className='create-modal-overlay' onClick={closeModal}>
@@ -67,10 +107,7 @@ export function CreateModal() {
                     <article className='post-submit-container'>
                         {handleHeader()}
                         <div className="post-container">
-                            {uploadedImage
-                                && <div className='post-image' >
-                                    <img src={uploadedImage} />
-                                </div>}
+                            {uploadedImage && <div className='post-image'>{handleMainImages()}</div>}
                             {currPage === 3
                                 && <div className="post-details">
                                     <div className="user-details">
@@ -87,7 +124,8 @@ export function CreateModal() {
                                         }}
                                         onSubmit={(values) => {
                                             console.log(values)
-                                            postActions.savePost({ caption: values.postBody, loc: values.postLocation, imgUrl: uploadedImage })
+                                            postActions.savePost({ caption: values.postBody, loc: values.postLocation, imgUrl: croppedImage })
+                                            navigate(`/${fullLoggedInUser.username}`)
                                         }}
                                         innerRef={(instance) => (formikRef = instance)}
                                     >

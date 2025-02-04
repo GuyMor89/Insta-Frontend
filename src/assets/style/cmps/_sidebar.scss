@@ -6,7 +6,7 @@
     >.side-bar {
         position: sticky;
 
-        height: 100vh;
+        height: 100dvh;
         top: 0;
 
         z-index: 20;
@@ -16,15 +16,15 @@
 
         @include for-mobile-layout {
             position: fixed;
-            
+
             bottom: 0;
             left: 0;
             top: auto;
-            
+
             z-index: 100;
             border: none;
             border-block-start: 1px solid hsl(0, 0%, 86%);
-            
+
             height: max-content;
             width: 100%;
 
@@ -32,6 +32,8 @@
         }
 
         >div {
+            position: relative;
+
             padding: em(12px);
             margin-block-end: 0.45em;
             margin-inline: 0.75em;
@@ -101,7 +103,7 @@
                 }
             }
 
-            span {
+            >span {
 
                 @include for-narrow-layout {
                     display: none;
@@ -111,9 +113,47 @@
                     font-weight: 700;
                 }
             }
+
+            >.notification-bubble-messenger {
+                position: absolute;
+
+                top: 6px;
+                right: 4px;
+
+                width: 20px;
+                height: 20px;
+
+                text-align: center;
+                font-size: rem(10px);
+                line-height: 15px;
+
+                color: white;
+                background-color: hsl(355, 100%, 59%);
+                border: 2px solid white;
+                border-radius: 999px;
+            }
+
+            >.notification-bubble-notifications {
+                position: absolute;
+
+                top: 10px;
+                right: 7px;
+
+                width: 12px;
+                height: 12px;
+
+                background-color: hsl(355, 100%, 59%);
+                border: 2px solid white;
+                border-radius: 999px;
+
+                @include for-normal-layout {
+                    right: auto;
+                    left: 27px
+                }
+            }
         }
 
-        .logo-btn {
+        >.logo-btn {
 
 
             @include for-narrow-layout {
@@ -123,6 +163,16 @@
 
             @include for-mobile-layout {
                 display: none !important;
+            }
+
+            @include for-normal-layout {
+                &:hover {
+                    background-color: white;
+                }
+
+                &:active {
+                    background-color: white;
+                }
             }
 
             @include for-wide-layout {
@@ -135,7 +185,7 @@
                 }
             }
 
-            .logo-image {
+            >.logo-image {
 
                 @include for-wide-layout {
                     display: none;
@@ -150,7 +200,7 @@
                 }
             }
 
-            .logo-name {
+            >.logo-name {
                 margin-block: 0.25em;
                 margin-inline-start: 0em;
 

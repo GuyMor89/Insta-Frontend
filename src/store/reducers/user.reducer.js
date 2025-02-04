@@ -1,11 +1,14 @@
 export const SET_FULL_LOGGEDIN_USER = 'SET_FULL_LOGGEDIN_USER'
 export const SET_USERS = 'SET_USERS'
-export const REMOVE_USER = 'REMOVE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
+export const SET_MESSAGES = 'SET_MESSAGES'
+export const SET_NEW_NOTIFICATIONS = 'SET_NEW_NOTIFICATIONS'
 
 const initialState = {
     users: [],
-    fullLoggedInUser: null
+    fullLoggedInUser: null,
+    messages: [],
+    newNotifications: { message: false, other: false }
 }
 
 export function userReducer(state = initialState, action) {
@@ -27,11 +30,17 @@ export function userReducer(state = initialState, action) {
                 users: state.users.map(user => user._id === action.user._id ? action.user : user),
                 fullLoggedInUser: (action.user._id === state.fullLoggedInUser._id) ? action.user : state.fullLoggedInUser
             }
-        case REMOVE_USER:
+        case SET_MESSAGES:
             return {
                 ...state,
-                users: state.users.filter(user => user._id !== action.userID)
+                messages: action.messages
             }
+        case SET_NEW_NOTIFICATIONS:
+            return {
+                ...state,
+                newNotifications: action.newNotifications
+            }
+
 
         default:
             return state

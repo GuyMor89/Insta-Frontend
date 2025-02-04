@@ -5,7 +5,8 @@ const BASE_URL = 'messages/'
 export const messageService = {
     query,
     add,
-    update
+    addLine,
+    markRead
 }
 
 function query() {
@@ -16,6 +17,10 @@ function add(secondUserID) {
     return httpService.post(BASE_URL, { secondUserID })
 }
 
-function update(messageID, lineToSend) {
-    return httpService.put(BASE_URL + messageID, { lineToSend })
+function addLine(secondUserID, messageID, lineToSend) {
+    return httpService.put(BASE_URL + messageID, { secondUserID, lineToSend })
+}
+
+function markRead(messageID) {
+    return httpService.put(BASE_URL + 'read/' + messageID)
 }

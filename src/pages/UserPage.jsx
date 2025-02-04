@@ -35,7 +35,7 @@ export function UserPage() {
     }
 
     function handleButtons() {
-        if (myUserPage) return (<div className="follow-btn grey">Edit profile</div>)
+        if (myUserPage) return (<div className="follow-btn grey"  onClick={() => postActions.openModal('switch')}>Switch User</div>)
         if (!myUserPage && !alreadyFollowingUser) return (<><div className="follow-btn" onClick={() => interactionService.followUser(currUser._id)}>Follow</div><button className="message-btn" onClick={() => startMessage()}>Message</button></>)
         if (!myUserPage && alreadyFollowingUser) return (<><div className="follow-btn grey" onClick={() => postActions.openModal('menu', currUser._id)}>Following <span><svg fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12" style={{ transform: 'rotate(180deg)' }}><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg></span></div><button className="message-btn" onClick={() => startMessage()}>Message</button></>)
     }

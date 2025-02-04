@@ -7,6 +7,7 @@ import { addFormikField } from '../cmps/Formik.jsx';
 import * as Yup from 'yup'
 
 import { userActions } from '../store/actions/user.actions.js'
+import { useNavigate } from 'react-router-dom';
 
 export function LoginSignup() {
 
@@ -14,6 +15,8 @@ export function LoginSignup() {
     const [currState, setCurrState] = useState('login')
     const [isLoggedIn, setIsLoggedIn] = useState(true)
     const [checkUser, setCheckUser] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (fullLoggedInUser) return setIsLoggedIn(true)
@@ -30,6 +33,7 @@ export function LoginSignup() {
         if (currState === 'login') await userActions.loginUser(values)
         if (currState === 'signup') await userActions.signupUser(values)
         setCheckUser(!checkUser)
+        navigate('/')
     }
 
     function handleChooserBtn() {

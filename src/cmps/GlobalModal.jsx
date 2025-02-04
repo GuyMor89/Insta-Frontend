@@ -7,6 +7,7 @@ import { Modal } from "./Modal.jsx";
 import { interactionService } from "../services/interactions.service.js";
 import { postActions } from "../store/actions/post.actions.js";
 import { userActions } from "../store/actions/user.actions.js";
+import { hookService } from "../services/hook.service.js";
 
 
 export function GlobalModal() {
@@ -14,6 +15,8 @@ export function GlobalModal() {
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const users = useSelector(storeState => storeState.userModule.users)
     const [chosenUser, setChosenUser] = useState(null)
+
+    const { navigate } = hookService()
 
     const openModals = useSelector(storeState => {
         const entry = Object.entries(storeState.postModule?.modals).filter(([modalName, modal]) => modal.open)
@@ -68,7 +71,7 @@ export function GlobalModal() {
 
         async function switchUser() {
             await userActions.loginUser({ username: chosenUser, password: 'vageta44' })
-
+            navigate('/')
         }
 
         return (

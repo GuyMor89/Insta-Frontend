@@ -3,10 +3,10 @@
 .main-app {
     @include grid(column);
 
-    grid-template-columns: max-content min-content 1fr;
+    grid-template-columns: max-content min-content min-content 1fr;
 
     &:has(.user-menu-overlay) {
-        grid-template-columns: max-content min-content min-content 1fr;
+        grid-template-columns: max-content min-content min-content min-content 1fr;
     }
 
     @include for-mobile-layout {
@@ -19,7 +19,7 @@
     >.side-bar {
         @include grid(row);
 
-        grid-template-rows: repeat(7, max-content);
+        grid-template-rows: repeat(8, max-content);
 
         @include for-mobile-layout {
             grid-row: 2/3;
@@ -27,6 +27,26 @@
             grid-template-columns: repeat(6, 1fr);
 
             justify-items: center;
+
+            >.notifications-btn {
+                display: none;
+            }
+
+            >.messenger-btn {
+                grid-column: 5/6;
+                grid-row: 1/2;
+            }
+
+            >.create-btn {
+                grid-column: 4/5;
+                grid-row: 1/2;
+            }
+
+            >.profile-btn {
+                grid-column: 6/7;
+                grid-row: 1/2;
+                align-self: start;
+            }
         }
 
         >div {
@@ -42,11 +62,7 @@
             align-self: end;
         }
 
-        .profile-btn {
-            @include for-mobile-layout {
-                align-self: start;
-            }
-        }
+
 
         .more-btn {
             @include for-mobile-layout {
@@ -99,6 +115,40 @@
 
                 >.no-users-found {
                     @include grid(row, $justify: center)
+                }
+            }
+        }
+    }
+
+    >.notifications-overlay {
+
+        >.notifications-container {
+
+            >.notifications {
+
+                >.activity-container {
+                    @include grid(column, $place: center);
+
+                    >.from-user-details {
+
+                        @include grid(column, $align: center);
+
+                        grid-template-columns: max-content 1fr max-content;
+
+                        >.user-image {
+                            @include grid(row, $place: center)
+                        }
+
+                        >.header-details-container {
+
+                            >.header-details {
+                                // @include grid(column);
+
+                                grid-template-rows: repeat(2, 1fr);
+                                grid-template-columns: repeat(3, max-content)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -164,6 +214,8 @@
         >.post-container {
             @include grid(row, $justify: center);
 
+            grid-template-rows: max-content max-content;
+
             >.post {
                 >.user-details {
                     @include grid(column, $align: center);
@@ -210,6 +262,14 @@
                         grid-template-columns: repeat(2, max-content);
                     }
                 }
+            }
+
+            >.observed-div {
+                @include grid(row, $place: center);
+            }
+
+            >.all-caught-up {
+                @include grid(row, $place: center)
             }
         }
     }
@@ -314,6 +374,10 @@
 
                 grid-template-columns: 1fr clamp(300px, 50%, 330px);
 
+                @include for-mobile-layout {
+                    grid-template-columns: 1fr;
+                }
+
 
                 >.post-image {
                     @include grid(row, $place: center)
@@ -322,7 +386,7 @@
                 >.post-details {
                     @include grid(row);
 
-                    grid-template-rows: repeat(5, max-content);
+                    grid-template-rows: max-content 1fr repeat(4, max-content);
 
 
                     >.user-details {
@@ -436,13 +500,32 @@
 .explore-container {
     @include grid(row, $justify: center);
 
-    grid-template-columns: repeat(3, 1fr)
+    grid-template-columns: repeat(3, 1fr);
+
+    /* In odd groups (items 1–5, 11–15, …): expand the first item (top left) */
+    >.post:nth-child(10n + 1) {
+        grid-row: span 2;
+        grid-column: 1;
+        /* Place it in the left column */
+    }
+
+    /* In even groups (items 6–10, 16–20, …): expand the first item of that group (top right) */
+    >.post:nth-child(10n + 8) {
+        grid-row: span 2;
+        grid-column: 3;
+        /* Place it in the right column */
+    }
+
 }
 
 .messenger-container {
     @include grid(column);
 
     grid-template-columns: max-content 1fr;
+
+    @include for-narrow-layout {
+        grid-template-columns: inherit;
+    }
 
     >.side-bar {
         @include grid(row);
@@ -481,15 +564,15 @@
     >.chosen-message-container {
         @include grid(row);
 
-        grid-template-rows: max-content 1fr max-content;
-        
+        grid-template-rows: max-content max-content 1fr max-content;
+
         >.container-header {
 
             >.header-details-container {
-                
+
                 @include grid(column, $place: center);
                 grid-template-columns: repeat(3, max-content);
-                
+
                 >.user-image {
                     @include grid(row, $place: center)
                 }
@@ -499,9 +582,9 @@
         >.message-header {
 
             >.header-details-container {
-                
+
                 @include grid(row, $place: center);
-                
+
                 >.user-image {
                     @include grid(row, $place: center)
                 }
@@ -517,17 +600,23 @@
             @include grid(row, $align: end);
 
             >.message-container {
-                @include grid(row);  
-    
+                @include grid(row);
+
                 grid-auto-rows: max-content;
-                
+
                 >.message {
-                    @include grid(row, $justify: center, $align: end);  
-                    
+                    @include grid(row, $justify: center, $align: end);
+
                     align-self: end;
-                    
-                    >.text{
+
+                    >.text {
                         justify-self: end;
+
+                        @include grid(column, $place: center);
+
+                        &.grey {
+                            justify-self: start
+                        }
                     }
                 }
             }
@@ -545,7 +634,7 @@
             @include grid(row, $place: center);
 
             grid-template-rows: 1fr;
-            
+
             >.start-new-message {
                 @include grid(row, $place: center)
             }
@@ -563,6 +652,10 @@
         @include grid(column, $justify: center);
 
         grid-template-columns: minmax(180px, 280px) max-content;
+        
+        @include for-mobile-layout {
+            grid-template-columns: none
+        }
 
         .user-image {
             @include grid(row, $place: center)
@@ -621,6 +714,10 @@
 
             grid-template-columns: repeat(3, 1fr);
             gap: 0.25em;
+
+            @include for-mobile-layout {
+                gap: 0;
+            }
 
             &:has(.no-posts) {
 

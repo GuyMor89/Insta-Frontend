@@ -45,7 +45,7 @@ export function Search({ searchOpen, setSearchOpen }) {
 
     return (
         <article className="search-overlay">
-            <div className={`search-container ${searchOpen && 'open'}`}>
+            <div className={`search-container ${searchOpen ? 'open' : ''}`}>
                 <div className="title">
                     Search
                 </div>

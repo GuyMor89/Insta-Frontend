@@ -3,7 +3,8 @@ export const utilService = {
     getRandomIntInclusive,
     debounce,
     formatDate,
-    animateCSS
+    animateCSS,
+    getCroppedImg
 }
 
 function makeId(length = 6) {
@@ -120,3 +121,37 @@ function animateCSS(el, animation = 'bounce') {
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
 }
+
+async function getCroppedImg(imageSrc, croppedAreaPixels) {
+    const createImage = (url) =>
+      new Promise((resolve, reject) => {
+        const image = new Image()
+        image.crossOrigin = "anonymous"
+        image.src = url
+        image.onload = () => resolve(image)
+        image.onerror = (error) => reject(error)
+      })
+  
+    const image = await createImage(imageSrc)
+    const canvas = document.createElement("canvas")
+    const ctx = canvas.getContext("2d")
+  
+    // Set canvas size to the cropped area
+    canvas.width = croppedAreaPixels.width
+    canvas.height = croppedAreaPixels.height
+  
+    ctx.drawImage(
+      image,
+      croppedAreaPixels.x, croppedAreaPixels.y, // Source start (where to crop)
+      croppedAreaPixels.width, croppedAreaPixels.height, // Source size (crop dimensions)
+      0, 0, // Destination start (canvas placement)
+      canvas.width, canvas.height // Destination size (match cropped area)
+    )
+  
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        resolve(blob) // Returns cropped Blob image
+      }, "image/jpeg")
+    })
+  }
+  

@@ -18,9 +18,7 @@ export function ImgUploader({ uploadedImage, setUploadedImage }) {
         
         setIsDragging(false)
 
-        setTimeout(() => {
-            setIsUploading(false)
-        }, 0)
+        setIsUploading(false)
     }
 
     const handleDragOver = (e) => {
@@ -35,7 +33,7 @@ export function ImgUploader({ uploadedImage, setUploadedImage }) {
     return (
         <>
             {isUploading
-                ? <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
+                ? <img id='loader' className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
                 : !uploadedImage && (
                     <div
                         className={`drag-wrapper ${isDragging ? 'drag' : ''}`}

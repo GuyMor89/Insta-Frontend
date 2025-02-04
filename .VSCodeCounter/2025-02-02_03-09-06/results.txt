@@ -1,0 +1,114 @@
+Date : 2025-02-02 03:09:06
+Directory : c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend
+Total : 68 files,  10768 codes, 166 comments, 1394 blanks, all 12328 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |          2 |      6,074 |          0 |          2 |      6,076 |
+| SCSS           |         25 |      2,463 |         81 |        980 |      3,524 |
+| JavaScript JSX |         21 |      1,456 |         11 |        266 |      1,733 |
+| JavaScript     |         18 |        761 |         74 |        145 |        980 |
+| HTML           |          1 |         13 |          0 |          1 |         14 |
+| XML            |          1 |          1 |          0 |          0 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                    |         68 |     10,768 |        166 |      1,394 |     12,328 |
+| . (Files)                                                                                            |          5 |      6,129 |          1 |          7 |      6,137 |
+| src                                                                                                  |         63 |      4,639 |        165 |      1,387 |      6,191 |
+| src (Files)                                                                                          |          2 |         65 |          0 |         16 |         81 |
+| src\assets                                                                                           |         26 |      2,464 |         81 |        980 |      3,525 |
+| src\assets\img                                                                                       |          1 |          1 |          0 |          0 |          1 |
+| src\assets\style                                                                                     |         25 |      2,463 |         81 |        980 |      3,524 |
+| src\assets\style (Files)                                                                             |          1 |         24 |          4 |          7 |         35 |
+| src\assets\style\base                                                                                |          7 |        901 |         19 |        364 |      1,284 |
+| src\assets\style\cmps                                                                                |         12 |        913 |         35 |        361 |      1,309 |
+| src\assets\style\pages                                                                               |          5 |        625 |         23 |        248 |        896 |
+| src\cmps                                                                                             |         14 |        972 |          1 |        178 |      1,151 |
+| src\pages                                                                                            |          5 |        419 |         10 |         72 |        501 |
+| src\services                                                                                         |         11 |        446 |         73 |        104 |        623 |
+| src\store                                                                                            |          5 |        273 |          0 |         37 |        310 |
+| src\store (Files)                                                                                    |          1 |         13 |          0 |          5 |         18 |
+| src\store\actions                                                                                    |          2 |        154 |          0 |         21 |        175 |
+| src\store\reducers                                                                                   |          2 |        106 |          0 |         11 |        117 |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                             | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\eslint.config.js                              | JavaScript     |         37 |          0 |          2 |         39 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\index.html                                    | HTML           |         13 |          0 |          1 |         14 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\package-lock.json                             | JSON           |      6,035 |          0 |          1 |      6,036 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\package.json                                  | JSON           |         39 |          0 |          1 |         40 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\CreateRoot.jsx                            | JavaScript JSX |         13 |          0 |          5 |         18 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\Main.jsx                                  | JavaScript JSX |         52 |          0 |         11 |         63 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\img\logo.svg                       | XML            |          1 |          0 |          0 |          1 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_base.scss              | SCSS           |         38 |          1 |          7 |         46 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_functions.scss         | SCSS           |         10 |          0 |          3 |         13 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_layout.scss            | SCSS           |        539 |          5 |        258 |        802 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_loader.scss            | SCSS           |         60 |          0 |         12 |         72 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_mixins.scss            | SCSS           |        249 |         13 |         82 |        344 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_typography.scss        | SCSS           |          2 |          0 |          1 |          3 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\base\_variables.scss         | SCSS           |          3 |          0 |          1 |          4 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_create-modal.scss      | SCSS           |        141 |          5 |         63 |        209 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_dialogue-modal.scss    | SCSS           |         37 |          0 |         15 |         52 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_menu-modal.scss        | SCSS           |         28 |          0 |         12 |         40 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_notifications.scss     | SCSS           |         90 |          8 |         37 |        135 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_post-modal.scss        | SCSS           |        129 |          2 |         54 |        185 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_search.scss            | SCSS           |        110 |          6 |         42 |        158 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_sidebar.scss           | SCSS           |        159 |          1 |         59 |        219 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_switch-user-modal.scss | SCSS           |         15 |          0 |          9 |         24 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_user-bar.scss          | SCSS           |         47 |          0 |         15 |         62 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_user-menu.scss         | SCSS           |         27 |          0 |         13 |         40 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_user-modal.scss        | SCSS           |        107 |         13 |         38 |        158 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\cmps\_user-msg.scss          | SCSS           |         23 |          0 |          4 |         27 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\main.scss                    | SCSS           |         24 |          4 |          7 |         35 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\pages\_explore.scss          | SCSS           |         18 |          0 |          6 |         24 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\pages\_home.scss             | SCSS           |        205 |         19 |         93 |        317 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\pages\_login-signup.scss     | SCSS           |         72 |          0 |         29 |        101 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\pages\_messenger.scss        | SCSS           |        198 |          1 |         69 |        268 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\assets\style\pages\_user-page.scss        | SCSS           |        132 |          3 |         51 |        186 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\CreateModal.jsx                      | JavaScript JSX |        100 |          0 |         18 |        118 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\Formik.jsx                           | JavaScript JSX |         19 |          0 |          3 |         22 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\GlobalModal.jsx                      | JavaScript JSX |         69 |          0 |         18 |         87 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\HoverTracker.jsx                     | JavaScript JSX |         51 |          0 |         12 |         63 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\ImgUploader.jsx                      | JavaScript JSX |         52 |          0 |         21 |         73 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\Modal.jsx                            | JavaScript JSX |         14 |          0 |          2 |         16 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\Notifications.jsx                    | JavaScript JSX |         83 |          0 |         16 |         99 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\Post.jsx                             | JavaScript JSX |        111 |          0 |         18 |        129 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\PostModal.jsx                        | JavaScript JSX |        157 |          1 |         23 |        181 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\Search.jsx                           | JavaScript JSX |         70 |          0 |         11 |         81 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\SideBar.jsx                          | JavaScript JSX |         84 |          0 |          7 |         91 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\UserBar.jsx                          | JavaScript JSX |         57 |          0 |         10 |         67 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\UserMenu.jsx                         | JavaScript JSX |         19 |          0 |          5 |         24 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\cmps\UserModal.jsx                        | JavaScript JSX |         86 |          0 |         14 |        100 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\pages\Explore.jsx                         | JavaScript JSX |         23 |          0 |          7 |         30 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\pages\Home.jsx                            | JavaScript JSX |         55 |          6 |         11 |         72 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\pages\LoginSignup.jsx                     | JavaScript JSX |         69 |          1 |         10 |         80 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\pages\Messenger.jsx                       | JavaScript JSX |        132 |          2 |         26 |        160 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\pages\UserPage.jsx                        | JavaScript JSX |        140 |          1 |         18 |        159 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\event-bus.service.js             | JavaScript     |         25 |         13 |          7 |         45 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\hook.service.js                  | JavaScript     |         20 |          0 |          6 |         26 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\http.service.js                  | JavaScript     |         40 |          0 |          6 |         46 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\interactions.service.js          | JavaScript     |         52 |          2 |         16 |         70 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\message.service.js               | JavaScript     |         20 |          0 |          7 |         27 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\notifications.service.js         | JavaScript     |         20 |          0 |          7 |         27 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\post.service.js                  | JavaScript     |         24 |          0 |          7 |         31 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\socket.service.js                | JavaScript     |         44 |         55 |         12 |        111 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\upload.service.js                | JavaScript     |         24 |          0 |          3 |         27 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\user.service.js                  | JavaScript     |         75 |          1 |         14 |         90 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\services\util.service.js                  | JavaScript     |        102 |          2 |         19 |        123 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\store\actions\post.actions.js             | JavaScript     |         63 |          0 |          8 |         71 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\store\actions\user.actions.js             | JavaScript     |         91 |          0 |         13 |        104 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\store\reducers\post.reducer.js            | JavaScript     |         71 |          0 |          6 |         77 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\store\reducers\user.reducer.js            | JavaScript     |         35 |          0 |          5 |         40 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\src\store\store.js                            | JavaScript     |         13 |          0 |          5 |         18 |
+| c:\Users\guymo\Desktop\Dev\Projects\Instagram\Frontend\vite.config.js                                | JavaScript     |          5 |          1 |          2 |          8 |
+| Total                                                                                                |                |     10,768 |        166 |      1,394 |     12,328 |
++------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

@@ -3,29 +3,59 @@
 
 .messenger-container {
 
-    height: 100vh;
+    min-height: 100%;
+
+    @include for-narrow-layout {
+
+
+        &.message-open {
+
+            >.side-bar {
+                display: none;
+            }
+
+            >.chosen-message-container {
+                display: grid;
+            }
+        }
+
+        &:not(.message-open) {
+
+            >.side-bar {
+                display: grid;
+            }
+
+            >.chosen-message-container {
+                display: none !important;
+            }
+        }
+    }
 
     >.side-bar {
         width: 250px;
-        height: 100%;
-        
+        min-height: 100dvh;
+
         border-inline-end: 1px solid hsl(0, 0%, 86%);
-        
+
+        @include for-narrow-layout {
+            width: inherit;
+        }
+
         >.side-bar-header {
             padding-inline: rem(24px);
             padding-block-start: rem(36px);
             padding-block-end: rem(24px);
-            
+
             >.user-name {
                 font-size: rem(20px);
                 font-weight: 700;
             }
         }
-        
+
         >.user-image {
             margin-inline: rem(16px);
             padding-inline-start: rem(6px);
-            
+
             >img {
                 border-radius: 999px;
                 width: 75px;
@@ -33,9 +63,9 @@
                 object-fit: cover;
             }
         }
-        
+
         >.title {
-            padding-inline: rem(24px);
+            padding-inline: rem(14px);
             padding-block-start: rem(14px);
 
             font-weight: 700;
@@ -61,12 +91,33 @@
 
                 >.header-details-container {
                     >.header-details {
+                        position: relative;
+
                         >.user-name {
                             font-weight: 400;
 
                             &:hover {
                                 color: black
                             }
+
+                            &.bold {
+                                font-weight: 600;
+                            }
+
+                        }
+
+                        >.new-message-notification {
+                            position: absolute;
+
+                            top: 10px;
+                            right: 7px;
+
+                            width: 12px;
+                            height: 12px;
+
+                            background-color: hsl(204, 100%, 48%);
+                            border: 2px solid white;
+                            border-radius: 999px;
                         }
                     }
                 }
@@ -152,7 +203,11 @@
             scrollbar-width: none;
             // scroll-behavior: smooth;
 
-            height: calc(100vh - 318px);
+            height: calc(100dvh - 310px);
+
+            @include for-mobile-layout {
+                height: calc(100dvh - 353px);
+            }
 
             >.message-container {
                 >.message {
@@ -167,13 +222,36 @@
                     }
 
                     >.text {
-                        padding-block: rem(6px);
-                        padding-block-end: rem(7px);
                         padding-inline: rem(16px);
+                        
+                        >span {
+                            padding-block: rem(6px);
+                            padding-block-end: rem(7px);
+                            padding-inline: rem(16px);
 
-                        background-color: hsl(204, 100%, 48%);
-                        color: white;
-                        border-radius: rem(20px);
+                            background-color: hsl(204, 100%, 48%);
+                            color: white;
+                            border-radius: rem(20px);
+                        }
+
+                        >img {
+                            width: 28px;
+                            height: 28px;
+                            border-radius: 999px;
+                        }
+
+                        &.grey {
+                            
+                            &:not(:has(img)){
+                                padding-inline-start: rem(44px);
+                            }
+
+                            >span {
+                                margin-inline-start: 1em;
+                                background-color: grey;
+                            }
+
+                        }
                     }
 
                     &:last-of-type {
@@ -185,7 +263,11 @@
 
         >.send-message-container {
             padding: rem(16px);
-            padding-block-start: rem(8px);
+            padding-block-start: rem(8px); 
+
+            @include for-mobile-layout {
+                padding-block-end: rem(60px); 
+            }
 
             >.message-bar {
                 padding-inline: rem(15px);

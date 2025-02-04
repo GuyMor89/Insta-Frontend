@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { hookService } from './services/hook.service.js'
 
@@ -16,6 +16,7 @@ import { Explore } from './pages/Explore.jsx'
 import { Messenger } from './pages/Messenger.jsx'
 
 import { SET_PREV_LOC } from './store/reducers/post.reducer.js'
+import { StoryModal } from './cmps/StoryModal.jsx'
 
 export function Main() {
 
@@ -49,9 +50,10 @@ export function Main() {
                 <Routes location={prevLoc || '/'}>
                     <Route path="/" element={<><Home /><UserBar /></>} />
                     <Route path='/explore' element={<Explore />} />
-                    <Route path='/:username' element={<UserPage />} />
                     <Route path='/direct/inbox' element={<Messenger />} />
                     <Route path='/direct/t/:id' element={<Messenger />} />
+                    <Route path='/story' element={<StoryModal />} />
+                    <Route path='/:username' element={<UserPage />} />
                 </Routes>
                 <Routes>
                     <Route path='/p/:id' element={<PostModal />} />

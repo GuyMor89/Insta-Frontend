@@ -18,6 +18,12 @@
 
         >.post-details {
 
+            background-color: white;
+
+            @include for-mobile-layout {
+                display: none;
+            }
+
             .user-details,
             .post-caption-container,
             .comment-container {
@@ -36,7 +42,7 @@
                 overflow: scroll;
                 scrollbar-width: none;
                 scroll-behavior: smooth;
-                height: calc(350px - 56px);
+                height: calc(70.8vh - 210px);
 
                 >.post-caption-container {
 

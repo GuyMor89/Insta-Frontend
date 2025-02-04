@@ -1,5 +1,7 @@
+import { notificationService } from '../../services/notifications.service.js'
+import { socketService } from '../../services/socket.service.js'
 import { userService } from '../../services/user.service.js'
-import { REMOVE_USER, SET_FULL_LOGGEDIN_USER, SET_USERS, UPDATE_USER } from "../reducers/user.reducer.js"
+import { SET_FULL_LOGGEDIN_USER, SET_NEW_NOTIFICATIONS, SET_USERS, UPDATE_USER } from "../reducers/user.reducer.js"
 import { store } from "../store.js"
 
 export const userActions = {
@@ -10,7 +12,7 @@ export const userActions = {
     signupUser,
     updateUser,
     updateUsers,
-    removeUser
+    setNewNotifications
 }
 
 async function loadLoggedInUser() {
@@ -43,6 +45,7 @@ async function loginUser(credentials) {
     try {
         const user = await userService.login(credentials)
         store.dispatch({ type: SET_FULL_LOGGEDIN_USER, user })
+        socketService.setup()
     } catch (err) {
         console.error('Failed to load logged-in user:', err)
         throw err
@@ -93,12 +96,6 @@ async function updateUsers(type, userToFollowID) {
     }
 }
 
-async function removeUser(userID) {
-    try {
-        await userService.remove(userID)
-        store.dispatch({ type: REMOVE_USER, userID })
-    } catch (err) {
-        console.log('Cannot remove user:', err)
-        throw err
-    }
+function setNewNotifications(newNotifications) {
+    store.dispatch({ type: SET_NEW_NOTIFICATIONS, newNotifications })
 }

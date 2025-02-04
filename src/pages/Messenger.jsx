@@ -2,41 +2,49 @@ import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { messageService } from "../services/message.service.js"
 import { utilService } from '../services/util.service.js'
-import { useNavigate, useParams } from "react-router-dom"
 import { socketService } from "../services/socket.service.js"
+import { hookService } from "../services/hook.service.js"
+import { userActions } from "../store/actions/user.actions.js"
 
 export function Messenger() {
 
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
-    const [messages, setMessages] = useState(null)
+    const newNotifications = useSelector(storeState => storeState.userModule.newNotifications)
+    const messages = useSelector(storeState => storeState.userModule.messages)
     const [chosenMessage, setChosenMessage] = useState(null)
+    const chosenRef = useRef(chosenMessage)
 
     const [line, setLine] = useState(null)
+    const lastLineTimestamp = useRef(null)
+    const lastLineBy = useRef(null)
     const messageInput = useRef(null)
     const messageContainer = useRef(null)
 
-    const params = useParams()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        getMessages()
-    }, [params.id])
+    const { params, navigate, location } = hookService()
 
     useEffect(() => {
         setChosenMessage(messages?.find(message => message._id === params.id) || null)
-    }, [messages])
+        const unReadMessage = messages.filter(message => message.hasUnread)
 
-    async function getMessages() {
-        const messages = await messageService.query()
-        setMessages(messages)
-    }
+        if (unReadMessage.length === 0) return
+        if (params.id === unReadMessage[0]._id) {
+            messageService.markRead(unReadMessage[0]._id)
+            userActions.setNewNotifications({ ...newNotifications, message: false })
+        }
+    }, [messages, params.id])
 
     useEffect(() => {
-        socketService.emit('set-room', params.id)
-    }, [params.id])
+        chosenRef.current = chosenMessage
+    }, [chosenMessage])
 
     useEffect(() => {
         socketService.on('msg-from-server', addLine)
+
+        function addLine({ messageID, lineToSend }) {
+            if (!chosenMessage) return
+            if (messageID !== chosenRef.current._id) return
+            setChosenMessage(prevMessage => ({ ...prevMessage, lines: [...prevMessage.lines, lineToSend] }))
+        }
 
         return () => {
             socketService.off('msg-from-server', addLine)
@@ -44,18 +52,49 @@ export function Messenger() {
     }, [])
 
     function sendMessage() {
-        const lineToSend = { id: utilService.makeId(), by: fullLoggedInUser.username, text: line, sentAt: Date.now() }
-        messageService.update(chosenMessage._id, lineToSend)
+        const lineToSend = { id: utilService.makeId(), by: fullLoggedInUser.username, text: line, sentAt: Date.now(), isRead: false }
+        messageService.addLine(chosenMessage.user._id, chosenMessage._id, lineToSend)
 
-        socketService.emit('msg-from-socket', lineToSend)
-        // addLine(lineToSend)
+        setChosenMessage(prevMessage => ({ ...prevMessage, lines: [...prevMessage.lines, lineToSend] }))
 
         messageInput.current.value = ''
         setLine(null)
     }
 
-    function addLine(lineToSend) {
-        setChosenMessage(prevMessage => ({ ...prevMessage, lines: [...prevMessage.lines, lineToSend] }))
+    function handleLineFormatting({ by, sentAt, text }) {
+        const currLineTimestamp = utilService.formatDate(sentAt).shortHour
+
+        const timestampIsNew = currLineTimestamp !== lastLineTimestamp.current
+        const userIsNew = by !== lastLineBy.current
+        // console.log(lastLineBy.current)
+        console.log(currLineTimestamp)
+        console.log(lastLineTimestamp.current)
+
+        if (timestampIsNew) {
+            lastLineTimestamp.current = currLineTimestamp
+        }
+        if (userIsNew) {
+            lastLineBy.current = by
+        }
+
+        const isCurrentUser = by === fullLoggedInUser.username;
+        const textClassName = `text${isCurrentUser ? '' : ' grey'}`
+
+        const showTimestamp = timestampIsNew || userIsNew
+
+        return (
+            <>
+                {showTimestamp && (
+                    <div className="sent-at">
+                        {lastLineTimestamp.current}
+                    </div>
+                )}
+                <div className={textClassName}>
+                    {!isCurrentUser && (userIsNew || timestampIsNew) && <img src={chosenMessage.user.imgUrl} />}
+                    <span>{text}</span>
+                </div>
+            </>
+        )
     }
 
     useEffect(() => {
@@ -67,7 +106,7 @@ export function Messenger() {
     if (!fullLoggedInUser || !messages) return
 
     return (
-        <article className="messenger-container">
+        <article className={`messenger-container ${params.id ? 'message-open' : ''}`}>
             <div className="side-bar">
                 <div className="side-bar-header">
                     <div className="user-name">{fullLoggedInUser.username} <svg aria-label="Down chevron icon" fill="currentColor" height="12" role="img" viewBox="0 0 24 24" width="12"><title>Down chevron icon</title><path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path></svg></div>
@@ -80,13 +119,14 @@ export function Messenger() {
                 <div className="messages-list">
 
                     {messages.map(message =>
-                        <div className={`user-details ${chosenMessage?._id === message._id ? 'chosen' : ''}`} onClick={() => { navigate(chosenMessage?._id === message._id ? '/direct/inbox' : `/direct/t/${message._id}`) }} key={message._id}>
+                        <div className={`user-details ${chosenMessage?._id === message._id ? 'chosen' : ''}`} onClick={() => { { messageService.markRead(message._id); navigate(chosenMessage?._id === message._id ? '/direct/inbox' : `/direct/t/${message._id}`) } }}>
                             <div className="user-image">
                                 <img src={message.user.imgUrl} />
                             </div>
                             <div className="header-details-container">
                                 <div className="header-details">
-                                    <div className="user-name">{message.user.fullname}</div>
+                                    <div className={`user-name ${(message.hasUnread && !location.pathname.includes('/t/')) ? 'bold' : ''}`}>{message.user.fullname}</div>
+                                    {message.hasUnread && !location.pathname.includes('/t/') && <div className='new-message-notification'></div>}
                                 </div>
                             </div>
                         </div>
@@ -120,18 +160,42 @@ export function Messenger() {
                                     <div className="full-name">{chosenMessage.user.fullname}</div>
                                     <div className="user-name">{chosenMessage.user.username} · Instagram</div>
                                 </div>
-                                <button className="view-profile">View Profile</button>
+                                <button className="view-profile" onClick={() => navigate(`/${chosenMessage.user.username}`)}>View Profile</button>
                             </div>
                         </div>
 
                         <div className="message-content-container" ref={messageContainer}>
                             <div className="message-container">
-                                {chosenMessage.lines.map(line =>
-                                    <div className="message">
-                                        <div className="sent-at">{utilService.formatDate(line.sentAt).relativeTime}</div>
-                                        <div className="text">{line.text}</div>
-                                    </div>
-                                )}
+                                <>
+                                    {chosenMessage.lines.map((msg, index, arr) => {
+                                        const currLineTimestamp = utilService.formatDate(msg.sentAt).shortHour;
+                                        const previousMsg = index > 0 ? arr[index - 1] : null;
+                                        const previousTimestamp = previousMsg
+                                            ? utilService.formatDate(previousMsg.sentAt).shortHour
+                                            : null;
+                                        const timestampIsNew = !previousMsg || currLineTimestamp !== previousTimestamp;
+                                        const userIsNew = !previousMsg || msg.by !== previousMsg.by;
+                                        const isCurrentUser = msg.by === fullLoggedInUser.username;
+                                        const textClassName = `text${isCurrentUser ? '' : ' grey'}`;
+                                        const showTimestamp = timestampIsNew || userIsNew;
+
+                                        return (
+                                            <div className="message" key={msg.id}>
+                                                {showTimestamp && (
+                                                    <div className="sent-at">
+                                                        {currLineTimestamp}
+                                                    </div>
+                                                )}
+                                                <div className={textClassName}>
+                                                    {!isCurrentUser && (userIsNew || timestampIsNew) && (
+                                                        <img src={chosenMessage.user.imgUrl} alt={`${msg.by} avatar`} />
+                                                    )}
+                                                    <span>{msg.text}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </>
                             </div>
                         </div>
 

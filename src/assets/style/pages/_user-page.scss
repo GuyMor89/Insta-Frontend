@@ -7,6 +7,11 @@
 
     max-width: 935px;
 
+    @include for-mobile-layout {
+        padding: 0;
+        padding-block-end: rem(60px);
+    }
+
     >.user-page-header-container {
 
         width: 100%;
@@ -25,6 +30,12 @@
                 width: 150px;
                 height: 150px;
                 object-fit: cover;
+
+                @include for-mobile-layout {
+                    margin-inline-start: rem(4px);
+                    width: 100px;
+                    height: 100px;
+                }
             }
         }
 
@@ -32,6 +43,7 @@
 
             >.user-nav {
 
+                width: 332px;
                 height: 48px;
 
                 >* {
@@ -63,7 +75,7 @@
 
             >.user-data {
 
-                width: 400px;
+                max-width: 400px;
                 height: 25px;
 
                 >* {
@@ -88,6 +100,7 @@
 
                 >.user-bio {
                     white-space: pre-line;
+                    max-width: 540px;
                     font-size: em(14px);
                 }
 

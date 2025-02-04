@@ -33,6 +33,10 @@
         transition: transform 300ms ease-in-out, opacity 300ms ease-in-out, visibility 0s 300ms;
         /* Delay visibility */
 
+        @include for-mobile-layout {
+            height: calc(100vh - 48px);
+        }
+
         &.open {
             transform: translateX(0);
 

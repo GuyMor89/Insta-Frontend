@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { postActions } from "../store/actions/post.actions.js"
 import { Post } from "../cmps/Post.jsx"
 import { userActions } from "../store/actions/user.actions.js"
+import { useLocation } from "react-router-dom"
 
 export function Home() {
 
+    const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const posts = useSelector(storeState => storeState.postModule.posts)
     const users = useSelector(storeState => storeState.userModule.users)
 
@@ -15,24 +17,27 @@ export function Home() {
     const [isInView, setIsInView] = useState(false)
     const targetRef = useRef(null)
 
+    const location = useLocation()
+
     const amountOfPosts = posts?.length
 
     useEffect(() => {
         postActions.loadPosts(postLimit)
         if (users.length === 0) userActions.loadUsers()
         setIsLoading(false)
-    }, [postLimit])
+    }, [postLimit, location])
 
     useEffect(() => {
         if (isInView && amountOfPosts > 0 && postLimit > amountOfPosts) setPostLimit(amountOfPosts)
         else if (isInView && postLimit === amountOfPosts) {
             setTimeout(() => {
                 setPostLimit(amountOfPosts + 4)
-            }, 500);
+            }, 500)
         }
     }, [isInView])
 
     useEffect(() => {
+        if (amountOfPosts < 2) return
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsInView(entry.isIntersecting)
@@ -50,7 +55,7 @@ export function Home() {
         }
     }, [])
 
-    if (!posts) return
+    if (!posts || !fullLoggedInUser) return
 
     return (
         <article className="post-container" >
@@ -58,14 +63,15 @@ export function Home() {
                 <Post post={post} />
             )}
             <div className="observed-div" ref={targetRef}>
-                {isLoading && amountOfPosts > 0 && <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>}
-                {/* {amountOfPosts === postLimit &&
-                    <div className="all-caught-up">
-                        <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1737594357/illo-confirm-refresh-light_zdzg5x.png" />
-                        <div className="title">You're all caught up</div>
-                        <div className="body">You've seen all new posts from the past 3 days.</div>
-                    </div>} */}
+                {isLoading && amountOfPosts > 0 && amountOfPosts > 2 && <svg className="loader-svg" role="img" viewBox="0 0 100 100"><rect height="6" opacity="0" rx="3" ry="3" transform="rotate(-90 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.08333333333333333" rx="3" ry="3" transform="rotate(-60 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.16666666666666666" rx="3" ry="3" transform="rotate(-30 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.25" rx="3" ry="3" transform="rotate(0 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.3333333333333333" rx="3" ry="3" transform="rotate(30 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.4166666666666667" rx="3" ry="3" transform="rotate(60 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.5" rx="3" ry="3" transform="rotate(90 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.5833333333333334" rx="3" ry="3" transform="rotate(120 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.6666666666666666" rx="3" ry="3" transform="rotate(150 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.75" rx="3" ry="3" transform="rotate(180 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.8333333333333334" rx="3" ry="3" transform="rotate(210 50 50)" width="25" x="72" y="47"></rect><rect height="6" opacity="0.9166666666666666" rx="3" ry="3" transform="rotate(240 50 50)" width="25" x="72" y="47"></rect></svg>}
             </div>
+            {!isLoading &&
+            <div className="all-caught-up">
+                <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1737594357/illo-confirm-refresh-light_zdzg5x.png" />
+                <div className="title">You're all caught up</div>
+                <div className="body">You've seen all new posts from the past 3 days.</div>
+            </div>
+            }
         </article >
     )
 }

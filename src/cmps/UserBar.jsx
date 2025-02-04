@@ -16,7 +16,7 @@ export function UserBar() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!suggestedUsers || suggestedUsers?.length === 0) setSuggestedUsers(usersIAmNotFollowing)
+        if (!suggestedUsers || suggestedUsers?.length === 0) setSuggestedUsers(usersIAmNotFollowing.slice(0, 5))
     }, [usersIAmNotFollowing])
 
     function handleFollowBtn(userID) {
@@ -26,7 +26,7 @@ export function UserBar() {
         if (!myUser && alreadyFollowingUser) return <div className="follow-btn following" onClick={() => interactionService.unfollowUser(userID)}>Following</div>
     }
 
-    if (!fullLoggedInUser ) return
+    if (!fullLoggedInUser) return
 
     return (
         <article className="user-bar-container">
@@ -53,9 +53,7 @@ export function UserBar() {
                     </HoverTracker>
                     <div className="header-details-container">
                         <div className="header-details">
-                            <HoverTracker username={user.username}>
-                                <div className="user-name" onClick={() => navigate(`/${user.username}`)}>{user.username}</div>
-                            </HoverTracker>
+                            <div className="user-name" onClick={() => navigate(`/${user.username}`)}>{user.username}</div>
                         </div>
                         <div className="location">{user.fullname}</div>
                     </div>

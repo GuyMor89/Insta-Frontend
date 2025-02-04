@@ -7,33 +7,43 @@ import { HoverTracker } from "./HoverTracker.jsx";
 import { postActions } from "../store/actions/post.actions.js"
 import { utilService } from '../services/util.service.js'
 import { interactionService } from "../services/interactions.service.js";
-import { hookService } from "../services/hook.service.js";
+import { hookService, useEffectSkipFirst } from "../services/hook.service.js";
 import { postService } from "../services/post.service.js";
 
 export function PostModal() {
-    
+
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
+    const posts = useSelector(storeState => storeState.postModule.posts)
     const prevLoc = useSelector(storeState => storeState.postModule.prevLoc)
     const [post, setPost] = useState(null)
 
     const [comment, setComment] = useState(null)
     const commentInput = useRef(null)
+    const postBody = useRef(null)
 
     const { navigate, params } = hookService()
 
     useEffect(() => {
-        getPost()
+        getPosts()
         postActions.openModal('post')
-    }, [params.id])
+    }, [params.id, posts])
 
-    async function getPost() {
-        const post = await postService.getById(params.id)
-        setPost(post)
+    async function getPosts() {
+        const posts = await postService.query()
+        setPost(posts.find(post => post._id === params.id))
     }
 
     function closeModal() {
         postActions.closeModal('post')
         navigate(prevLoc)
+    }
+
+    async function addComment() {
+        interactionService.addCommentToPost(post, fullLoggedInUser, comment, commentInput, setComment)
+
+        if (postBody.current) {
+            postBody.current.scrollTop = postBody.current.scrollHeight
+        }
     }
 
     if (!post || fullLoggedInUser === null) return
@@ -74,7 +84,7 @@ export function PostModal() {
                                     <svg className="menu" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
                                 </div>
 
-                                <div className="post-body">
+                                <div className="post-body" ref={postBody}>
 
                                     {postHasCaption
                                         && <div className="post-caption-container">
@@ -145,8 +155,8 @@ export function PostModal() {
                                 </div>
                                 {postHasLikes
                                     ? <div className="likes">
-                                        <span>{post.likedBy.length} likes</span>
-                                    </div>
+                                        {post.likedBy.length === 1 && <span>{post.likedBy.length} like</span>}
+                                        {post.likedBy.length > 1 && <span>{post.likedBy.length} likes</span>}                                    </div>
                                     : <div className="no-likes">Be the first to
                                         <span> like this</span>
                                     </div>
@@ -157,8 +167,8 @@ export function PostModal() {
                                 </div>
 
                                 <div className="add-comment-container">
-                                    <input type="text" ref={commentInput} onChange={(e) => setComment(e.target.value)} placeholder="Add a comment.." />
-                                    <button className={comment?.length > 0 && 'full'} onClick={() => interactionService.addCommentToPost(post, fullLoggedInUser, comment, commentInput, setComment)}>Post</button>
+                                    <input type="text" ref={commentInput} onChange={(e) => setComment(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') addComment() }} placeholder="Add a comment.." />
+                                    <button className={comment?.length > 0 && 'full'} onClick={() => addComment()}>Post</button>
                                 </div>
 
                             </div>
