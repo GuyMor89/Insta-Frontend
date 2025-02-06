@@ -2,26 +2,36 @@
 @use '../base/mixins' as *;
 
 
-@include modal($name: 'post-modal-overlay', $width: 85vw) {
+@include modal($name: 'post-modal-overlay', $height: 70.8vh, $width: 85vw) {
 
     >.post-container {
         width: 100%;
-
-        height: 70.8vh;
-
+        
         @include mainImage;
-
+        
         >.post-image {
             border-top-left-radius: 6px;
             background-color: black;
+            
+            >img {
+                // border-top-left-radius: 6px;
+                // border-bottom-left-radius: 6px;
+                
+                @include for-mobile-layout {
+                    border-bottom-left-radius: 0;
+                    border-top-right-radius: 6px;
+                }
+            }
         }
-
+        
         >.post-details {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
 
             background-color: white;
 
             @include for-mobile-layout {
-                display: none;
+                border-bottom-left-radius: 6px;
             }
 
             .user-details,
@@ -43,6 +53,11 @@
                 scrollbar-width: none;
                 scroll-behavior: smooth;
                 height: calc(70.8vh - 210px);
+
+                @include for-mobile-layout {
+                    padding-block: 1em;
+                    height: auto;
+                }
 
                 >.post-caption-container {
 

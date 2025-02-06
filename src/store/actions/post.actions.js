@@ -6,6 +6,7 @@ export const postActions = {
     loadPosts,
     savePost,
     removePost,
+    setIsLoading,
     openModal,
     closeModal
 }
@@ -39,7 +40,6 @@ async function savePost(post) {
     const type = post._id ? UPDATE_POST : ADD_POST
 
     try {
-        store.dispatch({ type: SET_IS_LOADING, isLoading: true })
         const savedPost = await postService.save(post)
         console.log(savedPost)
         store.dispatch({ type, post: savedPost })
@@ -47,9 +47,12 @@ async function savePost(post) {
     } catch (err) {
         console.log('Post action -> Cannot save Post', err)
         throw err
-    } finally {
-        store.dispatch({ type: SET_IS_LOADING, isLoading: false })
     }
+}
+
+function setIsLoading(type) {
+    if (type === true) return store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    if (type === false) return store.dispatch({ type: SET_IS_LOADING, isLoading: false })
 }
 
 async function openModal(type, data) {

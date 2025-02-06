@@ -6,6 +6,7 @@ import { HoverTracker } from "./HoverTracker.jsx"
 
 import { interactionService } from "../services/interactions.service.js"
 import { postActions } from "../store/actions/post.actions.js"
+import { userActions } from "../store/actions/user.actions.js"
 
 export function UserBar() {
 
@@ -14,6 +15,10 @@ export function UserBar() {
     const [suggestedUsers, setSuggestedUsers] = useState(null)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        userActions.loadUsers()
+    }, [])
 
     useEffect(() => {
         if (!suggestedUsers || suggestedUsers?.length === 0) setSuggestedUsers(usersIAmNotFollowing.slice(0, 5))

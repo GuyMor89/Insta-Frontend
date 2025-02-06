@@ -6,7 +6,7 @@ const BASE_URL = 'users/'
 export const userService = {
     getUsers,
     getById,
-    getByUsername,
+    getByUsernameWithPosts,
     login,
     signup,
     logout,
@@ -24,7 +24,7 @@ function getById(userId) {
     return httpService.get(BASE_URL + 'id/' + userId)
 }
 
-function getByUsername(username) {
+function getByUsernameWithPosts(username) {
     return httpService.get(BASE_URL + 'username/' + username)
 }
 

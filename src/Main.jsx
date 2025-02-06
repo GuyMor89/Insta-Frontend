@@ -17,6 +17,7 @@ import { Messenger } from './pages/Messenger.jsx'
 
 import { SET_PREV_LOC } from './store/reducers/post.reducer.js'
 import { StoryModal } from './cmps/StoryModal.jsx'
+import { Loader } from './cmps/Loader.jsx'
 
 export function Main() {
 
@@ -42,11 +43,12 @@ export function Main() {
     return (
         <main className='main-app'>
             <LoginSignup />
+            <Loader />
             <GlobalModal />
             <CreateModal />
-            <UserModal />
             <SideBar />
             <section className='main-container'>
+                <UserModal />
                 <Routes location={prevLoc || '/'}>
                     <Route path="/" element={<><Home /><UserBar /></>} />
                     <Route path='/explore' element={<Explore />} />

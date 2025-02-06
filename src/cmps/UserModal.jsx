@@ -10,16 +10,16 @@ export function UserModal() {
 
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const modalOpen = useSelector(storeState => storeState.postModule.userModalData.open)
-    
+
     const userModalData = useSelector(storeState => storeState.postModule.userModalData)
     const currentCoords = useSelector(storeState => storeState.postModule.userModalData.coords)
     const username = useSelector(storeState => storeState.postModule.userModalData.username)
-    
+
     const [isHovering, setIsHovering] = useState(false)
     const [currUser, setCurrUser] = useState(null)
-    
+
     const { location, dispatch, navigate } = hookService()
-    
+
     const handleMouseEnter = () => setIsHovering(true)
     const handleMouseLeave = () => setIsHovering(false)
 
@@ -28,7 +28,7 @@ export function UserModal() {
     }, [username])
 
     async function getUser() {
-        const user = await userService.getByUsername(username)
+        const user = await userService.getByUsernameWithPosts(username)
         setCurrUser(user)
     }
 
@@ -38,7 +38,7 @@ export function UserModal() {
             userModalData: {
                 ...userModalData,
                 open: false,
-                coords: {x: -2000, y: 0}
+                coords: { x: -2000, y: 0 }
             },
         })
     }, [location])
@@ -55,7 +55,14 @@ export function UserModal() {
     }
 
     return (
-        <div className='user-modal' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ left: currentCoords?.x, top: currentCoords?.y, opacity: modalOpen || isHovering ? 1 : 0, visibility: modalOpen || isHovering ? 'visible' : 'hidden', pointerEvents: modalOpen || isHovering ? 'all' : 'none' }} onClick={(e) => { e.stopPropagation() }}>
+        <div className='user-modal' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{
+            '--modal-left': `${currentCoords?.x}px`,
+            top: currentCoords?.y, // or `${currentCoords?.y}px` if it's a number and you need units
+            opacity: modalOpen || isHovering ? 1 : 0,
+            visibility: modalOpen || isHovering ? 'visible' : 'hidden',
+            pointerEvents: modalOpen || isHovering ? 'all' : 'none'
+        }}
+            onClick={(e) => { e.stopPropagation() }}>
             <div className="user-details">
                 <div className="user-image" onClick={() => { navigate(`/${currUser.username}`); setIsHovering(false) }}>
                     <img src={currUser.imgUrl} />
@@ -83,10 +90,13 @@ export function UserModal() {
             </div>
             <div className="user-posts-container">
                 {currUser.imgUrls.length > 0
-                    ? currUser.imgUrls.map(image =>
-                        <div className="user-post" onClick={() => { navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } }); setIsHovering(false) }}>
-                            <img src={image.url} />
-                        </div>
+                    ? currUser.imgUrls.map((image, idx) => {
+                        if (idx < 3) return (
+                            <div className="user-post" onClick={() => { navigate(`/p/${image._id}`, { state: { previousLocation: location.pathname } }); setIsHovering(false) }}>
+                                <img src={image.url} />
+                            </div>
+                        )
+                    }
                     )
                     : <div className="no-posts">
                         <img src="https://res.cloudinary.com/dtkjyqiap/image/upload/v1737130872/0qSQcHrCNzw_huro0j.png"></img>

@@ -5,10 +5,12 @@
     padding-inline: em(20px);
     padding-block: em(30px);
 
+    width: 100%;
     max-width: 935px;
 
     @include for-mobile-layout {
         padding: 0;
+        padding-block-start: rem(8px);
         padding-block-end: rem(60px);
     }
 
@@ -46,6 +48,10 @@
                 width: 332px;
                 height: 48px;
 
+                @include for-mobile-layout {
+                    width: inherit;
+                }
+
                 >* {
                     margin-inline-end: 1em;
                 }
@@ -58,11 +64,21 @@
                     color: white;
                     @include button ($bgc: 'blue');
 
+                    @include for-mobile-layout {
+                        padding-inline: rem(10px);
+                        font-size: em(13px);
+                    }
+
                     &.grey {
                         @include button($bgc: 'grey');
             
                         background-color: hsl(0, 0%, 92%);
-                        color: black
+                        color: black;
+
+                        @include for-mobile-layout {
+                            padding-inline: rem(10px);
+                            font-size: em(13px);
+                        }
                     }
                 }
 
@@ -70,6 +86,12 @@
                     @include button ($bgc: 'grey');
                     color: black;
                     background-color: rgb(239, 239, 239);
+
+                    @include for-mobile-layout {
+                        margin: 0;
+                        padding-inline: rem(10px);
+                        font-size: em(13px);
+                    }
                 }
             }
 

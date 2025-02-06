@@ -25,12 +25,11 @@ export function UserPage() {
     const imageInput = useRef(null)
 
     useEffect(() => {
-        // if (!fullLoggedInUser) userActions.loadLoggedInUser()
-        getUser()
+        getUserWithPosts()
     }, [params.username, fullLoggedInUser, posts])
 
-    async function getUser() {
-        const user = await userService.getByUsername(params.username)
+    async function getUserWithPosts() {
+        const user = await userService.getByUsernameWithPosts(params.username)
         setCurrUser(user)
     }
 

@@ -142,7 +142,7 @@
 }
 
 @mixin for-narrow-layout {
-    @media (width < 1060px) {
+    @media (width < 1175px) {
         @content;
     }
 }
@@ -253,42 +253,51 @@
     }
 }
 
-@mixin modal($name: 'modal-overlay', $width: null, $wide: false, $zIndex: 50) {
+@mixin modal($name: 'modal-overlay', $width: null, $height: null, $wide: false, $zIndex: 50) {
 
     .#{$name} {
         position: fixed;
+
         inset: 0;
         cursor: pointer;
         z-index: $zIndex - 20;
-
+        
         background-color: rgba(0, 0, 0, 0.65);
-
+        
         transition: background-color 0.3s;
-
+        
         @include grid(row, $place: center);
-
+        
+        @include for-mobile-layout {
+        }
+        
         >.modal-container {
-            margin-block-end: 2.5em;
+            height: $height;
             width: clamp(300px, 90vw, $width);
-
+            
             background-color: rgb(255, 255, 255);
             border-radius: 6px;
             box-shadow:
-                1px 1px 5px 0px rgba(0, 0, 0, 0.1);
-
+            1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+            
             z-index: $zIndex;
-
+            
             animation: slideUp 150ms ease;
-
+            
             transition: width 500ms, top 500ms;
-
+            
             @if $wide {
                 &.wide {
                     width: clamp(300px, 90vw, 66.5vw);
                 }
             }
-
+            
             cursor: auto;
+
+            @include for-mobile-layout() {
+                margin-block-end: 2.5em;
+                height: max-content;
+            }
 
             >.close-btn {
                 position: absolute;
@@ -339,6 +348,17 @@
         100% {
             scale: (1);
             opacity: 1;
+        }
+    }
+}
+
+@mixin SpinAnimation {
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
         }
     }
 }

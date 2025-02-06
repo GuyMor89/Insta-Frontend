@@ -9,7 +9,7 @@
 
 // Extras
 
-@use './base/loader';
+@use './base/loaders';
 
 // CMPS
 
@@ -25,6 +25,7 @@
 @use './cmps/notifications';
 @use './cmps/user-menu';
 @use './cmps/switch-user-modal';
+@use './cmps/loader';
 
 // Pages
 

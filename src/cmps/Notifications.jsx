@@ -74,7 +74,6 @@ export function Notifications({ notificationsOpen, setNotificationsOpen }) {
 
     useEffect(() => {
         const handleDocumentClick = (event) => {
-            console.log(event.target)
             if (event.target.closest('.main-container') || (event.target.closest('.side-bar') && (!event.target.classList.contains('notifications')) && (!event.target.classList.contains('notifications-btn')) && (!event.target.classList.contains('side-bar'))))
                 setNotificationsOpen(false)
         }

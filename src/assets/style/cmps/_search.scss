@@ -1,5 +1,6 @@
 @use '../base/mixins' as *;
 @use '../base/functions' as *;
+@include SpinAnimation;
 
 .search-overlay {
     position: sticky;
@@ -152,11 +153,3 @@
     }
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}

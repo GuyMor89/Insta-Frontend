@@ -5,17 +5,20 @@
 .main-container {
 
     min-height: 100dvh;
+    // min-width: 100vh;
+
+    position: relative;
+    overflow: hidden;
     
-    &:has(.post-container) {
+    &:has(.user-bar-container) {
         margin-inline-start: rem(32px);
         
         @include for-narrow-layout {
-            margin-inline-start: 0;
+            margin-inline-start: inherit;
         }
     }
 
-    >div:not(.post-container),
-    >div:not(.user-bar-container) {
+    >div {
         position: absolute;
     }
 
@@ -176,6 +179,9 @@
                     // &:not(.red):not(:hover) {
                     //     animation: grow 350ms;
                     // }
+                    >svg {
+                        width: 105%;
+                    }
 
                     &.red {
                         position: relative;
@@ -331,7 +337,12 @@
                 height: 75%;
 
                 animation: spin 2s linear infinite;
-                transform-origin: center
+                transform-origin: center;
+
+                @include for-mobile-layout {
+                    width: 50%;
+                    height: 50%;
+                }
             }
         }
 
@@ -339,6 +350,10 @@
             padding-block-start: rem(16px);
 
             height: 176px;
+
+            @include for-mobile-layout {
+                margin-block-end: 2em;
+            }
             
             >img {
                 width: 96px;

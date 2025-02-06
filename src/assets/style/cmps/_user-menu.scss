@@ -1,4 +1,5 @@
 @use '../base/functions' as *;
+@use '../base/mixins' as *;
 
 .user-menu-overlay {
     position: sticky;
@@ -13,14 +14,24 @@
         position: absolute;
 
         padding: rem(8px);
-
-        bottom: -95vh;
-        left: -10px;
-
+        
         border-radius: 10px;
         background-color: white;
-
+        
         box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px 0px;
+        
+        @include for-wide-layout {
+            top: calc(var(--more-btn-top) - 120px);
+            left: -217px;
+        }
+        @include for-normal-layout {
+            top: calc(var(--more-btn-top) - 120px);
+            left: -217px;
+        }
+        @include for-narrow-layout {
+            top: calc(var(--more-btn-top) - 61px);
+            left: -10px;
+        }
 
         >.logout {
             padding: rem(16px);

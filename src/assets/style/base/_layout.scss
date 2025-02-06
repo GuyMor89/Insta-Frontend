@@ -375,7 +375,9 @@
                 grid-template-columns: 1fr clamp(300px, 50%, 330px);
 
                 @include for-mobile-layout {
+                    @include grid(row);
                     grid-template-columns: 1fr;
+                    grid-template-rows: max-content max-content;
                 }
 
 
@@ -649,9 +651,11 @@
 
     .user-page-header-container {
 
-        @include grid(column, $justify: center);
+        @include grid(column);
 
         grid-template-columns: minmax(180px, 280px) max-content;
+
+        justify-content: center;
         
         @include for-mobile-layout {
             grid-template-columns: none
@@ -663,10 +667,9 @@
 
         .user-page-header {
 
-            justify-self: start;
+            // justify-self: start;
 
             @include grid(row);
-
 
             .user-nav {
 
@@ -862,4 +865,10 @@
             @include grid(row, $place: center);
         }
     }
+}
+
+.loader {
+    @include grid(row, $place: center);
+
+    grid-template-rows: 1fr max-content;
 }

@@ -4,26 +4,37 @@
 .user-modal {
     position: absolute;
     // bottom: -315px;
-    // left: 5px;
-
+    
     width: 366px;
     height: 320px;
-
+    
     opacity: 0;
     visibility: hidden;
-    z-index: 100;
-
+    z-index: 50;
+    
     // pointer-events: none;
     cursor: default;
-
+    
     background-color: white;
     border-radius: 8px;
     color: black;
-
+    
     box-shadow: 0px 0px 23px hsl(0, 0%, 0%, 0.2);
-
+    
     transition: opacity 500ms ease, visibility 500ms;
-
+    
+    @include for-wide-layout {
+        left: calc(var(--modal-left) - 264px);
+    }
+    @include for-normal-layout {
+        left: calc(var(--modal-left) - 264px);
+    }
+    @include for-narrow-layout {
+        left: calc(var(--modal-left) - 72px);
+    }
+    @include for-mobile-layout {
+        left: var(--modal-left);
+    }
     >.user-details {
         padding-block-start: 1.1em;
         padding-inline-start: 1em;
