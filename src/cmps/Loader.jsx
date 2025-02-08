@@ -7,7 +7,6 @@ export function Loader() {
 
     const fullLoggedInUser = useSelector(storeState => storeState.userModule.fullLoggedInUser)
     const isLoading = useSelector(storeState => storeState.postModule.isLoading)
-    console.log(isLoading)
 
     if (!isLoading || !fullLoggedInUser) return
 

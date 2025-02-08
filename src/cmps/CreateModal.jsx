@@ -38,13 +38,15 @@ export function CreateModal() {
 
         const croppedBlob = await utilService.getCroppedImg(uploadedImage, croppedPixels)
         const croppedFile = new File([croppedBlob], "cropped-image.jpg", { type: "image/jpeg" })
+        console.log(`File size: ${croppedFile.size}`)
 
         setTimeout(() => {
             setIsUploading(false)
-        }, 1000)
+        }, 800)
 
         const { secure_url } = await uploadService.uploadImg({ target: { files: [croppedFile] }, type: "change" })
 
+        setIsUploading(false)
         setCroppedImage(secure_url)
 
         setCurrPage(3)
@@ -58,6 +60,10 @@ export function CreateModal() {
     useEffect(() => {
         if (uploadedImage) setCurrPage(2)
     }, [uploadedImage])
+
+    useEffect(() => {
+        // if (currPage === 3) setIsUploading(false)
+    }, [currPage])
 
     useEffect(() => {
         if (!modalOpen) {
@@ -94,8 +100,8 @@ export function CreateModal() {
     if (!modalOpen) return
 
     function handleMainImages() {
-        if (croppedImage) return <img src={croppedImage} />
-        else if (isUploading) return <img className='loader' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
+        if (croppedImage) return <img className="cropped" src={croppedImage} />
+        else if (isUploading) return <img className='loader-img' src='https://res.cloudinary.com/dtkjyqiap/image/upload/v1737145287/ShFi4iY4Fd9_aww4yy.gif'></img>
         return <Cropper image={uploadedImage} crop={crop} zoom={zoom} aspect={1 / 1} onCropChange={setCrop} onCropComplete={onCropComplete} onZoomChange={setZoom} />
     }
 

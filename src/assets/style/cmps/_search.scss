@@ -99,9 +99,14 @@
             >.loader-svg {
                 width: 75%;
                 height: 75%;
-
+                
                 animation: spin 2s linear infinite;
-                transform-origin: center
+                transform-origin: center;
+                
+                @include for-mobile-layout {
+                    position: relative;
+                    left: -50px;
+                }
             }
         }
 

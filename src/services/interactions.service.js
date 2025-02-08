@@ -18,6 +18,8 @@ export const interactionService = {
 
 async function likePost(post, fullLoggedInUser) {
     await postActions.savePost({ ...post, likedBy: [...post.likedBy, fullLoggedInUser._id] })
+    
+    if (post.by._id === fullLoggedInUser._id) return
     notificationService.addActivity(post.by._id, { type: 'post', action: 'like', imgUrl: post.imgUrl, _id: post._id })
 }
 
@@ -32,6 +34,8 @@ async function addCommentToPost(post, fullLoggedInUser, comment, commentInput, s
     setComment(null)
 
     await postActions.savePost({ ...post, comments: [...post.comments, commentToAdd] })
+    
+    if (post.by._id === fullLoggedInUser._id) return
     notificationService.addActivity(post.by._id, { type: 'post', action: 'comment', imgUrl: post.imgUrl, _id: post._id })
 }
 
@@ -57,6 +61,8 @@ function savePost(post, fullLoggedInUser) {
     if (userAlreadySavedPost) return
 
     userActions.updateUser({ ...fullLoggedInUser, savedPostIDs: [...fullLoggedInUser.savedPostIDs, post._id] })
+    
+    if (post.by._id === fullLoggedInUser._id) return
     notificationService.addActivity(post.by._id, { type: 'post', action: 'save', imgUrl: post.imgUrl, _id: post._id })
 }
 
@@ -64,6 +70,8 @@ function unSavePost(post, fullLoggedInUser) {
     console.log('unsaving')
     const userHasNotSavedPost = fullLoggedInUser.savedPostIDs.find(_id => _id === post._id)
     if (!userHasNotSavedPost) return
+
+    if (post.by._id === fullLoggedInUser._id) return
     userActions.updateUser({ ...fullLoggedInUser, savedPostIDs: fullLoggedInUser.savedPostIDs.filter(_id => _id !== post._id) })
 }
 

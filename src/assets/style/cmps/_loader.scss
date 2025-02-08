@@ -2,7 +2,7 @@
 @use '../base/functions' as *;
 
 .loader {
-    position: absolute;
+    position: fixed;
 
     background-color: white;
     z-index: 100;

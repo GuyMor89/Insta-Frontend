@@ -150,6 +150,10 @@
                     right: auto;
                     left: 27px
                 }
+                @include for-wide-layout {
+                    right: auto;
+                    left: 27px
+                }
             }
         }
 

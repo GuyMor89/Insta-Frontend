@@ -70,6 +70,7 @@ export function GlobalModal() {
         }))
 
         async function switchUser() {
+            await userActions.logoutUser()
             await userActions.loginUser({ username: chosenUser, password: 'vageta44' })
             navigate('/')
         }

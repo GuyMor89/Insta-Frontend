@@ -8,6 +8,7 @@ import { interactionService } from "../services/interactions.service.js"
 import { messageService } from "../services/message.service.js"
 import { SET_MESSAGES } from "../store/reducers/user.reducer.js"
 import { userActions } from "../store/actions/user.actions.js"
+import { socketService } from "../services/socket.service.js"
 
 export function Notifications({ notificationsOpen, setNotificationsOpen }) {
 

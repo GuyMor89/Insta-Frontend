@@ -45,7 +45,7 @@ async function loginUser(credentials) {
     try {
         const user = await userService.login(credentials)
         store.dispatch({ type: SET_FULL_LOGGEDIN_USER, user })
-        socketService.setup()
+        socketService.login()
     } catch (err) {
         console.error('Failed to load logged-in user:', err)
         throw err
@@ -66,6 +66,7 @@ async function logoutUser() {
     try {
         await userService.logout()
         store.dispatch({ type: SET_FULL_LOGGEDIN_USER, user: null })
+        socketService.logout()
     } catch (err) {
         console.error('Failed to logout:', err)
         throw err

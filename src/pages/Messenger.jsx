@@ -15,8 +15,6 @@ export function Messenger() {
     const chosenRef = useRef(chosenMessage)
 
     const [line, setLine] = useState(null)
-    const lastLineTimestamp = useRef(null)
-    const lastLineBy = useRef(null)
     const messageInput = useRef(null)
     const messageContainer = useRef(null)
 
@@ -59,42 +57,6 @@ export function Messenger() {
 
         messageInput.current.value = ''
         setLine(null)
-    }
-
-    function handleLineFormatting({ by, sentAt, text }) {
-        const currLineTimestamp = utilService.formatDate(sentAt).shortHour
-
-        const timestampIsNew = currLineTimestamp !== lastLineTimestamp.current
-        const userIsNew = by !== lastLineBy.current
-        // console.log(lastLineBy.current)
-        console.log(currLineTimestamp)
-        console.log(lastLineTimestamp.current)
-
-        if (timestampIsNew) {
-            lastLineTimestamp.current = currLineTimestamp
-        }
-        if (userIsNew) {
-            lastLineBy.current = by
-        }
-
-        const isCurrentUser = by === fullLoggedInUser.username;
-        const textClassName = `text${isCurrentUser ? '' : ' grey'}`
-
-        const showTimestamp = timestampIsNew || userIsNew
-
-        return (
-            <>
-                {showTimestamp && (
-                    <div className="sent-at">
-                        {lastLineTimestamp.current}
-                    </div>
-                )}
-                <div className={textClassName}>
-                    {!isCurrentUser && (userIsNew || timestampIsNew) && <img src={chosenMessage.user.imgUrl} />}
-                    <span>{text}</span>
-                </div>
-            </>
-        )
     }
 
     useEffect(() => {

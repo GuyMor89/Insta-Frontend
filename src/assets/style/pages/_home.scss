@@ -9,12 +9,20 @@
 
     position: relative;
     overflow: hidden;
-    
+
     &:has(.user-bar-container) {
         margin-inline-start: rem(32px);
-        
+
         @include for-narrow-layout {
             margin-inline-start: inherit;
+        }
+    }
+
+    &:has(.post-modal-conatiner) {
+        @include for-normal-layout {
+            .user-modal {
+                // left: calc(var(--modal-left) - 232px);
+            }
         }
     }
 
@@ -38,9 +46,10 @@
             @include for-mobile-layout {
                 width: 430px;
             }
-            
+
             @include for-narrow-mobile-layout {
                 width: 410px;
+
                 >* {
                     padding-inline: 0.75em;
                 }
@@ -191,7 +200,7 @@
                             opacity: 1;
                         }
 
-                        
+
                         svg {
                             animation: grow 350ms;
                         }
@@ -333,28 +342,37 @@
         >.observed-div {
 
             >.loader-svg {
-                width: 75%;
-                height: 75%;
+                width: 65%;
+                height: 65%;
 
                 animation: spin 2s linear infinite;
                 transform-origin: center;
 
                 @include for-mobile-layout {
-                    width: 50%;
-                    height: 50%;
+                    width: 40%;
+                    height: 40%;
                 }
             }
         }
 
-        >.all-caught-up {
+        >.all-caught-up,
+        >.not-following-anyone {
             padding-block-start: rem(16px);
 
             height: 176px;
 
+            width: 470px;
+
             @include for-mobile-layout {
                 margin-block-end: 2em;
+
+                width: 430px;
             }
-            
+
+            @include for-narrow-mobile-layout {
+                width: 410px;
+            }
+
             >img {
                 width: 96px;
                 height: 96px;
@@ -369,6 +387,22 @@
             >.body {
                 color: grey
             }
+
+        }
+
+        >.not-following-anyone {
+            
+            >.title {
+                font-size: rem(24px);
+                font-weight: 700;
+
+            }
+
+            >button {
+                @include borderlessButton;
+
+                font-size: rem(16px);
+            }
         }
     }
 }
@@ -377,6 +411,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }

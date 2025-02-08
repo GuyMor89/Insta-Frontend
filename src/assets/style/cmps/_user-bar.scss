@@ -55,8 +55,17 @@
         padding-block-end: em(20px);
     }
 
-    .suggested-user-details {
+    >.suggested-user-details {
         padding-block-end: 0;
+    }
+
+    >.no-suggested-users {
+        padding-block-start: rem(16px);
+        padding-inline-start: rem(16px);
+
+        >span:first-of-type {
+            font-weight: 700;
+        }
     }
 
 }

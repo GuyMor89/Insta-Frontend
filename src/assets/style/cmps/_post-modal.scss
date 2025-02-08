@@ -6,8 +6,18 @@
 
     >.post-container {
         width: 100%;
+        height: 90vh;
         
         @include mainImage;
+
+        >.post-image {
+            min-height: inherit;
+            max-height: inherit;
+        }
+
+        @include for-mobile-layout {
+            height: inherit;
+        }
         
         >.post-image {
             border-top-left-radius: 6px;
@@ -16,6 +26,8 @@
             >img {
                 // border-top-left-radius: 6px;
                 // border-bottom-left-radius: 6px;
+
+                // max-width: 50%;
                 
                 @include for-mobile-layout {
                     border-bottom-left-radius: 0;
@@ -56,7 +68,7 @@
 
                 @include for-mobile-layout {
                     padding-block: 1em;
-                    height: auto;
+                    height: 150px;
                 }
 
                 >.post-caption-container {

@@ -14,10 +14,10 @@ function createSocketService() {
     var socket = null
     const socketService = {
         setup() {
-            // if (!socket) {
+            if (!socket) {
                 socket = io(baseUrl)
                 this.login()
-            // }
+            }
         },
         on(eventName, cb) {
             socket.on(eventName, cb)
@@ -36,7 +36,8 @@ function createSocketService() {
         },
         logout() {
             if (socket) {
-                socket.disconnect()
+                // socket.disconnect()
+                socket.emit('remove-user-socket')
             }
         },
         terminate() {

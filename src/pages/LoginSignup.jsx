@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import { RemoveScroll } from 'react-remove-scroll';
 import { Formik, Form } from 'formik'
 import { addFormikField } from '../cmps/Formik.jsx';
-import * as Yup from 'yup'
 
 import { userActions } from '../store/actions/user.actions.js'
-import { useNavigate } from 'react-router-dom';
+import { hookService } from '../services/hook.service.js';
+import { socketService } from '../services/socket.service.js';
 
 export function LoginSignup() {
 
@@ -16,7 +16,7 @@ export function LoginSignup() {
     const [isLoggedIn, setIsLoggedIn] = useState(true)
     const [checkUser, setCheckUser] = useState(false)
 
-    const navigate = useNavigate()
+    const { location, navigate } = hookService()
 
     useEffect(() => {
         if (fullLoggedInUser) return setIsLoggedIn(true)
@@ -25,8 +25,8 @@ export function LoginSignup() {
             setIsLoggedIn(!!userIsLoggedIn)
         }
         fetchLoggedInUser()
-    }, [checkUser, fullLoggedInUser])
-
+    }, [checkUser, fullLoggedInUser, location])
+    
     if (isLoggedIn) return
 
     async function handleAuth(values) {
